@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tenant-a
+---
+apiVersion: kamaji.clastix.io/v1alpha1
+kind: TenantControlPlane
+metadata:
+  name: tenant-a
+  namespace: tenant-a
+spec:
+  dataStore: default
+  controlPlane:
+    deployment:
+      replicas: 2
+    service:
+      serviceType: LoadBalancer
+  kubernetes:
+    version: v1.36.4
+    kubelet:
+      cgroupfs: systemd
+      # Do not fail if swap is on when Worker Node joins
+      configurationJSONPatches:
+        - op: add
+          path: /failSwapOn
+          value: false
+  networkProfile:
+    port: 6443
+  addons:
+    coreDNS: {}
+
+    # kube-proxy disabled, it has a conntrack issue, we will install Cilium later!
+    # kubeProxy: {}
+
+    # konnectivity disabled, it will be enabled later
+    # konnectivity {}
