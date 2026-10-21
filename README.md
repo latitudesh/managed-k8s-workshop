@@ -21,7 +21,7 @@ alias kmgmt='kubectl --kubeconfig mgmt.kubeconfig'
 
 Verify Kind Cluster:
 ```
-ubectl get nodes
+kmgmt get nodes
 ```
 
 ## Start cloud-kind-provider
