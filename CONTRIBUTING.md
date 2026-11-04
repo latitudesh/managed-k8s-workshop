@@ -25,7 +25,7 @@ uv pip install -r requirements.txt
 
 ## Check before opening a PR
 
-The deploy runs the build in strict mode, so a broken link or a missing file fails the deploy. Run the same command locally:
+Every pull request that touches the docs runs the build in strict mode as a check, so a broken link or a missing file fails before it reaches `main`. Run the same command locally:
 
 ```
 mkdocs build --strict
