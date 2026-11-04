@@ -16,3 +16,5 @@ Delete the kubeconfig files:
 ```sh
 rm -f mgmt.kubeconfig tenant-a.kubeconfig
 ```
+
+That's the end of the main path. Head to the [Wrap-up](wrap-up.md) for a recap, the LKS credits offer and where to go next.

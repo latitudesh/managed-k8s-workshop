@@ -208,3 +208,5 @@ ssh ubuntu@$WORKER_IP sudo kubeadm reset -f
 ```
 
 Delete the LKS cluster and the server from the Latitude.sh dashboard if you don't need them anymore.
+
+Then head to the [Wrap-up](wrap-up.md).
