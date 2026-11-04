@@ -304,3 +304,24 @@
   --md-default-fg-color--lightest: var(--lat-surface);
   --md-default-fg-color--lighter: var(--lat-border);
 }
+
+/* ---- "Your hosts" page: two cards side by side, stacked on narrow screens --- */
+.md-typeset .hosts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+.md-typeset .host img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 0.4rem;
+  border: 1px solid var(--lat-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host img {
+  border-color: #e0e0dc;
+}
+.md-typeset .host p {
+  margin: 0.6rem 0;
+}

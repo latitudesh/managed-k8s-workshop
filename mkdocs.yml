@@ -80,6 +80,7 @@ plugins:
 nav:
   - Introduction: index.md
   - What is Latitude.sh?: latitude.md
+  - Your hosts: hosts.md
   - Setup:
       - 1. Prerequisites: 01-prerequisites.md
       - 2. Get the workshop files: 02-workshop-files.md

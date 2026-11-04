@@ -39,6 +39,7 @@ The `site/` folder it creates is ignored by git.
 | --- | --- |
 | `docs/index.md` | The introduction: what you'll build and the list of steps |
 | `docs/latitude.md` | What Latitude.sh and LKS are, and how LKS maps to the steps |
+| `docs/hosts.md` | Who's giving the workshop, with photos in `docs/assets/` |
 | `docs/NN-slug.md` | One file per step, numbered in the order of the workshop |
 | `docs/troubleshooting.md` | Every known problem, with the symptom, where it shows up and the fix |
 | `docs/stylesheets/extra.css` | The Latitude.sh colors and the custom blocks described below |
