@@ -1,0 +1,237 @@
+/* Latitude.sh palette, taken from latitude.sh's own CSS variables.
+   Lime:   hsl(71 99% 67%)   #E0FE56  (brand-lime / dark-mode link)
+   UV:     hsl(241 87% 61%)  #4A45F2  (brand-uv, kept for reference)
+   Light-mode links use the lime hue darkened to olive, see --lat-olive.
+   Dark background: hsl(60 71% 1.4%), dark surfaces: hsl(71 1.5% 7..10%) */
+
+:root {
+  --lat-lime: #e0fe56;
+  --lat-lime-dim: #b9e005;
+  --lat-uv: #4a45f2;
+  --lat-olive: #5c7000;      /* lime hue, darkened to read on white (5.3:1) */
+  --lat-olive-bright: #708a00;
+  --lat-black: #060600;
+  --lat-surface: #121211;
+  --lat-surface-2: #1a1a19;
+  --lat-border: #393932;
+  --lat-fg: #f8fafc;
+  --lat-fg-muted: #a1a5ab;
+  --lat-light-bg: #f9f9f9;
+  --lat-light-fg: #020817;
+  --lat-light-border: #e0e0e0;
+}
+
+/* Header and tabs are black with a lime title in both modes, like latitude.sh */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: var(--lat-black);
+  --md-primary-fg-color--light: var(--lat-surface-2);
+  --md-primary-fg-color--dark: #000000;
+  --md-primary-bg-color: var(--lat-fg);
+  --md-primary-bg-color--light: var(--lat-fg-muted);
+}
+
+.md-header {
+  border-bottom: 1px solid var(--lat-border);
+}
+
+.md-header__topic:first-child {
+  color: var(--lat-lime);
+  font-weight: 700;
+}
+
+/* ---- Dark scheme (default) ---------------------------------------------- */
+[data-md-color-scheme="latitude-dark"] {
+  --md-hue: 60;
+  --md-default-bg-color: var(--lat-black);
+  --md-default-bg-color--light: var(--lat-surface);
+  --md-default-bg-color--lighter: var(--lat-surface-2);
+  --md-default-bg-color--lightest: var(--lat-border);
+
+  --md-default-fg-color: var(--lat-fg);
+  --md-default-fg-color--light: #d4d7dc;
+  --md-default-fg-color--lighter: var(--lat-fg-muted);
+  --md-default-fg-color--lightest: var(--lat-border);
+
+  --md-accent-fg-color: var(--lat-lime);
+  --md-accent-fg-color--transparent: rgba(224, 254, 86, 0.1);
+  --md-accent-bg-color: var(--lat-black);
+  --md-accent-bg-color--light: var(--lat-black);
+
+  --md-typeset-color: var(--lat-fg);
+  --md-typeset-a-color: var(--lat-lime);
+  --md-typeset-mark-color: rgba(224, 254, 86, 0.3);
+  --md-typeset-kbd-color: var(--lat-surface-2);
+  --md-typeset-kbd-accent-color: var(--lat-border);
+  --md-typeset-kbd-border-color: var(--lat-border);
+  --md-typeset-table-color: var(--lat-border);
+  --md-typeset-table-color--light: rgba(255, 255, 255, 0.035);
+
+  --md-code-bg-color: var(--lat-surface);
+  --md-code-fg-color: #e6e8eb;
+  --md-code-hl-color: rgba(224, 254, 86, 0.15);
+  --md-code-hl-color--light: rgba(224, 254, 86, 0.08);
+  --md-code-hl-number-color: #ffa978;
+  --md-code-hl-special-color: #f285b8;
+  --md-code-hl-function-color: #caaef5;
+  --md-code-hl-constant-color: #caaef5;
+  --md-code-hl-keyword-color: #76c6ff;
+  --md-code-hl-string-color: var(--lat-lime);
+  --md-code-hl-name-color: var(--md-code-fg-color);
+  --md-code-hl-operator-color: var(--lat-fg-muted);
+  --md-code-hl-punctuation-color: var(--lat-fg-muted);
+  --md-code-hl-comment-color: #7c7f85;
+  --md-code-hl-generic-color: var(--lat-fg-muted);
+  --md-code-hl-variable-color: #ffa978;
+
+  --md-admonition-fg-color: var(--lat-fg);
+  --md-admonition-bg-color: var(--lat-surface);
+  --md-footer-bg-color: var(--lat-black);
+  --md-footer-bg-color--dark: #000000;
+  --md-footer-fg-color: var(--lat-fg);
+  --md-footer-fg-color--light: var(--lat-fg-muted);
+  --md-footer-fg-color--lighter: #7c7f85;
+
+  color-scheme: dark;
+}
+
+[data-md-color-scheme="latitude-dark"] .md-typeset a:hover {
+  color: #ebff8d;
+}
+
+[data-md-color-scheme="latitude-dark"] .md-typeset code {
+  border: 1px solid var(--lat-border);
+}
+
+[data-md-color-scheme="latitude-dark"] .md-typeset pre > code {
+  border: 1px solid var(--lat-border);
+}
+
+[data-md-color-scheme="latitude-dark"] .md-search__form {
+  background-color: var(--lat-surface-2);
+}
+
+[data-md-color-scheme="latitude-dark"] .md-nav__item .md-nav__link--active,
+[data-md-color-scheme="latitude-dark"] .md-nav__link[for]:focus,
+[data-md-color-scheme="latitude-dark"] .md-nav__link:hover {
+  color: var(--lat-lime);
+}
+
+/* ---- Light scheme -------------------------------------------------------- */
+[data-md-color-scheme="latitude-light"] {
+  --md-default-bg-color: var(--lat-light-bg);
+  --md-default-bg-color--light: #f1f1f1;
+  --md-default-bg-color--lighter: #ebebeb;
+  --md-default-bg-color--lightest: var(--lat-light-border);
+
+  --md-default-fg-color: var(--lat-light-fg);
+  --md-default-fg-color--light: #3f4451;
+  --md-default-fg-color--lighter: #6b7280;
+  --md-default-fg-color--lightest: var(--lat-light-border);
+
+  --md-accent-fg-color: var(--lat-olive);
+  --md-accent-fg-color--transparent: rgba(224, 254, 86, 0.35);
+
+  --md-typeset-color: var(--lat-light-fg);
+  --md-typeset-a-color: var(--lat-olive);
+  --md-typeset-mark-color: rgba(224, 254, 86, 0.6);
+  --md-typeset-table-color: var(--lat-light-border);
+
+  --md-code-bg-color: #f0f0ee;
+  --md-code-fg-color: #1f2328;
+  --md-code-hl-string-color: #4d7a00;
+  --md-code-hl-keyword-color: var(--lat-olive);
+
+  --md-admonition-bg-color: #ffffff;
+  --md-footer-bg-color: var(--lat-black);
+  --md-footer-bg-color--dark: #000000;
+}
+
+[data-md-color-scheme="latitude-light"] .md-typeset code {
+  border: 1px solid var(--lat-light-border);
+}
+
+/* Light mode: the same lime hue, darkened to olive so it reads on white */
+[data-md-color-scheme="latitude-light"] .md-typeset a:hover {
+  color: var(--lat-olive-bright);
+}
+
+[data-md-color-scheme="latitude-light"] .md-nav__item .md-nav__link--active,
+[data-md-color-scheme="latitude-light"] .md-nav__link[for]:focus,
+[data-md-color-scheme="latitude-light"] .md-nav__link:hover {
+  color: var(--lat-olive);
+}
+
+/* ---- Shared touches ------------------------------------------------------ */
+
+/* Lime for the "tip" callouts */
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
+  border-color: var(--lat-lime-dim);
+}
+.md-typeset .tip > .admonition-title,
+.md-typeset .tip > summary {
+  background-color: rgba(224, 254, 86, 0.14);
+}
+.md-typeset .tip > .admonition-title::before,
+.md-typeset .tip > summary::before {
+  background-color: var(--lat-lime-dim);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .tip > .admonition-title::before,
+[data-md-color-scheme="latitude-dark"] .md-typeset .tip > summary::before {
+  background-color: var(--lat-lime);
+}
+
+
+/* Headings: tighter, like latitude.sh */
+.md-typeset h1 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--md-default-fg-color);
+}
+.md-typeset h2 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--md-default-fg-color);
+}
+
+/* Selection in lime */
+::selection {
+  background: rgba(224, 254, 86, 0.45);
+  color: #000;
+}
+
+/* Mermaid diagrams: let the theme pick colors, but keep labels readable */
+.md-typeset .mermaid {
+  text-align: center;
+}
+
+/* ---- Mermaid diagrams in the Latitude palette ---------------------------
+   Material maps these variables onto the flowchart: node fill and border,
+   edge lines, and the label text. Lime nodes with black text in light mode,
+   lime borders on dark surfaces in dark mode. */
+[data-md-color-scheme="latitude-light"] {
+  --md-mermaid-font-family: var(--md-text-font-family);
+  --md-mermaid-node-bg-color: rgba(224, 254, 86, 0.45);
+  --md-mermaid-node-fg-color: var(--lat-lime-dim);
+  --md-mermaid-edge-color: #3f4451;
+  --md-mermaid-label-bg-color: var(--lat-light-bg);
+  --md-mermaid-label-fg-color: var(--lat-light-fg);
+}
+[data-md-color-scheme="latitude-dark"] {
+  --md-mermaid-font-family: var(--md-text-font-family);
+  --md-mermaid-node-bg-color: rgba(224, 254, 86, 0.12);
+  --md-mermaid-node-fg-color: var(--lat-lime);
+  --md-mermaid-edge-color: #a1a5ab;
+  --md-mermaid-label-bg-color: var(--lat-black);
+  --md-mermaid-label-fg-color: var(--lat-fg);
+}
+/* Subgraph boxes. Material renders the diagram in a shadow DOM and fills the
+   cluster with these two global variables, so override them on the host only. */
+[data-md-color-scheme="latitude-light"] .md-typeset .mermaid {
+  --md-default-fg-color--lightest: #efefed;
+  --md-default-fg-color--lighter: #c9c9c4;
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .mermaid {
+  --md-default-fg-color--lightest: var(--lat-surface);
+  --md-default-fg-color--lighter: var(--lat-border);
+}

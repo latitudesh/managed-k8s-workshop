@@ -9,6 +9,27 @@ copyright: Latitude.sh
 theme:
   name: material
   language: en
+  logo: assets/logo-white.svg
+  favicon: assets/logo.svg
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    # Dark is the default, like latitude.sh
+    - media: "(prefers-color-scheme: dark)"
+      scheme: latitude-dark
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: latitude-light
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
   features:
     - navigation.footer
     - navigation.top
@@ -20,6 +41,21 @@ theme:
     - search.highlight
     - content.code.copy
     - content.action.edit
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/latitudesh
+      name: Latitude.sh on GitHub
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/latitudesh
+      name: Latitude.sh on X
+    - icon: fontawesome/solid/globe
+      link: https://www.latitude.sh
+      name: latitude.sh
 
 markdown_extensions:
   - admonition
