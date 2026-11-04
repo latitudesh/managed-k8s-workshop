@@ -6,6 +6,9 @@ When you click "Create Cluster" on a managed Kubernetes platform, like [LKS](htt
 
 This workshop shows what's behind that button. You'll build the same pieces a provider might run, step by step, and hit the same problems they had to solve.
 
+!!! tip "New to Latitude.sh?"
+    Read [What is Latitude.sh?](latitude.md) first. It explains the company, what LKS is, and how each piece of LKS maps to a step of this workshop.
+
 ## What you'll build
 
 ```mermaid
