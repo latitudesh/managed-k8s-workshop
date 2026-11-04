@@ -71,6 +71,14 @@ Install the following tools:
 
 Give Docker at least **4 CPUs, 8 GB of RAM and 20 GB of disk**. You'll run 5 Kubernetes nodes as containers: 3 for `mgmt` and 2 tenant workers.
 
+## Get the workshop files
+
+Clone this repository and enter the folder. Every command in the workshop runs from here, because the manifests are referenced by relative path:
+```
+git clone https://github.com/latitudesh/managed-k8s-workshop.git
+cd managed-k8s-workshop
+```
+
 ## Create the kind cluster (mgmt)
 
 This is the provider's **management cluster**. Customers never see it, and it hosts their control planes. It has 1 control plane node and 2 workers, which gives the tenant control plane Pods and the etcd datastore room to spread out, like a small provider fleet.
