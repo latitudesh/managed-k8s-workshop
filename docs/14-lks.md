@@ -2,6 +2,8 @@
 
 kind is great to learn, but everything runs on your laptop. Now let's do it with real infrastructure: an [LKS](https://www.latitude.sh/docs/lks) cluster as the management cluster, and a bare metal server as the worker node.
 
+Nothing from the kind setup is needed here. If you haven't done the [clean-up](13-clean-up.md) yet, do it first: this step reuses the `kmgmt` and `kta` aliases and the `tenant-a.kubeconfig` file, and it's easier when only one `tenant-a` exists.
+
 What's different from the kind setup:
 
 - **Management cluster**: an LKS cluster with 3 worker nodes, instead of kind.
