@@ -51,13 +51,13 @@ You'll use one kubeconfig for each, so always check which cluster you're talking
 
 ## What we'll do
 
-1. [Create the management cluster](#3-create-the-kind-cluster-mgmt) and [install the platform](#5-install-helm-packages): cert-manager, Kamaji and etcd.
-2. [Create a hosted control plane](#6-create-your-first-hosted-control-plane-tenant-a) for `tenant-a` and look at what's inside it.
-3. [Join a worker node](#7-join-a-worker-node) and install a CNI.
-4. [Simulate a real provider network](#8-simulating-a-real-world-managed-kubernetes-network) and [watch `kubectl logs` and `kubectl exec` break](#9-lets-run-a-workload).
-5. [Fix them with Konnectivity](#10-fix-with-konnectivity).
-6. [Upgrade Kubernetes](#11-upgrade-kubernetes) the way providers do: control plane in place, workers by replacement.
-7. [Bonus: run it on LKS](#13-bonus-run-it-on-lks), with real infrastructure.
+- [Create the management cluster](#3-create-the-kind-cluster-mgmt) and [install the platform](#5-install-helm-packages): cert-manager, Kamaji and etcd.
+- [Create a hosted control plane](#6-create-your-first-hosted-control-plane-tenant-a) for `tenant-a` and look at what's inside it.
+- [Join a worker node](#7-join-a-worker-node) and install a CNI.
+- [Simulate a real provider network](#8-simulating-a-real-world-managed-kubernetes-network) and [watch `kubectl logs` and `kubectl exec` break](#9-lets-run-a-workload).
+- [Fix them with Konnectivity](#10-fix-with-konnectivity).
+- [Upgrade Kubernetes](#11-upgrade-kubernetes) the way providers do: control plane in place, workers by replacement.
+- [Bonus: run it on LKS](#13-bonus-run-it-on-lks), with real infrastructure.
 
 ## 1. Prerequisites
 
