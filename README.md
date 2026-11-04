@@ -51,15 +51,15 @@ You'll use one kubeconfig for each, so always check which cluster you're talking
 
 ## What we'll do
 
-1. [Create the management cluster](#create-the-kind-cluster-mgmt) and [install the platform](#install-helm-packages): cert-manager, Kamaji and etcd.
-2. [Create a hosted control plane](#create-your-first-hosted-control-plane-tenant-a) for `tenant-a` and look at what's inside it.
-3. [Join a worker node](#join-a-worker-node) and install a CNI.
-4. [Simulate a real provider network](#simulating-a-real-world-managed-kubernetes-network) and [watch `kubectl logs` and `kubectl exec` break](#lets-run-a-workload).
-5. [Fix them with Konnectivity](#fix-with-konnectivity).
-6. [Upgrade Kubernetes](#upgrade-kubernetes) the way providers do: control plane in place, workers by replacement.
-7. [Bonus: run it on LKS](#bonus-run-it-on-lks), with real infrastructure.
+1. [Create the management cluster](#3-create-the-kind-cluster-mgmt) and [install the platform](#5-install-helm-packages): cert-manager, Kamaji and etcd.
+2. [Create a hosted control plane](#6-create-your-first-hosted-control-plane-tenant-a) for `tenant-a` and look at what's inside it.
+3. [Join a worker node](#7-join-a-worker-node) and install a CNI.
+4. [Simulate a real provider network](#8-simulating-a-real-world-managed-kubernetes-network) and [watch `kubectl logs` and `kubectl exec` break](#9-lets-run-a-workload).
+5. [Fix them with Konnectivity](#10-fix-with-konnectivity).
+6. [Upgrade Kubernetes](#11-upgrade-kubernetes) the way providers do: control plane in place, workers by replacement.
+7. [Bonus: run it on LKS](#13-bonus-run-it-on-lks), with real infrastructure.
 
-## Prerequisites
+## 1. Prerequisites
 
 Install the following tools:
 
@@ -71,7 +71,7 @@ Install the following tools:
 
 Give Docker at least **4 CPUs, 8 GB of RAM and 20 GB of disk**. You'll run 5 Kubernetes nodes as containers: 3 for `mgmt` and 2 tenant workers.
 
-## Get the workshop files
+## 2. Get the workshop files
 
 Clone this repository and enter the folder. Every command in the workshop runs from here, because the manifests are referenced by relative path:
 ```
@@ -79,7 +79,7 @@ git clone https://github.com/latitudesh/managed-k8s-workshop.git
 cd managed-k8s-workshop
 ```
 
-## Create the kind cluster (mgmt)
+## 3. Create the kind cluster (mgmt)
 
 This is the provider's **management cluster**. Customers never see it, and it hosts their control planes. It has 1 control plane node and 2 workers, which gives the tenant control plane Pods and the etcd datastore room to spread out, like a small provider fleet.
 
@@ -106,7 +106,7 @@ mgmt-worker          Ready    <none>          20s   v1.36.4
 mgmt-worker2         Ready    <none>          20s   v1.36.4
 ```
 
-## Start cloud-provider-kind
+## 4. Start cloud-provider-kind
 
 On a cloud, a `LoadBalancer` Service gets a real load balancer and an external IP. kind has no cloud, so these Services stay `<pending>` forever. `cloud-provider-kind` fills the gap: it watches for `LoadBalancer` Services and starts an Envoy container on the `kind` Docker network for each one, with its own IP.
 
@@ -126,7 +126,7 @@ cloud-provider-kind
 
 > 💡 **Why `sudo` on macOS?** On macOS, Docker runs inside a VM, so container IPs aren't reachable from your machine. `cloud-provider-kind` works around this with port mappings on the host, which needs extra privileges.
 
-## Install Helm packages
+## 5. Install Helm packages
 
 Next, install the platform the provider runs on the management cluster.
 
@@ -139,7 +139,7 @@ helm repo add clastix https://clastix.github.io/charts
 helm repo update
 ```
 
-### cert-manager
+### 5.1 cert-manager
 
 cert-manager issues and renews the platform's own certificates: TLS for Kamaji's admission webhooks, and the CA, server, peer and client certificates of the etcd datastore.
 
@@ -156,7 +156,7 @@ helm upgrade --install cert-manager jetstack/cert-manager \
   --wait
 ```
 
-### Kamaji
+### 5.2 Kamaji
 
 Kamaji is the operator that turns the management cluster into a provider. It adds a `TenantControlPlane` resource: you declare a cluster (version, replicas, how to expose it), and Kamaji runs its control plane as a Deployment in `mgmt`.
 
@@ -213,7 +213,7 @@ Status:
   Ready:  true
 ```
 
-## Create your first hosted control plane (tenant-a)
+## 6. Create your first hosted control plane (tenant-a)
 
 This is the "Create Cluster" button. One `TenantControlPlane` resource becomes a full Kubernetes control plane, running as ordinary Pods in `mgmt`. No VMs to boot and no control plane nodes to manage.
 
@@ -249,7 +249,7 @@ tenant-a   v1.36.4   v1.36.4             Ready    172.18.0.5:6443          tenan
 - `CONTROL-PLANE ENDPOINT`: the IP `cloud-provider-kind` gave the `LoadBalancer` Service.
 - `KUBECONFIG`: the Secret with the admin credentials.
 
-### What Kamaji created
+### 6.1 What Kamaji created
 
 ```
 kmgmt -n tenant-a get deploy,pods,svc,secrets
@@ -321,7 +321,7 @@ kmgmt -n tenant-a get deploy tenant-a -o yaml | grep -E -- '--etcd'
 - `--etcd-servers`: the shared etcd, from the `default` DataStore.
 - `--etcd-prefix`: every key `tenant-a` writes lives under its own UUID. That's how one etcd serves many clusters.
 
-### Connect to tenant-a
+### 6.2 Connect to tenant-a
 
 Get the `tenant-a`'s kubeconfig:
 ```
@@ -375,14 +375,14 @@ kube-public       Active   20s
 kube-system       Active   20s
 ```
 
-### Export helpful variables
+### 6.3 Export helpful variables
 
 Save the API server IP. You'll need it to join nodes and to configure Cilium:
 ```
 export TENANT_A_APISERVER_IP=$(kmgmt -n tenant-a get svc tenant-a -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
 
-## Join a worker node
+## 7. Join a worker node
 
 On a managed provider, adding a node pool means booting machines in your network that join the hosted control plane. Here, a worker node is a Docker container running the `kindest/node` image, the same image kind uses for its own nodes. It comes with containerd, kubelet and kubeadm preinstalled.
 
@@ -420,7 +420,7 @@ docker exec -ti tenant-a-worker-1 curl -k "https://$TENANT_A_APISERVER_IP:6443"
 
 A `403` is good news: the network path works and TLS works. The API server just doesn't know who we are yet.
 
-### Bootstrap the node
+### 7.1 Bootstrap the node
 
 Copy the control plane's kubeconfig into the worker node:
 ```
@@ -481,7 +481,7 @@ kube-system   coredns-695c5d47b8-ndv5c   0/1     Pending   0          12m
 kube-system   coredns-695c5d47b8-twmks   0/1     Pending   0          12m
 ```
 
-### Install a CNI
+### 7.2 Install a CNI
 
 The CNI runs on the worker nodes, on the customer's side of the cluster. We use Cilium, which also replaces kube-proxy (that's why `kubeProxy` is disabled in `tenant-a.yaml`).
 
@@ -527,7 +527,7 @@ kube-system   coredns-695c5d47b8-twmks           1/1     Running   0          20
 - `cilium-operator-*`: cluster-wide housekeeping for Cilium.
 - `coredns-*`: finally `Running`, now that the node has a network.
 
-## Simulating a real world managed Kubernetes network
+## 8. Simulating a real world managed Kubernetes network
 
 So far everything lives on the same Docker network, so the control plane can reach the worker node directly. That's not how a managed provider works. The control plane runs in the provider's network, and your nodes run in yours. Nodes can reach the API server through its public endpoint, but the API server can't open connections into your network.
 
@@ -569,7 +569,7 @@ DROP       tcp  --  172.18.0.3           0.0.0.0/0            tcp dpt:10250
 
 > 💡 **Why block the `mgmt` node IPs, not the API server Pods?** Traffic leaving a Pod for an address outside the cluster is translated to its node's IP. From the worker's point of view, the API server calls come from the `mgmt` nodes.
 
-## Let's run a workload
+## 9. Let's run a workload
 
 Create a Deployment:
 ```
@@ -617,7 +617,7 @@ error: unable to upgrade connection: error dialing backend: dial tcp 172.18.0.6:
 - `dial tcp 172.18.0.6:10250`: the API server tried to open a connection to the kubelet on the worker node.
 - `i/o timeout`: our iptables rule dropped it.
 
-## Fix with Konnectivity
+## 10. Fix with Konnectivity
 
 The API server can't reach into the customer network, but the nodes can reach out. So turn the connection around: something on the node dials **out** to the control plane and keeps a tunnel open, and the API server sends its kubelet traffic back through it. That's [Konnectivity](https://kubernetes.io/docs/tasks/extend-kubernetes/setup-konnectivity/), the Kubernetes project for exactly this problem.
 
@@ -710,11 +710,11 @@ kta exec deploy/web -- hostname
 web-795767664d-sl6tx
 ```
 
-## Upgrade Kubernetes
+## 11. Upgrade Kubernetes
 
 Managed providers upgrade a cluster in two steps: the control plane first, then the worker nodes. The order matters. Kubernetes allows the kubelet to be older than the API server, but never newer (see the [version skew policy](https://kubernetes.io/releases/version-skew-policy/)).
 
-### Upgrade the control plane
+### 11.1 Upgrade the control plane
 
 In a second terminal, keep an eye on the `tenant-a` control plane Pods:
 ```
@@ -786,7 +786,7 @@ web-795767664d-c4xkh   1/1     Running   0          15m
 web-795767664d-sl6tx   1/1     Running   0          15m
 ```
 
-### Upgrade the worker node
+### 11.2 Upgrade the worker node
 
 Managed providers usually don't upgrade nodes in place. They add a new node with the new version, move the workloads, and remove the old one. Every node starts from a clean image, and if something goes wrong, the old node is still there.
 
@@ -860,7 +860,7 @@ kube-system   konnectivity-agent-kq2wr           1/1     Running   0          69
 
 The cluster is fully on `v1.37.0`, and the workload kept running the whole time.
 
-## Clean up
+## 12. Clean up
 
 Delete the kind cluster. This removes the management cluster, and with it the `tenant-a` control plane and its state in etcd:
 ```
@@ -879,7 +879,7 @@ Delete the kubeconfig files:
 rm -f mgmt.kubeconfig tenant-a.kubeconfig
 ```
 
-## Bonus: run it on LKS
+## 13. Bonus: run it on LKS
 
 kind is great to learn, but everything runs on your laptop. Now let's do it with real infrastructure: an [LKS](https://www.latitude.sh/docs/lks) cluster as the management cluster, and a bare metal server as the worker node.
 
@@ -896,7 +896,7 @@ You need:
 - A Latitude.sh bare metal server running Ubuntu 24.04, that you can SSH into.
 - `kubectl` and `helm` on your machine.
 
-### Management cluster on LKS
+### 13.1 Management cluster on LKS
 
 Grab the kubeconfig of your LKS cluster from the Latitude.sh dashboard and point the `kmgmt` alias to it. That way, every `kmgmt` command from the workshop works as is:
 ```
@@ -912,12 +912,12 @@ kmgmt get storageclass
 
 - `latitude-block (default)`: the 3 `kamaji-etcd` replicas get their volumes from it.
 
-Install cert-manager and Kamaji exactly as in [Install Helm packages](#install-helm-packages), replacing `--kubeconfig mgmt.kubeconfig` with the path to your LKS kubeconfig. Then verify the DataStore:
+Install cert-manager and Kamaji exactly as in [Install Helm packages](#5-install-helm-packages), replacing `--kubeconfig mgmt.kubeconfig` with the path to your LKS kubeconfig. Then verify the DataStore:
 ```
 kmgmt get datastores
 ```
 
-### Hosted control plane on LKS
+### 13.2 Hosted control plane on LKS
 
 The only change to `tenant-a` is the load balancer class. Take a look at [`manifests/tenant-a-lks.yaml`](manifests/tenant-a-lks.yaml):
 
@@ -946,7 +946,7 @@ export TENANT_A_APISERVER_IP=$(kmgmt -n tenant-a get svc tenant-a -o jsonpath='{
 kta version
 ```
 
-### Prepare the worker node
+### 13.3 Prepare the worker node
 
 Save the server's public IP:
 ```
@@ -1038,7 +1038,7 @@ curl -k https://<TENANT_A_APISERVER_IP>:6443
 
 - `403 Forbidden`: good news, as before. The network path and TLS work.
 
-### Join the worker node
+### 13.4 Join the worker node
 
 From your machine, copy the `tenant-a` kubeconfig to the server:
 ```
@@ -1058,22 +1058,22 @@ Back on your machine, the node joins as `NotReady`, as before:
 kta get nodes
 ```
 
-Install Cilium exactly as in [Install a CNI](#install-a-cni), then wait for the node to become `Ready`:
+Install Cilium exactly as in [Install a CNI](#72-install-a-cni), then wait for the node to become `Ready`:
 ```
 kta get nodes -w
 ```
 
-### Next steps
+### 13.5 Next steps
 
 Your hosted control plane now runs on LKS with a bare metal worker node. Now go on your own adventure! You might want to:
 
-- [Run a workload](#lets-run-a-workload) and call its NodePort over SSH.
-- Block the LKS nodes from reaching the kubelet port, like in [Simulating a real world managed Kubernetes network](#simulating-a-real-world-managed-kubernetes-network), and watch `logs` and `exec` break.
-- [Enable Konnectivity](#fix-with-konnectivity) to fix them.
-- [Upgrade the control plane](#upgrade-the-control-plane) to `v1.37.0`.
+- [Run a workload](#9-lets-run-a-workload) and call its NodePort over SSH.
+- Block the LKS nodes from reaching the kubelet port, like in [Simulating a real world managed Kubernetes network](#8-simulating-a-real-world-managed-kubernetes-network), and watch `logs` and `exec` break.
+- [Enable Konnectivity](#10-fix-with-konnectivity) to fix them.
+- [Upgrade the control plane](#111-upgrade-the-control-plane) to `v1.37.0`.
 - Create a `tenant-b` and run two hosted control planes on the same LKS cluster.
 
-### Clean up LKS
+### 13.6 Clean up LKS
 
 Delete `tenant-a`. This deletes its Service and releases the Elastic IP:
 ```
