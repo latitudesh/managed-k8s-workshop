@@ -84,13 +84,6 @@ Keep the fix itself in `docs/troubleshooting.md` and leave only the symptom and 
 
 **Diagrams.** Use a `mermaid` block. The theme renders it in both color schemes.
 
-## Publishing (TODO)
+## Publishing
 
-Not live yet, because the repository is still internal: GitHub Pages on an internal repository only opens for members of the Latitude.sh enterprise, and the workshop audience is outside it.
-
-`.github/workflows/docs.yml` is already in place. It builds the site and deploys it to GitHub Pages on every push to `main`. What's left, in the repository settings:
-
-- [ ] Make the repository public.
-- [ ] Enable Pages with the source set to **GitHub Actions** (Settings, Pages, Build and deployment).
-
-Once both are done, the site is at https://latitudesh.github.io/managed-k8s-workshop/ and the workflow can also be started by hand from the Actions tab.
+Pushing to `main` runs `.github/workflows/docs.yml`, which builds the site and deploys it to GitHub Pages at https://latitudesh.github.io/managed-k8s-workshop/. The workflow can also be started by hand from the Actions tab.
