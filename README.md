@@ -128,6 +128,8 @@ cloud-provider-kind
 
 > 💡 **Why `sudo` on macOS?** On macOS, Docker runs inside a VM, so container IPs aren't reachable from your machine. `cloud-provider-kind` works around this with port mappings on the host, which needs extra privileges.
 
+> ⚠️ **macOS firewall.** If macOS asks whether `cloud-provider-kind` can accept incoming network connections, click **Allow**. With the firewall on and the answer set to block, the load balancer addresses won't work from your machine. See [6.2 Connect to tenant-a](#62-connect-to-tenant-a) if that happens.
+
 ## 5. Install Helm packages
 
 Next, install the platform the provider runs on the management cluster.
@@ -357,6 +359,33 @@ Client Version: v1.36.2
 Kustomize Version: v5.8.1
 Server Version: v1.36.4
 ```
+
+<details>
+<summary><code>connection reset by peer</code> on <code>172.18.0.5:6443</code>? (macOS)</summary>
+
+On macOS, `cloud-provider-kind` gives your machine the load balancer IP as an alias on the loopback interface, and runs a small tunnel on `172.18.0.5:6443` that forwards to the Envoy container. The macOS firewall treats that tunnel as an incoming connection to `cloud-provider-kind`. If the firewall is on and the app is set to block, the TCP connection opens and is reset right away, with nothing in the `cloud-provider-kind` logs.
+
+Check the rule:
+```
+/usr/libexec/ApplicationFirewall/socketfilterfw --listapps | grep -A1 cloud-provider-kind
+
+/opt/homebrew/Cellar/cloud-provider-kind/0.12.0/bin/cloud-provider-kind
+             (Block incoming connections)
+```
+
+Allow it in System Settings, under Network, Firewall, Options, switching `cloud-provider-kind` to **Allow incoming connections**, or from the terminal:
+```
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp /opt/homebrew/Cellar/cloud-provider-kind/0.12.0/bin/cloud-provider-kind
+```
+
+On a company-managed Mac, both can be locked by a profile. In that case, skip the tunnel: only `kubectl` on your machine goes through it, the containers reach the load balancer directly on the `kind` network. Point the alias at the port Docker mapped for the Envoy container. The port changes whenever `cloud-provider-kind` recreates the container, so look it up on every call:
+```
+alias kta='kubectl --kubeconfig tenant-a.kubeconfig --server https://127.0.0.1:$(docker port $(docker ps -q --filter name=kindccm) 6443/tcp | head -1 | cut -d: -f2)'
+```
+
+The API server certificate includes `127.0.0.1`, so TLS verification still works. Everything else in the workshop stays the same, including `TENANT_A_APISERVER_IP`, which the worker node uses from inside the Docker network.
+
+</details>
 
 It looks like any other cluster, but something is missing:
 ```
