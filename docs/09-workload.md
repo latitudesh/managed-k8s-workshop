@@ -5,7 +5,7 @@ Create a Deployment:
 kta create deployment web --image=nginx:1.29 --replicas=2
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 deployment.apps/web created
 ```
 
@@ -14,7 +14,7 @@ Expose it with a NodePort Service:
 kta create service nodeport web --tcp=80:80 --node-port=30080
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 service/web created
 ```
 
@@ -23,7 +23,7 @@ Call it from the worker node:
 docker exec tenant-a-worker-1 curl http://localhost:30080 --retry 10 --retry-all-errors --retry-delay 2
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 [...]
 <p><em>Thank you for using nginx.</em></p>
 [...]
@@ -36,7 +36,7 @@ Logs fail :(
 kta logs deploy/web -f --request-timeout 5s
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 Found 2 pods, using pod/web-795767664d-sl6tx
 Get "https://172.18.0.5:6443/api/v1/namespaces/default/pods/web-795767664d-sl6tx/log?container=nginx&follow=true&timeout=5s": context deadline exceeded
 Unable to connect to the server: context deadline exceeded
@@ -49,7 +49,7 @@ Exec too (it takes about a minute to fail):
 kta exec deploy/web -- hostname
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 error: unable to upgrade connection: error dialing backend: dial tcp 172.18.0.6:10250: i/o timeout
 ```
 

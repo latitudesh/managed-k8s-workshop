@@ -24,7 +24,7 @@ Verify the Sveltos Pods:
 kmgmt -n projectsveltos get pods
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                                                  READY   STATUS    RESTARTS   AGE
 access-manager-78fd55564-xh7zz                        1/1     Running   0          74s
 addon-controller-66f6794688-2f89d                     1/1     Running   0          74s
@@ -48,7 +48,7 @@ Sveltos also registered the management cluster itself:
 kmgmt get sveltoscluster -A
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAMESPACE   NAME   READY   VERSION   AGE   SHARD
 mgmt        mgmt   true    v1.36.4   43s
 ```
@@ -66,7 +66,7 @@ Register `tenant-a`:
 kmgmt apply -f manifests/sveltos-tenant-a.yaml
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 sveltoscluster.lib.projectsveltos.io/tenant-a created
 ```
 
@@ -75,7 +75,7 @@ Verify Sveltos can reach it:
 kmgmt get sveltoscluster -A
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAMESPACE   NAME       READY   VERSION   AGE   SHARD
 mgmt        mgmt       true    v1.36.4   63s
 tenant-a    tenant-a   true    v1.37.0   20s
@@ -92,7 +92,7 @@ Nothing landed in `tenant-a`:
 kta get ns
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME              STATUS   AGE
 cilium-secrets    Active   3m19s
 default           Active   12d
@@ -111,7 +111,7 @@ Cilium is still the one you installed by hand. Remove it, so Sveltos can own it:
 helm uninstall cilium --kubeconfig tenant-a.kubeconfig --namespace kube-system
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 release "cilium" uninstalled
 ```
 
@@ -120,7 +120,7 @@ The Cilium Pods are gone:
 kta get pods -A
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAMESPACE     NAME                       READY   STATUS    RESTARTS   AGE
 default       web-795767664d-lq6bc       1/1     Running   0          7d22h
 default       web-795767664d-sz58f       1/1     Running   0          7d22h
@@ -136,7 +136,7 @@ But the node still says `Ready`:
 kta get nodes
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                STATUS   ROLES    AGE     VERSION
 tenant-a-worker-2   Ready    <none>   7d23h   v1.37.0
 ```
@@ -151,7 +151,7 @@ The node goes `NotReady`, for the same reason as before:
 kta get nodes -w
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                STATUS     ROLES    AGE     VERSION
 tenant-a-worker-2   NotReady   <none>   7d23h   v1.37.0
 ```
@@ -160,7 +160,7 @@ tenant-a-worker-2   NotReady   <none>   7d23h   v1.37.0
 kta get node tenant-a-worker-2 -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}'
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized
 ```
 
@@ -173,7 +173,7 @@ The only value that changes from one cluster to another is the API server IP. Re
 sed "s/TENANT_A_APISERVER_IP/$TENANT_A_APISERVER_IP/" manifests/sveltos-cilium.yaml | kmgmt apply -f -
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 clusterprofile.config.projectsveltos.io/cilium created
 ```
 
@@ -182,7 +182,7 @@ Sveltos matched the profile to `tenant-a` through the `cni: cilium` label:
 kmgmt get clusterprofile cilium -o jsonpath='{.status.matchingClusters[*].name}'
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 tenant-a
 ```
 
@@ -191,7 +191,7 @@ For each matching cluster, Sveltos creates a `ClusterSummary`: the state of that
 kmgmt -n tenant-a get clustersummary -o wide -w
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                      AGE   HELMCHARTS     KUSTOMIZEREFS   POLICYREFS
 cilium-sveltos-tenant-a   6s    Provisioning
 cilium-sveltos-tenant-a   10s   Provisioned
@@ -204,7 +204,7 @@ Back in `tenant-a`, the node is `Ready` again:
 kta get nodes
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                STATUS   ROLES    AGE     VERSION
 tenant-a-worker-2   Ready    <none>   7d23h   v1.37.0
 ```
@@ -214,7 +214,7 @@ And the Cilium Pods are back:
 kta -n kube-system get pods
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                               READY   STATUS    RESTARTS   AGE
 cilium-bxtft                       1/1     Running   0          44s
 cilium-envoy-wk6st                 1/1     Running   0          44s
@@ -229,7 +229,7 @@ It's still Helm. Sveltos ran the same install, from `mgmt`, with the kubeconfig 
 helm list --kubeconfig tenant-a.kubeconfig -A
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME  	NAMESPACE  	REVISION	UPDATED                               	STATUS  	CHART        	APP VERSION
 cilium	kube-system	1       	2026-11-04 13:08:34.48236522 +0000 UTC	deployed	cilium-1.20.2	1.20.2
 ```

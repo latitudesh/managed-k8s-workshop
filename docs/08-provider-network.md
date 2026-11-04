@@ -30,7 +30,7 @@ done
 docker exec tenant-a-worker-1 iptables -L INPUT -n | grep 10250
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 DROP       tcp  --  172.18.0.2           0.0.0.0/0            tcp dpt:10250
 DROP       tcp  --  172.18.0.4           0.0.0.0/0            tcp dpt:10250
 DROP       tcp  --  172.18.0.3           0.0.0.0/0            tcp dpt:10250

@@ -22,7 +22,7 @@ Check the rule. The path is the one your install uses; this is what it looks lik
 /usr/libexec/ApplicationFirewall/socketfilterfw --listapps | grep -A1 cloud-provider-kind
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 /opt/homebrew/Cellar/cloud-provider-kind/0.12.0/bin/cloud-provider-kind
              (Block incoming connections)
 ```

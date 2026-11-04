@@ -132,7 +132,7 @@ Verify containerd uses `systemd` cgroups, matching the `cgroupfs: systemd` kubel
 grep SystemdCgroup /etc/containerd/config.toml
 ```
 
-```text
+```{ .text .no-copy title="Output" }
             SystemdCgroup = true
 ```
 

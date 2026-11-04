@@ -21,7 +21,7 @@ Verify the kind cluster:
 kmgmt get nodes
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                 STATUS   ROLES           AGE   VERSION
 mgmt-control-plane   Ready    control-plane   30s   v1.36.4
 mgmt-worker          Ready    <none>          20s   v1.36.4

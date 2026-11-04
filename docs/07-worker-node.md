@@ -16,7 +16,7 @@ Verify it is up and running:
 docker ps | grep tenant-a-worker-1
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 7e47d010be76   kindest/node:v1.36.4            "/usr/local/bin/entr…"   9 seconds ago   Up 5 seconds      tenant-a-worker-1
 ```
 
@@ -25,7 +25,7 @@ Exec into the container and verify it can reach the `tenant-a` `kube-apiserver`:
 docker exec -ti tenant-a-worker-1 curl -k "https://$TENANT_A_APISERVER_IP:6443"
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 {
   "kind": "Status",
   "apiVersion": "v1",
@@ -47,7 +47,7 @@ Copy the control plane's kubeconfig into the worker node:
 docker cp tenant-a.kubeconfig tenant-a-worker-1:/root/tenant.kubeconfig
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 Successfully copied 5.63kB (transferred 7.17kB) to tenant-a-worker-1:/root/tenant.kubeconfig
 ```
 
@@ -60,7 +60,7 @@ JOIN=$(docker exec tenant-a-worker-1 kubeadm token create --print-join-command -
 echo $JOIN
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 kubeadm join 172.18.0.5:6443 --token <redacted> --discovery-token-ca-cert-hash sha256:1f4d615c0a70093910299f4469f0f7e47ab45c9daa15aeb68acf5570dcfae28c
 ```
 
@@ -73,7 +73,7 @@ Run the kubeadm join command:
 docker exec tenant-a-worker-1 sh -c "$JOIN --ignore-preflight-errors=all"
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 [...]
 [kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap
 
@@ -89,7 +89,7 @@ Verify the worker node has joined!
 kta get node
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                STATUS     ROLES    AGE   VERSION
 tenant-a-worker-1   NotReady   <none>   24s   v1.36.4
 ```
@@ -99,7 +99,7 @@ It joined, but it's `NotReady`. Ask the node why:
 kta get node tenant-a-worker-1 -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}'
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized
 ```
 
@@ -108,7 +108,7 @@ Pods are still not running, we need a CNI:
 kta get pod -A
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAMESPACE     NAME                       READY   STATUS    RESTARTS   AGE
 kube-system   coredns-695c5d47b8-ndv5c   0/1     Pending   0          12m
 kube-system   coredns-695c5d47b8-twmks   0/1     Pending   0          12m
@@ -144,7 +144,7 @@ Verify the worker node gets `Ready`:
 kta get nodes -w
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                STATUS   ROLES    AGE    VERSION
 tenant-a-worker-1   Ready    <none>   111s   v1.36.4
 ```
@@ -154,7 +154,7 @@ Verify the Pods are all `Ready`:
 kta get pods -A
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
 kube-system   cilium-envoy-tjn5n                 1/1     Running   0          2m28s
 kube-system   cilium-htbgw                       1/1     Running   0          2m28s

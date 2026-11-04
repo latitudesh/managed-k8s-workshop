@@ -233,6 +233,47 @@
   background-color: #e8752e;
 }
 
+/* ---- Output blocks ---------------------------------------------------------
+   Written as ```{ .text .no-copy title="Output" }: a small "Output" label,
+   no copy button, dimmer text and a dashed border, so they read as a result
+   of the command above, not as something to type. */
+.md-typeset .highlight.no-copy {
+  margin-top: -0.4em;
+}
+.md-typeset .highlight.no-copy > .filename {
+  background-color: transparent;
+  border-bottom: 1px dashed var(--lat-border);
+  color: var(--md-default-fg-color--lighter);
+  font-family: var(--md-text-font-family);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35em 1em;
+}
+.md-typeset .highlight.no-copy > .filename::before {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-right: 0.5em;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  vertical-align: 0.05em;
+}
+.md-typeset .highlight.no-copy > pre > code {
+  border: 1px dashed var(--lat-border);
+  border-top: 0;
+  background-color: transparent;
+  color: var(--md-default-fg-color--light);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .highlight.no-copy > .filename {
+  border-bottom-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .highlight.no-copy > pre > code {
+  border-color: var(--lat-light-border);
+}
+
 /* ---- Mermaid diagrams in the Latitude palette ---------------------------
    Material maps these variables onto the flowchart: node fill and border,
    edge lines, and the label text. Lime nodes with black text in light mode,

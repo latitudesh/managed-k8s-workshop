@@ -58,7 +58,7 @@ Verify Kamaji Pods:
 kmgmt -n kamaji-system get pods
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                      READY   STATUS    RESTARTS   AGE
 kamaji-667f5c4b7c-g6h5p   1/1     Running   0          116s
 kamaji-etcd-0             1/1     Running   0          116s
@@ -73,7 +73,7 @@ Verify the Kamaji DataStores:
 kmgmt get datastores
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME      DRIVER   READY   AGE
 default   etcd     true    2m6s
 ```
@@ -85,7 +85,7 @@ Take a closer look:
 kmgmt describe datastore default
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 [...]
 Spec:
   Driver:  etcd

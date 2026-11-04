@@ -28,7 +28,7 @@ Watch it until it becomes `Ready`. This takes less than a minute:
 kmgmt -n tenant-a get tenantcontrolplane tenant-a -w
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME       VERSION   INSTALLED VERSION   STATUS   CONTROL-PLANE ENDPOINT   KUBECONFIG                  DATASTORE   AGE
 tenant-a   v1.36.4   v1.36.4             Ready    172.18.0.5:6443          tenant-a-admin-kubeconfig   default     35s
 ```
@@ -42,7 +42,7 @@ tenant-a   v1.36.4   v1.36.4             Ready    172.18.0.5:6443          tenan
 kmgmt -n tenant-a get deploy,pods,svc,secrets
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/tenant-a   2/2     2            2           36s
 
@@ -78,7 +78,7 @@ kmgmt -n tenant-a get pods -l kamaji.clastix.io/name=tenant-a \
   -o jsonpath='{range .items[0].spec.containers[*]}{.name}{"\n"}{end}'
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 kube-apiserver
 kube-scheduler
 kube-controller-manager
@@ -95,7 +95,7 @@ Where does the `kube-apiserver` listen?
 kmgmt -n tenant-a get deploy tenant-a -o yaml | grep -E -- '--advertise-address'
 ```
 
-```text
+```{ .text .no-copy title="Output" }
         - --advertise-address=172.18.0.5
 ```
 
@@ -106,7 +106,7 @@ And the `etcd` configuration?
 kmgmt -n tenant-a get deploy tenant-a -o yaml | grep -E -- '--etcd'
 ```
 
-```text
+```{ .text .no-copy title="Output" }
         - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
         - --etcd-certfile=/etc/kubernetes/pki/etcd/server.crt
         - --etcd-compaction-interval=0
@@ -141,7 +141,7 @@ Verify our newly created Kubernetes cluster:
 kta version
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 Client Version: v1.36.2
 Kustomize Version: v5.8.1
 Server Version: v1.36.4
@@ -156,7 +156,7 @@ It looks like any other cluster, but something is missing:
 kta get nodes
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 No resources found
 ```
 
@@ -166,7 +166,7 @@ No nodes at all. The control plane runs in `mgmt`, so it never shows up as a nod
 kta get pods -A
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAMESPACE     NAME                       READY   STATUS    RESTARTS   AGE
 kube-system   coredns-695c5d47b8-ds6rf   0/1     Pending   0          8s
 kube-system   coredns-695c5d47b8-gvq7h   0/1     Pending   0          9s
@@ -178,7 +178,7 @@ CoreDNS (the addon Kamaji installed) is `Pending`: there's nowhere to schedule i
 kta get ns
 ```
 
-```text
+```{ .text .no-copy title="Output" }
 NAME              STATUS   AGE
 default           Active   19s
 kube-node-lease   Active   19s
