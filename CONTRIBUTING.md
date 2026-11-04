@@ -86,4 +86,4 @@ Keep the fix itself in `docs/troubleshooting.md` and leave only the symptom and 
 
 ## Publishing
 
-Pushing to `main` runs `.github/workflows/docs.yml`, which builds the site and deploys it to GitHub Pages at https://latitudesh.github.io/managed-k8s-workshop/. The workflow can also be started by hand from the Actions tab.
+Pushing to `main` runs `.github/workflows/deploy-pages.yml`, which builds the site and deploys it to GitHub Pages at https://latitudesh.github.io/managed-k8s-workshop/. The workflow can also be started by hand from the Actions tab.
