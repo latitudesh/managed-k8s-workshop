@@ -12,13 +12,6 @@ When you click "Create Cluster" on a managed Kubernetes platform, like [LKS](htt
 - `manifests/`: the Kubernetes manifests the workshop applies. Every command runs from the root of this repository and references them by relative path.
 - `mkdocs.yml`: the site configuration ([MkDocs](https://www.mkdocs.org/) with the [Material](https://squidfunk.github.io/mkdocs-material/) theme).
 
-## Run the site locally
+## Contributing
 
-```
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-mkdocs serve
-```
-
-Open http://127.0.0.1:8000/managed-k8s-workshop/. The site reloads when you edit anything under `docs/`.
+To run the site locally and learn the writing conventions, see [CONTRIBUTING.md](CONTRIBUTING.md).
