@@ -385,7 +385,7 @@ Server Version: v1.36.4
 
 On macOS, `cloud-provider-kind` gives your machine the load balancer IP as an alias on the loopback interface, and runs a small tunnel on `172.18.0.5:6443` that forwards to the Envoy container. The macOS firewall treats that tunnel as an incoming connection to `cloud-provider-kind`. If the firewall is on and the app is set to block, the TCP connection opens and is reset right away, with nothing in the `cloud-provider-kind` logs.
 
-Check the rule:
+Check the rule. The path is the one your install uses; this is what it looks like with Homebrew on Apple silicon:
 ```
 /usr/libexec/ApplicationFirewall/socketfilterfw --listapps | grep -A1 cloud-provider-kind
 ```
@@ -395,9 +395,9 @@ Check the rule:
              (Block incoming connections)
 ```
 
-Allow it in System Settings, under Network, Firewall, Options, switching `cloud-provider-kind` to **Allow incoming connections**, or from the terminal:
+Allow it in System Settings, under Network, Firewall, Options, switching `cloud-provider-kind` to **Allow incoming connections**, or from the terminal. `realpath` follows the Homebrew symlink to the binary the firewall registered:
 ```
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp /opt/homebrew/Cellar/cloud-provider-kind/0.12.0/bin/cloud-provider-kind
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp "$(realpath "$(command -v cloud-provider-kind)")"
 ```
 
 On a company-managed Mac, both can be locked by a profile. In that case, skip the tunnel: only `kubectl` on your machine goes through it, the containers reach the load balancer directly on the `kind` network. Point the alias at the port Docker mapped for the Envoy container. The port changes whenever `cloud-provider-kind` recreates the container, so look it up on every call:
