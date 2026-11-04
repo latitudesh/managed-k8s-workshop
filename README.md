@@ -101,7 +101,9 @@ alias kmgmt='kubectl --kubeconfig mgmt.kubeconfig'
 Verify the kind cluster:
 ```
 kmgmt get nodes
+```
 
+```
 NAME                 STATUS   ROLES           AGE   VERSION
 mgmt-control-plane   Ready    control-plane   30s   v1.36.4
 mgmt-worker          Ready    <none>          20s   v1.36.4
@@ -191,7 +193,9 @@ helm upgrade --install kamaji clastix/kamaji \
 Verify Kamaji Pods:
 ```
 kmgmt -n kamaji-system get pods
+```
 
+```
 NAME                      READY   STATUS    RESTARTS   AGE
 kamaji-667f5c4b7c-g6h5p   1/1     Running   0          116s
 kamaji-etcd-0             1/1     Running   0          116s
@@ -204,7 +208,9 @@ You should see the Kamaji controller and 3 `kamaji-etcd` Pods, all `Running`.
 Verify the Kamaji DataStores:
 ```
 kmgmt get datastores
+```
 
+```
 NAME      DRIVER   READY   AGE
 default   etcd     true    2m6s
 ```
@@ -214,7 +220,9 @@ A **DataStore** is a cluster-scoped resource that tells Kamaji where tenant cont
 Take a closer look:
 ```
 kmgmt describe datastore default
+```
 
+```
 [...]
 Spec:
   Driver:  etcd
@@ -255,7 +263,9 @@ kmgmt apply -f manifests/tenant-a.yaml
 Watch it until it becomes `Ready`. This takes less than a minute:
 ```
 kmgmt -n tenant-a get tenantcontrolplane tenant-a -w
+```
 
+```
 NAME       VERSION   INSTALLED VERSION   STATUS   CONTROL-PLANE ENDPOINT   KUBECONFIG                  DATASTORE   AGE
 tenant-a   v1.36.4   v1.36.4             Ready    172.18.0.5:6443          tenant-a-admin-kubeconfig   default     35s
 ```
@@ -267,7 +277,9 @@ tenant-a   v1.36.4   v1.36.4             Ready    172.18.0.5:6443          tenan
 
 ```
 kmgmt -n tenant-a get deploy,pods,svc,secrets
+```
 
+```
 NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/tenant-a   2/2     2            2           36s
 
@@ -301,7 +313,9 @@ The Pods run our known Kubernetes components as containers!
 ```
 kmgmt -n tenant-a get pods -l kamaji.clastix.io/name=tenant-a \
   -o jsonpath='{range .items[0].spec.containers[*]}{.name}{"\n"}{end}'
+```
 
+```
 kube-apiserver
 kube-scheduler
 kube-controller-manager
@@ -314,7 +328,9 @@ kube-controller-manager
 Where does the `kube-apiserver` listen?
 ```
 kmgmt -n tenant-a get deploy tenant-a -o yaml | grep -E -- '--advertise-address'
+```
 
+```
         - --advertise-address=172.18.0.5
 ```
 
@@ -323,7 +339,9 @@ It advertises the load balancer IP, not the Pod IP. That's the address nodes and
 And the `etcd` configuration?
 ```
 kmgmt -n tenant-a get deploy tenant-a -o yaml | grep -E -- '--etcd'
+```
 
+```
         - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
         - --etcd-certfile=/etc/kubernetes/pki/etcd/server.crt
         - --etcd-compaction-interval=0
@@ -354,7 +372,9 @@ alias kta='kubectl --kubeconfig tenant-a.kubeconfig'
 Verify our newly created Kubernetes cluster:
 ```
 kta version
+```
 
+```
 Client Version: v1.36.2
 Kustomize Version: v5.8.1
 Server Version: v1.36.4
@@ -368,7 +388,9 @@ On macOS, `cloud-provider-kind` gives your machine the load balancer IP as an al
 Check the rule:
 ```
 /usr/libexec/ApplicationFirewall/socketfilterfw --listapps | grep -A1 cloud-provider-kind
+```
 
+```
 /opt/homebrew/Cellar/cloud-provider-kind/0.12.0/bin/cloud-provider-kind
              (Block incoming connections)
 ```
@@ -390,7 +412,9 @@ The API server certificate includes `127.0.0.1`, so TLS verification still works
 It looks like any other cluster, but something is missing:
 ```
 kta get nodes
+```
 
+```
 No resources found
 ```
 
@@ -398,7 +422,9 @@ No nodes at all. The control plane runs in `mgmt`, so it never shows up as a nod
 
 ```
 kta get pods -A
+```
 
+```
 NAMESPACE     NAME                       READY   STATUS    RESTARTS   AGE
 kube-system   coredns-695c5d47b8-ds6rf   0/1     Pending   0          8s
 kube-system   coredns-695c5d47b8-gvq7h   0/1     Pending   0          9s
@@ -408,7 +434,9 @@ CoreDNS (the addon Kamaji installed) is `Pending`: there's nowhere to schedule i
 
 ```
 kta get ns
+```
 
+```
 NAME              STATUS   AGE
 default           Active   19s
 kube-node-lease   Active   19s
@@ -439,14 +467,18 @@ docker run -d --name tenant-a-worker-1 --hostname tenant-a-worker-1 --network ki
 Verify it is up and running:
 ```
 docker ps | grep tenant-a-worker-1
+```
 
+```
 7e47d010be76   kindest/node:v1.36.4            "/usr/local/bin/entr…"   9 seconds ago   Up 5 seconds      tenant-a-worker-1
 ```
 
 Exec into the container and verify it can reach the `tenant-a` `kube-apiserver`:
 ```
 docker exec -ti tenant-a-worker-1 curl -k "https://$TENANT_A_APISERVER_IP:6443"
+```
 
+```
 {
   "kind": "Status",
   "apiVersion": "v1",
@@ -466,7 +498,9 @@ A `403` is good news: the network path works and TLS works. The API server just 
 Copy the control plane's kubeconfig into the worker node:
 ```
 docker cp tenant-a.kubeconfig tenant-a-worker-1:/root/tenant.kubeconfig
+```
 
+```
 Successfully copied 5.63kB (transferred 7.17kB) to tenant-a-worker-1:/root/tenant.kubeconfig
 ```
 
@@ -476,7 +510,9 @@ Generate the kubeadm join command:
 ```
 JOIN=$(docker exec tenant-a-worker-1 kubeadm token create --print-join-command --kubeconfig /root/tenant.kubeconfig)
 echo $JOIN
+```
 
+```
 kubeadm join 172.18.0.5:6443 --token <redacted> --discovery-token-ca-cert-hash sha256:1f4d615c0a70093910299f4469f0f7e47ab45c9daa15aeb68acf5570dcfae28c
 ```
 
@@ -487,7 +523,9 @@ kubeadm join 172.18.0.5:6443 --token <redacted> --discovery-token-ca-cert-hash s
 Run the kubeadm join command:
 ```
 docker exec tenant-a-worker-1 sh -c "$JOIN --ignore-preflight-errors=all"
+```
 
+```
 [...]
 [kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap
 
@@ -501,7 +539,9 @@ Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 Verify the worker node has joined!
 ```
 kta get node
+```
 
+```
 NAME                STATUS     ROLES    AGE   VERSION
 tenant-a-worker-1   NotReady   <none>   24s   v1.36.4
 ```
@@ -509,14 +549,18 @@ tenant-a-worker-1   NotReady   <none>   24s   v1.36.4
 It joined, but it's `NotReady`. Ask the node why:
 ```
 kta get node tenant-a-worker-1 -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}'
+```
 
+```
 container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized
 ```
 
 Pods are still not running, we need a CNI:
 ```
 kta get pod -A
+```
 
+```
 NAMESPACE     NAME                       READY   STATUS    RESTARTS   AGE
 kube-system   coredns-695c5d47b8-ndv5c   0/1     Pending   0          12m
 kube-system   coredns-695c5d47b8-twmks   0/1     Pending   0          12m
@@ -546,7 +590,9 @@ helm upgrade --install cilium cilium/cilium --version 1.20.2 \
 Verify the worker node gets `Ready`:
 ```
 kta get nodes -w
+```
 
+```
 NAME                STATUS   ROLES    AGE    VERSION
 tenant-a-worker-1   Ready    <none>   111s   v1.36.4
 ```
@@ -554,7 +600,9 @@ tenant-a-worker-1   Ready    <none>   111s   v1.36.4
 Verify the Pods are all `Ready`:
 ```
 kta get pods -A
+```
 
+```
 NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
 kube-system   cilium-envoy-tjn5n                 1/1     Running   0          2m28s
 kube-system   cilium-htbgw                       1/1     Running   0          2m28s
@@ -598,7 +646,9 @@ for n in $(kind get nodes --name mgmt); do
 done
 
 docker exec tenant-a-worker-1 iptables -L INPUT -n | grep 10250
+```
 
+```
 DROP       tcp  --  172.18.0.2           0.0.0.0/0            tcp dpt:10250
 DROP       tcp  --  172.18.0.4           0.0.0.0/0            tcp dpt:10250
 DROP       tcp  --  172.18.0.3           0.0.0.0/0            tcp dpt:10250
@@ -615,21 +665,27 @@ DROP       tcp  --  172.18.0.3           0.0.0.0/0            tcp dpt:10250
 Create a Deployment:
 ```
 kta create deployment web --image=nginx:1.29 --replicas=2
+```
 
+```
 deployment.apps/web created
 ```
 
 Expose it with a NodePort Service:
 ```
 kta create service nodeport web --tcp=80:80 --node-port=30080
+```
 
+```
 service/web created
 ```
 
 Call it from the worker node:
 ```
 docker exec tenant-a-worker-1 curl http://localhost:30080 --retry 10 --retry-all-errors --retry-delay 2
+```
 
+```
 [...]
 <p><em>Thank you for using nginx.</em></p>
 [...]
@@ -640,7 +696,9 @@ The workload works: the scheduler placed the Pods, the kubelet started them, and
 Logs fail :(
 ```
 kta logs deploy/web -f --request-timeout 5s
+```
 
+```
 Found 2 pods, using pod/web-795767664d-sl6tx
 Get "https://172.18.0.5:6443/api/v1/namespaces/default/pods/web-795767664d-sl6tx/log?container=nginx&follow=true&timeout=5s": context deadline exceeded
 Unable to connect to the server: context deadline exceeded
@@ -651,7 +709,9 @@ Unable to connect to the server: context deadline exceeded
 Exec too (it takes about a minute to fail):
 ```
 kta exec deploy/web -- hostname
+```
 
+```
 error: unable to upgrade connection: error dialing backend: dial tcp 172.18.0.6:10250: i/o timeout
 ```
 
@@ -679,7 +739,9 @@ flowchart LR
 Patch the `TenantControlPlane` resource to enable Konnectivity:
 ```
 kmgmt -n tenant-a patch tcp tenant-a --type merge -p '{"spec":{"addons":{"konnectivity":{"server":{"port":8132},"agent":{"mode":"DaemonSet"}}}}}'
+```
 
+```
 tenantcontrolplane.kamaji.clastix.io/tenant-a patched
 ```
 
@@ -689,7 +751,9 @@ tenantcontrolplane.kamaji.clastix.io/tenant-a patched
 The `tenant-a` control plane Pods roll. Thanks to the Deployment, the API server stays available during the change:
 ```
 kmgmt -n tenant-a get pods
+```
 
+```
 NAME                        READY   STATUS    RESTARTS   AGE
 tenant-a-9787c789c-thdlw    4/4     Running   0          35s
 tenant-a-9787c789c-x8wvh    4/4     Running   0          35s
@@ -698,7 +762,9 @@ tenant-a-9787c789c-x8wvh    4/4     Running   0          35s
 They now carry a 4th container:
 ```
 kmgmt -n tenant-a get deploy tenant-a -o jsonpath='{range .spec.template.spec.containers[*]}{.name}{"\n"}{end}'
+```
 
+```
 kube-apiserver
 kube-scheduler
 kube-controller-manager
@@ -708,7 +774,9 @@ konnectivity-server
 The Service now also exposes port 8132:
 ```
 kmgmt -n tenant-a get svc tenant-a
+```
 
+```
 NAME       TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                         AGE
 tenant-a   LoadBalancer   10.96.112.188   172.18.0.5    6443:31564/TCP,8132:31247/TCP   4d14h
 ```
@@ -719,14 +787,18 @@ tenant-a   LoadBalancer   10.96.112.188   172.18.0.5    6443:31564/TCP,8132:3124
 Kamaji installed the agent inside `tenant-a`. Wait until the tunnel is up:
 ```
 kta -n kube-system rollout status ds/konnectivity-agent
+```
 
+```
 daemon set "konnectivity-agent" successfully rolled out
 ```
 
 Check where the agent connects to:
 ```
 kta -n kube-system get ds konnectivity-agent -o yaml | grep -E -- '--proxy-server'
+```
 
+```
         - --proxy-server-host=172.18.0.5
         - --proxy-server-port=8132
 ```
@@ -737,7 +809,9 @@ kta -n kube-system get ds konnectivity-agent -o yaml | grep -E -- '--proxy-serve
 The iptables rules are still there. We didn't open anything; the traffic just flows the other way. Try the logs again:
 ```
 kta logs deploy/web --tail 5
+```
 
+```
 Found 2 pods, using pod/web-795767664d-sl6tx
 2026/10/27 13:34:06 [notice] 1#1: start worker process 38
 2026/10/27 13:34:06 [notice] 1#1: start worker process 39
@@ -747,7 +821,9 @@ Found 2 pods, using pod/web-795767664d-sl6tx
 And exec:
 ```
 kta exec deploy/web -- hostname
+```
 
+```
 web-795767664d-sl6tx
 ```
 
@@ -760,7 +836,9 @@ Managed providers upgrade a cluster in two steps: the control plane first, then 
 In a second terminal, keep an eye on the `tenant-a` control plane Pods:
 ```
 kmgmt -n tenant-a get pods -w
+```
 
+```
 NAME                       READY   STATUS    RESTARTS   AGE
 tenant-a-9787c789c-thdlw   4/4     Running   0          6m28s
 tenant-a-9787c789c-x8wvh   4/4     Running   0          6m28s
@@ -769,14 +847,18 @@ tenant-a-9787c789c-x8wvh   4/4     Running   0          6m28s
 Patch the `TenantControlPlane` with a new Kubernetes version:
 ```
 kmgmt -n tenant-a patch tenantcontrolplane tenant-a --type merge -p '{"spec":{"kubernetes":{"version":"v1.37.0"}}}'
+```
 
+```
 tenantcontrolplane.kamaji.clastix.io/tenant-a patched
 ```
 
 Verify the `TenantControlPlane` resource status (`Upgrading` -> `Ready`):
 ```
 kmgmt -n tenant-a get tenantcontrolplane tenant-a -w
+```
 
+```
 NAME       VERSION   INSTALLED VERSION   STATUS      CONTROL-PLANE ENDPOINT   KUBECONFIG                  DATASTORE   AGE
 tenant-a   v1.37.0   v1.36.4             Upgrading   172.18.0.5:6443          tenant-a-admin-kubeconfig   default     4d14h
 [...]
@@ -804,7 +886,9 @@ tenant-a-9787c789c-thdlw    4/4     Terminating         0          7m2s
 Verify, from `tenant-a`'s perspective, the new Kubernetes version:
 ```
 kta version
+```
 
+```
 Client Version: v1.36.2
 Kustomize Version: v5.8.1
 Server Version: v1.37.0
@@ -813,7 +897,9 @@ Server Version: v1.37.0
 And the worker node is still v1.36.4:
 ```
 kta get node
+```
 
+```
 NAME                STATUS   ROLES    AGE   VERSION
 tenant-a-worker-1   Ready    <none>   66m   v1.36.4
 ```
@@ -821,7 +907,9 @@ tenant-a-worker-1   Ready    <none>   66m   v1.36.4
 Our workload didn't notice anything:
 ```
 kta get pods
+```
 
+```
 NAME                   READY   STATUS    RESTARTS   AGE
 web-795767664d-c4xkh   1/1     Running   0          15m
 web-795767664d-sl6tx   1/1     Running   0          15m
@@ -845,7 +933,9 @@ docker exec tenant-a-worker-2 sh -c "$JOIN --ignore-preflight-errors=all"
 Verify the new worker node arrived in the cluster:
 ```
 kta get node -w
+```
 
+```
 NAME                STATUS   ROLES    AGE   VERSION
 tenant-a-worker-1   Ready    <none>   4d    v1.36.4
 tenant-a-worker-2   Ready    <none>   31s   v1.37.0
@@ -855,7 +945,9 @@ Cilium and the Konnectivity agent are DaemonSets, so they start on the new node 
 ```
 kta -n kube-system rollout status ds/cilium
 kta -n kube-system rollout status ds/konnectivity-agent
+```
 
+```
 daemon set "cilium" successfully rolled out
 daemon set "konnectivity-agent" successfully rolled out
 ```
@@ -863,7 +955,9 @@ daemon set "konnectivity-agent" successfully rolled out
 Drain the old worker node:
 ```
 kta drain tenant-a-worker-1 --ignore-daemonsets --delete-emptydir-data --force
+```
 
+```
 node/tenant-a-worker-1 cordoned
 Warning: ignoring DaemonSet-managed Pods: kube-system/cilium-envoy-7vvsl, kube-system/cilium-q8cz2, kube-system/konnectivity-agent-lpfcj
 evicting pod default/web-795767664d-sl6tx
@@ -887,7 +981,9 @@ docker rm -f tenant-a-worker-1
 Verify everything runs on the new worker node:
 ```
 kta get pods -A -o wide
+```
 
+```
 NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE    IP             NODE                NOMINATED NODE   READINESS GATES
 default       web-795767664d-fs2jd               1/1     Running   0          63s    10.244.1.127   tenant-a-worker-2   <none>           <none>
 default       web-795767664d-jzfb4               1/1     Running   0          63s    10.244.1.239   tenant-a-worker-2   <none>           <none>
@@ -1052,7 +1148,9 @@ systemctl enable --now containerd
 Verify containerd uses `systemd` cgroups, matching the `cgroupfs: systemd` kubelet setting in `tenant-a-lks.yaml`:
 ```
 grep SystemdCgroup /etc/containerd/config.toml
+```
 
+```
             SystemdCgroup = true
 ```
 
