@@ -27,3 +27,5 @@ mgmt-control-plane   Ready    control-plane   30s   v1.36.4
 mgmt-worker          Ready    <none>          20s   v1.36.4
 mgmt-worker2         Ready    <none>          20s   v1.36.4
 ```
+
+You have the provider's management cluster. Next, [start cloud-provider-kind](04-cloud-provider-kind.md), so `LoadBalancer` Services can get an IP.

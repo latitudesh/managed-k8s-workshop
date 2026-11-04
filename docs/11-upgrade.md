@@ -167,3 +167,5 @@ kube-system   konnectivity-agent-kq2wr           1/1     Running   0          69
 ```
 
 The cluster is fully on `v1.37.0`, and the workload kept running the whole time.
+
+One thing is still manual, though: the CNI you installed by hand in step 7. Next, [let the management cluster install it](12-sveltos.md).

@@ -12,3 +12,5 @@ Give Docker at least **4 CPUs, 8 GB of RAM and 20 GB of disk**. You'll run 5 Kub
 
 !!! warning "Pause VPNs and security agents that inspect TLS"
     (Cloudflare WARP, Zscaler, Netskope and similar) for the duration of the workshop. They replace the certificates of the sites you visit with their own. Your machine trusts that certificate, but the Kubernetes nodes you'll run as containers don't, so they can't pull images. If you can't pause it, ask your IT team for help before the workshop.
+
+Tools in place? Next, [get the workshop files](02-workshop-files.md).

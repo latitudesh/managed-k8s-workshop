@@ -167,3 +167,5 @@ kube-system   coredns-695c5d47b8-twmks           1/1     Running   0          20
 - `cilium-envoy-*`: the Envoy proxy Cilium uses for L7 features, one per node.
 - `cilium-operator-*`: cluster-wide housekeeping for Cilium.
 - `coredns-*`: finally `Running`, now that the node has a network.
+
+`tenant-a` is a working cluster: control plane in `mgmt`, one node, a CNI. It was too easy, because everything shares one Docker network. Next, [put a boundary between them](08-provider-network.md), like a real provider has.

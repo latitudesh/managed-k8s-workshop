@@ -192,3 +192,5 @@ Save the API server IP. You'll need it to join nodes and to configure Cilium:
 ```sh
 export TENANT_A_APISERVER_IP=$(kmgmt -n tenant-a get svc tenant-a -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
+
+You have a control plane with no nodes. Next, [join a worker node](07-worker-node.md).

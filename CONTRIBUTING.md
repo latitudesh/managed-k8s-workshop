@@ -50,7 +50,7 @@ The `site/` folder it creates is ignored by git.
 
 ## Writing conventions
 
-**Steps.** Each page starts with an `# N. Title` heading and uses `## N.M Subtitle` for subsections. The numbers are part of the heading because the text refers to them ("as in 7.2"). When you add a step, add it to `nav` in `mkdocs.yml` too.
+**Steps.** Each page starts with an `# N. Title` heading and uses `## N.M Subtitle` for subsections. The numbers are part of the heading because the text refers to them ("as in 7.2"). When you add a step, add it to `nav` in `mkdocs.yml` too. Each page ends with one sentence that says what the reader has now and links to the next step.
 
 **Commands and output.** A command goes in a `sh` block. Its output goes right after it in an output block, which has a label, dimmer styling and no copy button:
 

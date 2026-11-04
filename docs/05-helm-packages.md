@@ -97,3 +97,5 @@ Spec:
 Status:
   Ready:  true
 ```
+
+The platform is in place and Kamaji is waiting for its first `TenantControlPlane`. Next, [create one](06-hosted-control-plane.md).

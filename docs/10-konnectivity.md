@@ -106,3 +106,5 @@ kta exec deploy/web -- hostname
 ```{ .text .no-copy title="Output" }
 web-795767664d-sl6tx
 ```
+
+Logs and exec work again, and the boundary is still there. That's day one done. Next, [upgrade Kubernetes](11-upgrade.md), the way a provider does.
