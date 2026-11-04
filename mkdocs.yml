@@ -4,7 +4,7 @@ site_url: https://latitudesh.github.io/managed-k8s-workshop/
 repo_url: https://github.com/latitudesh/managed-k8s-workshop
 repo_name: latitudesh/managed-k8s-workshop
 edit_uri: edit/main/docs/
-copyright: Latitude.sh
+copyright: '© Latitude.sh. Licensed under the <a href="https://www.mozilla.org/MPL/2.0/">Mozilla Public License 2.0</a>.'
 
 theme:
   name: material

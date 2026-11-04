@@ -15,3 +15,7 @@ When you click "Create Cluster" on a managed Kubernetes platform, like [LKS](htt
 ## Contributing
 
 To run the site locally and learn the writing conventions, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+© Latitude.sh. This workshop is licensed under the [Mozilla Public License 2.0](LICENSE). You may use, modify and redistribute it, including commercially, as long as any file you modify stays under the same license with its source available.
