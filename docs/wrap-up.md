@@ -3,7 +3,7 @@
 You started with a "Create Cluster" button and ended with everything behind it running on your laptop:
 
 - A management cluster that hosts a customer control plane as ordinary Pods, with Kamaji and a shared etcd.
-- A worker node in another network that joined through a load balancer and never saw the control plane.
+- A worker node in another network that joined through a load balancer and never saw the control plane Pods.
 - The boundary between the provider's network and the customer's, the features it breaks, and Konnectivity as the fix.
 - An upgrade the way providers do it: control plane in place, workers by replacement.
 - Add-ons installed from the provider side with Sveltos.

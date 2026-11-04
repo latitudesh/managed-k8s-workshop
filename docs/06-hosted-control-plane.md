@@ -1,4 +1,4 @@
-# 6. Create your first hosted control plane (tenant-a)
+# 6. Create a hosted control plane (tenant-a)
 
 This is the "Create Cluster" button. One `TenantControlPlane` resource becomes a full Kubernetes control plane, running as ordinary Pods in `mgmt`. No VMs to boot and no control plane nodes to manage.
 

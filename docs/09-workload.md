@@ -1,4 +1,4 @@
-# 9. Let's run a workload
+# 9. Run a workload
 
 Create a Deployment:
 ```sh

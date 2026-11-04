@@ -1,4 +1,4 @@
-# 14. Bonus: run it on LKS
+# 14. Run it on LKS (optional)
 
 kind is great to learn, but everything runs on your laptop. Now let's do it with real infrastructure: an [LKS](https://www.latitude.sh/docs/lks) cluster as the management cluster, and a bare metal server as the worker node.
 
@@ -189,7 +189,7 @@ kta get nodes -w
 Your hosted control plane now runs on LKS with a bare metal worker node. Now go on your own adventure! You might want to:
 
 - [Run a workload](09-workload.md) and call its NodePort over SSH.
-- Block the LKS nodes from reaching the kubelet port, like in [Simulating a real world managed Kubernetes network](08-provider-network.md), and watch `logs` and `exec` break.
+- Block the LKS nodes from reaching the kubelet port, like in [Simulate a managed Kubernetes network](08-provider-network.md), and watch `logs` and `exec` break.
 - [Enable Konnectivity](10-konnectivity.md) to fix them.
 - [Upgrade the control plane](11-upgrade.md#111-upgrade-the-control-plane) to `v1.37.0`.
 - [Install Sveltos](12-sveltos.md) in the LKS cluster and let it install Cilium on the bare metal node.

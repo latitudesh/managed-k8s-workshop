@@ -1,4 +1,4 @@
-# 8. Simulating a real world managed Kubernetes network
+# 8. Simulate a managed Kubernetes network
 
 So far everything lives on the same Docker network, so the control plane can reach the worker node directly. That's not how a managed provider works. The control plane runs in the provider's network, and your nodes run in yours. Nodes can reach the API server through its public endpoint, but the API server can't open connections into your network.
 

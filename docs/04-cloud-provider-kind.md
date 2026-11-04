@@ -6,7 +6,7 @@ This is how the `tenant-a` API server will get a reachable address like `172.18.
 
 Start `cloud-provider-kind` in a separate terminal. Leave it running during the entire workshop.
 
-On OSX:
+On macOS:
 ```sh
 sudo cloud-provider-kind
 ```
