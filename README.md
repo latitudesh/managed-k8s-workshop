@@ -71,6 +71,8 @@ Install the following tools:
 
 Give Docker at least **4 CPUs, 8 GB of RAM and 20 GB of disk**. You'll run 5 Kubernetes nodes as containers: 3 for `mgmt` and 2 tenant workers.
 
+> ⚠️ **Pause VPNs and security agents that inspect TLS** (Cloudflare WARP, Zscaler, Netskope and similar) for the duration of the workshop. They replace the certificates of the sites you visit with their own. Your machine trusts that certificate, but the Kubernetes nodes you'll run as containers don't, so they can't pull images. If you can't pause it, ask your IT team for help before the workshop.
+
 ## 2. Get the workshop files
 
 Clone this repository and enter the folder. Every command in the workshop runs from here, because the manifests are referenced by relative path:
@@ -155,6 +157,16 @@ helm upgrade --install cert-manager jetstack/cert-manager \
   --set crds.enabled=true \
   --wait
 ```
+
+<details>
+<summary><code>Progress deadline exceeded</code> after 5 minutes?</summary>
+
+Check the Pods with `kmgmt -n cert-manager get pods`. If they're in `ImagePullBackOff` and `kmgmt -n cert-manager get events` shows `x509: certificate signed by unknown authority`, a VPN or security agent on your machine is inspecting TLS. See [Prerequisites](#1-prerequisites). After pausing it, delete the Pods so they retry right away, then run the `helm` command again:
+```
+kmgmt -n cert-manager delete pod --all
+```
+
+</details>
 
 ### 5.2 Kamaji
 
