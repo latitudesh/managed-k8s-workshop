@@ -30,11 +30,9 @@ helm upgrade --install cert-manager jetstack/cert-manager \
   --wait
 ```
 
-??? question "`Progress deadline exceeded` after 5 minutes?"
-    Check the Pods with `kmgmt -n cert-manager get pods`. If they're in `ImagePullBackOff` and `kmgmt -n cert-manager get events` shows `x509: certificate signed by unknown authority`, a VPN or security agent on your machine is inspecting TLS. See [Prerequisites](01-prerequisites.md). After pausing it, delete the Pods so they retry right away, then run the `helm` command again:
-    ```sh
-    kmgmt -n cert-manager delete pod --all
-    ```
+
+!!! troubleshooting "`Progress deadline exceeded` after 5 minutes?"
+    See [Troubleshooting: cert-manager](troubleshooting.md#progress-deadline-exceeded-when-installing-cert-manager).
 
 ## 5.2 Kamaji
 

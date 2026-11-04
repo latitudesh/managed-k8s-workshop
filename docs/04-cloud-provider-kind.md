@@ -20,4 +20,4 @@ cloud-provider-kind
     On macOS, Docker runs inside a VM, so container IPs aren't reachable from your machine. `cloud-provider-kind` works around this with port mappings on the host, which needs extra privileges.
 
 !!! warning "macOS firewall"
-    If macOS asks whether `cloud-provider-kind` can accept incoming network connections, click **Allow**. With the firewall on and the answer set to block, the load balancer addresses won't work from your machine. See [6.2 Connect to tenant-a](06-hosted-control-plane.md#62-connect-to-tenant-a) if that happens.
+    If macOS asks whether `cloud-provider-kind` can accept incoming network connections, click **Allow**. With the firewall on and the answer set to block, the load balancer addresses won't work from your machine. See [Troubleshooting: macOS firewall](troubleshooting.md#connection-reset-by-peer-on-17218056443-macos) if that happens.

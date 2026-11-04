@@ -135,23 +135,9 @@ helm upgrade --install cilium cilium/cilium --version 1.20.2 \
 - `ipam.mode=kubernetes`: use the Pod CIDR the controller-manager assigns to each node (`10.244.0.0/24` here).
 - `operator.replicas=1`: we only have one node.
 
-??? question "Using the firewall workaround from 6.2? Helm needs it too"
-    `helm` reads the kubeconfig directly and ignores the `kta` alias, so it hits the blocked tunnel. Point it at the Docker port with `--kube-apiserver`. The API server certificate includes `127.0.0.1`, so TLS verification still works:
-    ```sh
-    TENANT_A_LOCAL_PORT=$(docker port $(docker ps -q --filter name=kindccm) 6443/tcp | head -1 | cut -d: -f2)
 
-    helm upgrade --install cilium cilium/cilium --version 1.20.2 \
-      --kubeconfig tenant-a.kubeconfig \
-      --kube-apiserver https://127.0.0.1:$TENANT_A_LOCAL_PORT \
-      --namespace kube-system \
-      --set kubeProxyReplacement=true \
-      --set k8sServiceHost=$TENANT_A_APISERVER_IP \
-      --set k8sServicePort=6443 \
-      --set ipam.mode=kubernetes \
-      --set operator.replicas=1
-    ```
-
-    `k8sServiceHost` stays `172.18.0.5`: that address is used by the Cilium agent on the worker node, inside the Docker network.
+!!! troubleshooting "Using the macOS firewall workaround? Helm needs it too"
+    See [Troubleshooting: Helm and the macOS firewall](troubleshooting.md#helm-needs-the-workaround-too).
 
 Verify the worker node gets `Ready`:
 ```sh

@@ -205,6 +205,34 @@
   text-align: center;
 }
 
+/* ---- "troubleshooting" admonition: a wrench, in the warning orange --------
+   Usage: !!! troubleshooting "Symptom?"  */
+:root {
+  --md-admonition-icon--troubleshooting: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4"/></svg>');
+}
+.md-typeset .admonition.troubleshooting,
+.md-typeset details.troubleshooting {
+  border-color: #ffa978;
+}
+.md-typeset .troubleshooting > .admonition-title,
+.md-typeset .troubleshooting > summary {
+  background-color: rgba(255, 169, 120, 0.14);
+}
+.md-typeset .troubleshooting > .admonition-title::before,
+.md-typeset .troubleshooting > summary::before {
+  background-color: #ffa978;
+  -webkit-mask-image: var(--md-admonition-icon--troubleshooting);
+          mask-image: var(--md-admonition-icon--troubleshooting);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .admonition.troubleshooting,
+[data-md-color-scheme="latitude-light"] .md-typeset details.troubleshooting {
+  border-color: #e8752e;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .troubleshooting > .admonition-title::before,
+[data-md-color-scheme="latitude-light"] .md-typeset .troubleshooting > summary::before {
+  background-color: #e8752e;
+}
+
 /* ---- Mermaid diagrams in the Latitude palette ---------------------------
    Material maps these variables onto the flowchart: node fill and border,
    edge lines, and the label text. Lime nodes with black text in light mode,
