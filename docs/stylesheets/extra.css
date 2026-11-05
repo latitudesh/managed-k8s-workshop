@@ -325,3 +325,37 @@
 .md-typeset .host p {
   margin: 0.6rem 0;
 }
+
+/* ---- QR page (docs/qr.md, not in the nav): projected at the start of the
+   workshop so people can open the site. Big QR on a white card, so it scans
+   in both color schemes, and the URL in large type underneath. */
+.md-typeset .qr-page {
+  text-align: center;
+  padding: 1rem 0 3rem;
+}
+.md-typeset .qr-page h1 {
+  margin-bottom: 1.5rem;
+}
+.md-typeset .qr-page .qr-code {
+  display: block;
+  box-sizing: border-box;
+  width: min(60vh, 22rem);
+  max-width: 100%;
+  margin: 0 auto 2rem;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 0.6rem;
+  box-shadow: 0 0 0 1px var(--lat-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .qr-page .qr-code {
+  box-shadow: 0 0 0 1px var(--lat-light-border);
+}
+.md-typeset .qr-page .qr-url {
+  display: block;
+  font-family: var(--md-code-font-family);
+  font-size: clamp(1.2rem, 3.2vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
