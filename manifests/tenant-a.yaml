@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tenant-a
+---
+apiVersion: kamaji.clastix.io/v1alpha1
+kind: TenantControlPlane
+metadata:
+  name: tenant-a
+  namespace: tenant-a
+spec:
+  # Store this cluster's state in the shared etcd installed with Kamaji
+  dataStore: default
+  controlPlane:
+    deployment:
+      # Two control plane Pods for high availability
+      replicas: 2
+    service:
+      # Expose the API server through cloud-provider-kind
+      serviceType: LoadBalancer
+  kubernetes:
+    # The Kubernetes version the customer asked for
+    version: v1.36.4
+    # Kubelet settings worker nodes get when they join
+    kubelet:
+      cgroupfs: systemd
+      # Do not fail if swap is on when a worker node joins
+      configurationJSONPatches:
+        - op: add
+          path: /failSwapOn
+          value: false
+  networkProfile:
+    # Port the API server listens on
+    port: 6443
+  # Components Kamaji installs inside the tenant cluster for you
+  addons:
+    coreDNS: {}
+
+    # kube-proxy disabled, it has a conntrack issue, we will install Cilium later!
+    # kubeProxy: {}
+
+    # konnectivity disabled, it will be enabled later
+    # konnectivity {}
