@@ -1,0 +1,15 @@
+apiVersion: lib.projectsveltos.io/v1beta1
+kind: SveltosCluster
+metadata:
+  name: tenant-a
+  # Same namespace as the TenantControlPlane, so everything about tenant-a lives together
+  namespace: tenant-a
+  labels:
+    # ClusterProfiles pick clusters by label. This one asks for Cilium.
+    cni: cilium
+spec:
+  # The Secret Kamaji already created with the tenant-a kubeconfigs
+  kubeconfigName: tenant-a-admin-kubeconfig
+  # Use the in-cluster kubeconfig: Sveltos runs inside mgmt, so it reaches
+  # the API server through the Service, not the load balancer
+  kubeconfigKeyName: admin.svc

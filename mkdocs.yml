@@ -1,0 +1,104 @@
+site_name: Managed Kubernetes Workshop
+site_description: Build your own managed Kubernetes provider, on your laptop.
+site_url: https://latitudesh.github.io/managed-k8s-workshop/
+repo_url: https://github.com/latitudesh/managed-k8s-workshop
+repo_name: latitudesh/managed-k8s-workshop
+edit_uri: edit/main/docs/
+copyright: '© Latitude.sh. Licensed under the <a href="https://www.mozilla.org/MPL/2.0/">Mozilla Public License 2.0</a>.'
+
+theme:
+  name: material
+  language: en
+  logo: assets/logo-white.svg
+  favicon: assets/logo.svg
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    # Dark is the default, like latitude.sh
+    - media: "(prefers-color-scheme: dark)"
+      scheme: latitude-dark
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: latitude-light
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+  features:
+    - navigation.footer
+    - navigation.top
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/latitudesh
+      name: Latitude.sh on GitHub
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/latitudesh
+      name: Latitude.sh on X
+    - icon: fontawesome/solid/globe
+      link: https://www.latitude.sh
+      name: latitude.sh
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+  - search
+
+nav:
+  - Introduction: index.md
+  - What is Latitude.sh?: latitude.md
+  - Your hosts: hosts.md
+  - Setup:
+      - 1. Prerequisites: 01-prerequisites.md
+      - 2. Get the workshop files: 02-workshop-files.md
+      - 3. Create the kind cluster (mgmt): 03-management-cluster.md
+      - 4. Start cloud-provider-kind: 04-cloud-provider-kind.md
+      - 5. Install Helm packages: 05-helm-packages.md
+  - Hosted control plane:
+      - 6. Create a hosted control plane: 06-hosted-control-plane.md
+      - 7. Join a worker node: 07-worker-node.md
+  - Provider network:
+      - 8. Simulate a managed Kubernetes network: 08-provider-network.md
+      - 9. Run a workload: 09-workload.md
+      - 10. Fix with Konnectivity: 10-konnectivity.md
+  - Operations:
+      - 11. Upgrade Kubernetes: 11-upgrade.md
+      - 12. Manage add-ons with Sveltos: 12-sveltos.md
+      - 13. Clean up: 13-clean-up.md
+  - Bonus:
+      - 14. Run it on LKS (optional): 14-lks.md
+  - Wrap-up: wrap-up.md
+  - Troubleshooting: troubleshooting.md
