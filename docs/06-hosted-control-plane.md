@@ -122,7 +122,8 @@ kmgmt -n tenant-a get deploy tenant-a -o yaml | grep -E -- '--etcd'
 
 Get the `tenant-a`'s kubeconfig:
 ```sh
-kmgmt -n tenant-a get secret tenant-a-admin-kubeconfig -o jsonpath='{.data.admin\.conf}' | base64 -d > tenant-a.kubeconfig
+kmgmt -n tenant-a get secret tenant-a-admin-kubeconfig \
+  -o jsonpath='{.data.admin\.conf}' | base64 -d > tenant-a.kubeconfig
 ```
 
 !!! tip
@@ -146,7 +147,6 @@ Client Version: v1.36.2
 Kustomize Version: v5.8.1
 Server Version: v1.36.4
 ```
-
 
 !!! troubleshooting "`connection reset by peer` on `172.18.0.5:6443`? (macOS)"
     See [Troubleshooting: macOS firewall](troubleshooting.md#connection-reset-by-peer-on-17218056443-macos).

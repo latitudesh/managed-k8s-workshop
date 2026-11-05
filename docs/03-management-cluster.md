@@ -2,6 +2,9 @@
 
 This is the provider's **management cluster**. Customers never see it, and it hosts their control planes. It has 1 control plane node and 2 workers, which gives the tenant control plane Pods and the etcd datastore room to spread out, like a small provider fleet.
 
+!!! tip "Use `sudo` if needed"
+    If your user is not part of the `docker` group, you'll need to prepend the `kind` and `docker` commands with `sudo` or [add your user to the docker group](https://docs.docker.com/engine/install/linux-postinstall/#add-your-user-to-the-docker-group).
+
 Create the kind cluster:
 ```sh
 kind create cluster --config manifests/kind-mgmt.yaml
@@ -15,6 +18,9 @@ Create an alias to quickly manage the kind cluster:
 ```sh
 alias kmgmt='kubectl --kubeconfig mgmt.kubeconfig'
 ```
+
+!!! tip "Execute the `alias` command again if opening a new terminal"
+    If you open a new terminal, you'll need to execute the `alias` command again.
 
 Verify the kind cluster:
 ```sh
