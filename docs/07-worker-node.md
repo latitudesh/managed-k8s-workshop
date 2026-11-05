@@ -2,6 +2,21 @@
 
 On a managed provider, adding a node pool means booting machines in your network that join the hosted control plane. Here, a worker node is a Docker container running the `kindest/node` image, the same image kind uses for its own nodes. It comes with containerd, kubelet and kubeadm preinstalled.
 
+```mermaid
+flowchart LR
+  subgraph net["Docker network: kind"]
+    subgraph mgmt["mgmt cluster"]
+      subgraph ns["namespace: tenant-a"]
+        cp["Pods<br/>kube-apiserver<br/>kube-scheduler<br/>kube-controller-manager"]
+      end
+    end
+    lb["LoadBalancer<br/>172.18.0.5:6443"]
+    worker["tenant-a-worker-1<br/>kindest/node container<br/>kubelet, containerd"]
+  end
+  worker -- "✅ kubeadm join, then kubelet → :6443" --> lb
+  lb --> cp
+```
+
 Create the worker node as a Docker container:
 ```sh
 docker run -d --name tenant-a-worker-1 --hostname tenant-a-worker-1 --network kind --privileged --volume /var kindest/node:v1.36.4
