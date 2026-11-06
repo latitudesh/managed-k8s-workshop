@@ -19,7 +19,8 @@ On macOS, `cloud-provider-kind` gives your machine the load balancer IP as an al
 
 Check the rule. The path is the one your install uses; this is what it looks like with Homebrew on Apple silicon:
 ```sh
-/usr/libexec/ApplicationFirewall/socketfilterfw --listapps | grep -A1 cloud-provider-kind
+/usr/libexec/ApplicationFirewall/socketfilterfw --listapps \
+  | grep -A1 cloud-provider-kind
 ```
 
 ```{ .text .no-copy title="Output" }
@@ -29,12 +30,18 @@ Check the rule. The path is the one your install uses; this is what it looks lik
 
 Allow it in System Settings, under Network, Firewall, Options, switching `cloud-provider-kind` to **Allow incoming connections**, or from the terminal. `realpath` follows the Homebrew symlink to the binary the firewall registered:
 ```sh
-sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp "$(realpath "$(command -v cloud-provider-kind)")"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw \
+  --unblockapp "$(realpath "$(command -v cloud-provider-kind)")"
 ```
 
 On a company-managed Mac, both can be locked by a profile. In that case, skip the tunnel: only `kubectl` on your machine goes through it, the containers reach the load balancer directly on the `kind` network. Point the alias at the port Docker mapped for the Envoy container. The port changes whenever `cloud-provider-kind` recreates the container, so look it up on every call:
 ```sh
-alias kta='kubectl --kubeconfig tenant-a.kubeconfig --server https://127.0.0.1:$(docker port $(docker ps -q --filter name=kindccm) 6443/tcp | head -1 | cut -d: -f2)'
+tenant_a_url() {
+  port=$(docker port $(docker ps -q --filter name=kindccm) 6443/tcp \
+    | head -1 | cut -d: -f2)
+  echo "https://127.0.0.1:$port"
+}
+alias kta='kubectl --kubeconfig tenant-a.kubeconfig --server $(tenant_a_url)'
 ```
 
 The API server certificate includes `127.0.0.1`, so TLS verification still works. Everything else in the workshop stays the same, including `TENANT_A_APISERVER_IP`, which the worker node uses from inside the Docker network.
@@ -45,7 +52,8 @@ The API server certificate includes `127.0.0.1`, so TLS verification still works
 
 `helm` reads the kubeconfig directly and ignores the `kta` alias, so it hits the blocked tunnel. Point it at the Docker port with `--kube-apiserver`. The API server certificate includes `127.0.0.1`, so TLS verification still works:
 ```sh
-TENANT_A_LOCAL_PORT=$(docker port $(docker ps -q --filter name=kindccm) 6443/tcp | head -1 | cut -d: -f2)
+TENANT_A_LOCAL_PORT=$(docker port $(docker ps -q --filter name=kindccm) \
+  6443/tcp | head -1 | cut -d: -f2)
 
 helm upgrade --install cilium cilium/cilium --version 1.20.2 \
   --kubeconfig tenant-a.kubeconfig \

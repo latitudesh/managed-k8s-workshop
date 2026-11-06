@@ -23,8 +23,10 @@ Most of Kubernetes only needs the node → API server direction. A few features 
 Simulate the boundary: block the `mgmt` nodes from reaching the kubelet port (`10250`) on the worker node.
 ```sh
 for n in $(kind get nodes --name mgmt); do
-  ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$n")
-  docker exec tenant-a-worker-1 iptables -I INPUT -p tcp --dport 10250 -s "$ip" -j DROP
+  ip=$(docker inspect "$n" \
+    -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}')
+  docker exec tenant-a-worker-1 \
+    iptables -I INPUT -p tcp --dport 10250 -s "$ip" -j DROP
 done
 
 docker exec tenant-a-worker-1 iptables -L INPUT -n | grep 10250

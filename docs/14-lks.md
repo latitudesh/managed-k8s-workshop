@@ -58,11 +58,13 @@ kmgmt -n tenant-a get tenantcontrolplane tenant-a -w
 
 Get the kubeconfig and save the API server IP, as before:
 ```sh
-kmgmt -n tenant-a get secret tenant-a-admin-kubeconfig -o jsonpath='{.data.admin\.conf}' | base64 -d > tenant-a.kubeconfig
+kmgmt -n tenant-a get secret tenant-a-admin-kubeconfig \
+  -o jsonpath='{.data.admin\.conf}' | base64 -d > tenant-a.kubeconfig
 
 alias kta='kubectl --kubeconfig tenant-a.kubeconfig'
 
-export TENANT_A_APISERVER_IP=$(kmgmt -n tenant-a get svc tenant-a -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+export TENANT_A_APISERVER_IP=$(kmgmt -n tenant-a get svc tenant-a \
+  -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
 kta version
 ```
@@ -116,14 +118,22 @@ Install containerd and runc:
 ```sh
 CONTAINERD_VERSION=2.4.2
 RUNC_VERSION=1.5.2
+CONTAINERD_TGZ=containerd-${CONTAINERD_VERSION}-linux-amd64.tar.gz
+CONTAINERD_URL=https://github.com/containerd/containerd/releases/download
+CONTAINERD_RAW=https://raw.githubusercontent.com/containerd/containerd/main
+RUNC_URL=https://github.com/opencontainers/runc/releases/download
 
-curl -fsSL https://github.com/containerd/containerd/releases/download/v${CONTAINERD_VERSION}/containerd-${CONTAINERD_VERSION}-linux-amd64.tar.gz | tar -xz -C /usr/local
-curl -fsSL -o /etc/systemd/system/containerd.service https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
-curl -fsSL -o /usr/local/sbin/runc https://github.com/opencontainers/runc/releases/download/v${RUNC_VERSION}/runc.amd64
+curl -fsSL $CONTAINERD_URL/v${CONTAINERD_VERSION}/$CONTAINERD_TGZ \
+  | tar -xz -C /usr/local
+curl -fsSL -o /etc/systemd/system/containerd.service \
+  $CONTAINERD_RAW/containerd.service
+curl -fsSL -o /usr/local/sbin/runc $RUNC_URL/v${RUNC_VERSION}/runc.amd64
 chmod +x /usr/local/sbin/runc
 
 mkdir -p /etc/containerd
-containerd config default | sed 's/SystemdCgroup = false/SystemdCgroup = true/' > /etc/containerd/config.toml
+containerd config default \
+  | sed 's/SystemdCgroup = false/SystemdCgroup = true/' \
+  > /etc/containerd/config.toml
 
 systemctl daemon-reload
 systemctl enable --now containerd
@@ -144,8 +154,11 @@ apt-get update
 apt-get install -y apt-transport-https ca-certificates curl gpg
 
 mkdir -p /etc/apt/keyrings
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.36/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.36/deb/ /' > /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.36/deb/Release.key \
+  | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg]' \
+  'https://pkgs.k8s.io/core:/stable:/v1.36/deb/ /' \
+  > /etc/apt/sources.list.d/kubernetes.list
 
 apt-get update
 apt-get install -y kubelet=1.36.4-1.1 kubeadm=1.36.4-1.1
@@ -170,7 +183,8 @@ scp tenant-a.kubeconfig ubuntu@$WORKER_IP:/tmp/tenant.kubeconfig
 
 On the server, as root, create the join command, run it, and delete the kubeconfig:
 ```sh
-JOIN=$(kubeadm token create --print-join-command --kubeconfig /tmp/tenant.kubeconfig)
+JOIN=$(kubeadm token create --print-join-command \
+  --kubeconfig /tmp/tenant.kubeconfig)
 $JOIN
 
 rm /tmp/tenant.kubeconfig

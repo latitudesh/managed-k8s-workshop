@@ -20,7 +20,8 @@ service/web created
 
 Call it from the worker node:
 ```sh
-docker exec tenant-a-worker-1 curl http://localhost:30080 --retry 10 --retry-all-errors --retry-delay 2
+docker exec tenant-a-worker-1 curl http://localhost:30080 \
+  --retry 10 --retry-all-errors --retry-delay 2
 ```
 
 ```{ .text .no-copy title="Output" }

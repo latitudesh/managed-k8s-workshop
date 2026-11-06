@@ -19,7 +19,8 @@ flowchart LR
 
 Create the worker node as a Docker container:
 ```sh
-docker run -d --name tenant-a-worker-1 --hostname tenant-a-worker-1 --network kind --privileged --volume /var kindest/node:v1.36.4
+docker run -d --name tenant-a-worker-1 --hostname tenant-a-worker-1 \
+  --network kind --privileged --volume /var kindest/node:v1.36.4
 ```
 
 - `--network kind`: the same Docker network as kind, so the node can reach the API server.
@@ -37,7 +38,8 @@ docker ps | grep tenant-a-worker-1
 
 Exec into the container and verify it can reach the `tenant-a` `kube-apiserver`:
 ```sh
-docker exec -ti tenant-a-worker-1 curl -k "https://$TENANT_A_APISERVER_IP:6443"
+docker exec -ti tenant-a-worker-1 \
+  curl -k "https://$TENANT_A_APISERVER_IP:6443"
 ```
 
 ```{ .text .no-copy title="Output" }
@@ -71,7 +73,8 @@ Successfully copied 5.63kB (transferred 7.17kB) to tenant-a-worker-1:/root/tenan
 
 Generate the kubeadm join command:
 ```sh
-JOIN=$(docker exec tenant-a-worker-1 kubeadm token create --print-join-command --kubeconfig /root/tenant.kubeconfig)
+JOIN=$(docker exec tenant-a-worker-1 kubeadm token create \
+  --print-join-command --kubeconfig /root/tenant.kubeconfig)
 echo $JOIN
 ```
 
@@ -111,7 +114,8 @@ tenant-a-worker-1   NotReady   <none>   24s   v1.36.4
 
 It joined, but it's `NotReady`. Ask the node why:
 ```sh
-kta get node tenant-a-worker-1 -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}'
+kta get node tenant-a-worker-1 \
+  -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}'
 ```
 
 ```{ .text .no-copy title="Output" }

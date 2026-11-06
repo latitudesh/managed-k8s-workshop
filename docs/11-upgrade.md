@@ -17,7 +17,8 @@ tenant-a-9787c789c-x8wvh   4/4     Running   0          6m28s
 
 Patch the `TenantControlPlane` with a new Kubernetes version:
 ```sh
-kmgmt -n tenant-a patch tenantcontrolplane tenant-a --type merge -p '{"spec":{"kubernetes":{"version":"v1.37.0"}}}'
+kmgmt -n tenant-a patch tenantcontrolplane tenant-a --type merge \
+  -p '{"spec":{"kubernetes":{"version":"v1.37.0"}}}'
 ```
 
 ```{ .text .no-copy title="Output" }
@@ -92,11 +93,13 @@ Managed providers usually don't upgrade nodes in place. They add a new node with
 
 Add a new worker node with v1.37.0, the same way you joined the first one:
 ```sh
-docker run -d --name tenant-a-worker-2 --hostname tenant-a-worker-2 --network kind --privileged --volume /var kindest/node:v1.37.0
+docker run -d --name tenant-a-worker-2 --hostname tenant-a-worker-2 \
+  --network kind --privileged --volume /var kindest/node:v1.37.0
 
 docker cp tenant-a.kubeconfig tenant-a-worker-2:/root/tenant.kubeconfig
 
-JOIN=$(docker exec tenant-a-worker-2 kubeadm token create --print-join-command --kubeconfig /root/tenant.kubeconfig)
+JOIN=$(docker exec tenant-a-worker-2 kubeadm token create \
+  --print-join-command --kubeconfig /root/tenant.kubeconfig)
 
 docker exec tenant-a-worker-2 sh -c "$JOIN --ignore-preflight-errors=all"
 ```

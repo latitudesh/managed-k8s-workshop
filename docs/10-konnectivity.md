@@ -18,7 +18,16 @@ flowchart LR
 
 Patch the `TenantControlPlane` resource to enable Konnectivity:
 ```sh
-kmgmt -n tenant-a patch tcp tenant-a --type merge -p '{"spec":{"addons":{"konnectivity":{"server":{"port":8132},"agent":{"mode":"DaemonSet"}}}}}'
+kmgmt -n tenant-a patch tcp tenant-a --type merge -p '{
+  "spec": {
+    "addons": {
+      "konnectivity": {
+        "server": {"port": 8132},
+        "agent": {"mode": "DaemonSet"}
+      }
+    }
+  }
+}'
 ```
 
 ```{ .text .no-copy title="Output" }
@@ -41,7 +50,8 @@ tenant-a-9787c789c-x8wvh    4/4     Running   0          35s
 
 They now carry a 4th container:
 ```sh
-kmgmt -n tenant-a get deploy tenant-a -o jsonpath='{range .spec.template.spec.containers[*]}{.name}{"\n"}{end}'
+kmgmt -n tenant-a get deploy tenant-a \
+  -o jsonpath='{range .spec.template.spec.containers[*]}{.name}{"\n"}{end}'
 ```
 
 ```{ .text .no-copy title="Output" }
@@ -75,7 +85,8 @@ daemon set "konnectivity-agent" successfully rolled out
 
 Check where the agent connects to:
 ```sh
-kta -n kube-system get ds konnectivity-agent -o yaml | grep -E -- '--proxy-server'
+kta -n kube-system get ds konnectivity-agent -o yaml \
+  | grep -E -- '--proxy-server'
 ```
 
 ```{ .text .no-copy title="Output" }
