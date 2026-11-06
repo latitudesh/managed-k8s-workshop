@@ -305,6 +305,32 @@
   --md-default-fg-color--lighter: var(--lat-border);
 }
 
+/* ---- Arcade demo embed (docs/latitude.md) -----------------------------
+   Same wrapper as latitude.sh/docs: the iframe fills a box whose height
+   comes from the demo's aspect ratio plus Arcade's 41px toolbar. The
+   utm_content in the iframe URL tells Arcade which page the view came from. */
+.md-typeset .arcade-embed {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: calc(36.0417% + 41px);
+  margin: 1.5rem 0;
+  border-radius: 0.4rem;
+  overflow: hidden;
+  border: 1px solid var(--lat-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .arcade-embed {
+  border-color: var(--lat-light-border);
+}
+.md-typeset .arcade-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color-scheme: light;
+}
+
 /* ---- "Your hosts" page: two cards side by side, stacked on narrow screens --- */
 .md-typeset .hosts {
   display: grid;

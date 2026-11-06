@@ -16,6 +16,12 @@ Around the servers, the products you'd expect from a cloud:
 
 Everything is automated behind the same API. You can drive it from the dashboard, the [`lsh` CLI](https://www.latitude.sh/docs/cli), the [Terraform provider](https://www.latitude.sh/docs/guides/terraform), the [TypeScript, Go and Python SDKs](https://www.latitude.sh/docs/client-libraries) or an MCP server. Full details are in the [docs](https://www.latitude.sh/docs).
 
+Take a guided tour of the dashboard below.
+
+<div class="arcade-embed">
+<iframe src="https://demo.arcade.software/sjNPzHRssWtrJYV80sLQ?embed&embed_mobile=tab&embed_desktop=inline&squared=true&disable_border=true&show_copy_link=true&utm_content=/managed-k8s-workshop/latitude" title="Dashboard overview" referrerpolicy="no-referrer-when-downgrade" frameborder="0" loading="lazy" allowfullscreen allow="clipboard-write; autoplay"></iframe>
+</div>
+
 ## LKS, the managed Kubernetes
 
 [LKS](https://www.latitude.sh/docs/lks) (Latitude Kubernetes Service) is Latitude.sh's managed Kubernetes.
