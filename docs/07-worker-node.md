@@ -155,8 +155,8 @@ helm upgrade --install cilium cilium/cilium --version 1.20.2 \
 - `operator.replicas=1`: we only have one node.
 
 
-!!! troubleshooting "Using the macOS firewall workaround? Helm needs it too"
-    See [Troubleshooting: Helm and the macOS firewall](troubleshooting.md#helm-needs-the-workaround-too).
+!!! troubleshooting "`kubernetes cluster unreachable` with `connection reset by peer`? (macOS)"
+    If you're using the `kta` alias from the [firewall workaround](troubleshooting.md#connection-reset-by-peer-on-17218056443-macos), `helm` needs it too. See [Troubleshooting: Helm and the macOS firewall](troubleshooting.md#helm-needs-the-workaround-too).
 
 Verify the worker node gets `Ready`:
 ```sh
