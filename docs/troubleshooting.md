@@ -48,7 +48,7 @@ The API server certificate includes `127.0.0.1`, so TLS verification still works
 
 ### Helm needs the workaround too
 
-**Where:** [7.2 Install a CNI](07-worker-node.md#72-install-a-cni), if you're using the `kta` alias from the entry above. The Cilium `helm upgrade --install` fails right away with `kubernetes cluster unreachable: Get "https://172.18.0.5:6443/version": ... connection reset by peer`.
+**Where:** [7.2 Install a CNI](07-worker-node.md#72-install-a-cni), if you're using the `kta` alias from the entry above.
 
 `helm` reads the kubeconfig directly and ignores the `kta` alias, so it hits the blocked tunnel. Point it at the Docker port with `--kube-apiserver`. The API server certificate includes `127.0.0.1`, so TLS verification still works:
 ```sh
