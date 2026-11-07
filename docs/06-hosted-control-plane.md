@@ -23,7 +23,7 @@ Create the `tenant-a` control plane:
 kmgmt apply -f manifests/tenant-a.yaml
 ```
 
-Watch it until it becomes `Ready`. This takes less than a minute:
+Watch it until it becomes `Ready`:
 ```sh
 kmgmt -n tenant-a get tenantcontrolplane tenant-a -w
 ```
@@ -150,7 +150,7 @@ Server Version: v1.36.4
 ```
 
 !!! troubleshooting "`connection reset by peer` on `172.18.0.5:6443`? (macOS)"
-    See [Troubleshooting: macOS firewall](troubleshooting.md#connection-reset-by-peer-on-17218056443-macos).
+    See [Troubleshooting: macOS firewall](troubleshooting.md#macos-firewall).
 
 It looks like any other cluster, but something is missing:
 ```sh

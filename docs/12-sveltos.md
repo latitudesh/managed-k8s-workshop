@@ -115,6 +115,9 @@ helm uninstall cilium --kubeconfig tenant-a.kubeconfig --namespace kube-system
 release "cilium" uninstalled
 ```
 
+!!! troubleshooting "`kubernetes cluster unreachable` with `connection reset by peer`? (macOS)"
+    If you're using the `kta` alias from the [firewall workaround](troubleshooting.md#macos-firewall), `helm` needs it too. See [Troubleshooting: Uninstall Cilium with `hta`](troubleshooting.md#helm-uninstall-cilium).
+
 The Cilium Pods are gone:
 ```sh
 kta get pods -A
@@ -236,6 +239,9 @@ helm list --kubeconfig tenant-a.kubeconfig -A
 NAME  	NAMESPACE  	REVISION	UPDATED                               	STATUS  	CHART        	APP VERSION
 cilium	kube-system	1       	2026-11-04 13:08:34.48236522 +0000 UTC	deployed	cilium-1.20.2	1.20.2
 ```
+
+!!! troubleshooting "`kubernetes cluster unreachable` with `connection reset by peer`? (macOS)"
+    If you're using the `kta` alias from the [firewall workaround](troubleshooting.md#macos-firewall), `helm` needs it too. See [Troubleshooting: List releases with `hta`](troubleshooting.md#helm-list).
 
 !!! tip "This is how the CNI is already there when you create a cluster"
     A provider labels every new cluster and registers it with its add-on manager. A profile like this one matches it right away, before the first node joins. By the time you download the kubeconfig, the CNI, the CSI driver and the rest are already installed, and you never ran `helm install`.

@@ -2,7 +2,7 @@
 
 The problems people hit while running this workshop on different machines. Each entry starts with the symptom, says which step it shows up in, and gives the fix. The steps link here when they're the ones most likely to trigger it.
 
-## `Progress deadline exceeded` when installing cert-manager
+## `Progress deadline exceeded` when installing cert-manager { #cert-manager }
 
 **Where:** [5.1 cert-manager](05-helm-packages.md#51-cert-manager). The `helm upgrade --install` command gives up after 5 minutes with `Progress deadline exceeded`.
 
@@ -11,7 +11,7 @@ Check the Pods with `kmgmt -n cert-manager get pods`. If they're in `ImagePullBa
 kmgmt -n cert-manager delete pod --all
 ```
 
-## `connection reset by peer` on `172.18.0.5:6443` (macOS)
+## `connection reset by peer` on `172.18.0.5:6443` (macOS) { #macos-firewall }
 
 **Where:** [6.2 Connect to tenant-a](06-hosted-control-plane.md#62-connect-to-tenant-a). `kta version` fails right away with `connection reset by peer`, while the worker container can reach the same address.
 
@@ -42,22 +42,23 @@ tenant_a_url() {
   echo "https://127.0.0.1:$port"
 }
 alias kta='kubectl --kubeconfig tenant-a.kubeconfig --server $(tenant_a_url)'
+alias hta='helm --kube-apiserver $(tenant_a_url)'
 ```
 
-The API server certificate includes `127.0.0.1`, so TLS verification still works. Everything else in the workshop stays the same, including `TENANT_A_APISERVER_IP`, which the worker node uses from inside the Docker network.
+The API server certificate includes `127.0.0.1`, so TLS verification still works. Everything else in the workshop stays the same, including `TENANT_A_APISERVER_IP`, which the worker node uses from inside the Docker network. The `hta` alias is for `helm`, see the next entry.
 
-### Helm needs the workaround too
+### Helm needs the workaround too { #helm-macos-firewall }
 
-**Where:** [7.2 Install a CNI](07-worker-node.md#72-install-a-cni), if you're using the `kta` alias from the entry above.
+**Where:** every `helm` command with `--kubeconfig tenant-a.kubeconfig`, if you're using the `kta` alias from the entry above. One subsection per command below.
 
-`helm` reads the kubeconfig directly and ignores the `kta` alias, so it hits the blocked tunnel. Point it at the Docker port with `--kube-apiserver`. The API server certificate includes `127.0.0.1`, so TLS verification still works:
+`helm` reads the kubeconfig directly and ignores the `kta` alias, so it hits the blocked tunnel. The `hta` alias from the entry above adds `--kube-apiserver` pointing at the Docker port, and nothing else. The API server certificate includes `127.0.0.1`, so TLS verification still works. Run the commands with `hta` in place of `helm`, keeping everything else as written. Keep plain `helm` for the commands against `mgmt.kubeconfig`: those don't go through the tunnel.
+
+#### Install Cilium { #helm-install-cilium }
+
+**Where:** [7.2 Install a CNI](07-worker-node.md#72-install-a-cni).
 ```sh
-TENANT_A_LOCAL_PORT=$(docker port $(docker ps -q --filter name=kindccm) \
-  6443/tcp | head -1 | cut -d: -f2)
-
-helm upgrade --install cilium cilium/cilium --version 1.20.2 \
+hta upgrade --install cilium cilium/cilium --version 1.20.2 \
   --kubeconfig tenant-a.kubeconfig \
-  --kube-apiserver https://127.0.0.1:$TENANT_A_LOCAL_PORT \
   --namespace kube-system \
   --set kubeProxyReplacement=true \
   --set k8sServiceHost=$TENANT_A_APISERVER_IP \
@@ -67,3 +68,17 @@ helm upgrade --install cilium cilium/cilium --version 1.20.2 \
 ```
 
 `k8sServiceHost` stays `172.18.0.5`: that address is used by the Cilium agent on the worker node, inside the Docker network.
+
+#### Uninstall Cilium { #helm-uninstall-cilium }
+
+**Where:** [12.3 Uninstall Cilium by hand](12-sveltos.md#123-uninstall-cilium-by-hand).
+```sh
+hta uninstall cilium --kubeconfig tenant-a.kubeconfig --namespace kube-system
+```
+
+#### List releases { #helm-list }
+
+**Where:** [12.4 Install Cilium with Sveltos](12-sveltos.md#124-install-cilium-with-sveltos).
+```sh
+hta list --kubeconfig tenant-a.kubeconfig -A
+```
