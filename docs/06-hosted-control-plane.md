@@ -92,7 +92,8 @@ kube-controller-manager
 
 Where does the `kube-apiserver` listen?
 ```sh
-kmgmt -n tenant-a get deploy tenant-a -o yaml | grep -E -- '--advertise-address'
+kmgmt -n tenant-a get deploy tenant-a -o yaml \
+  | grep -E -- '--advertise-address'
 ```
 
 ```{ .text .no-copy title="Output" }
@@ -190,7 +191,8 @@ kube-system       Active   20s
 
 Save the API server IP. You'll need it to join nodes and to configure Cilium:
 ```sh
-export TENANT_A_APISERVER_IP=$(kmgmt -n tenant-a get svc tenant-a -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+export TENANT_A_APISERVER_IP=$(kmgmt -n tenant-a get svc tenant-a \
+  -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
 
 You have a control plane with no nodes. Next, [join a worker node](07-worker-node.md).

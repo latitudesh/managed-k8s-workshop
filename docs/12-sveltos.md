@@ -157,7 +157,8 @@ tenant-a-worker-2   NotReady   <none>   7d23h   v1.37.0
 ```
 
 ```sh
-kta get node tenant-a-worker-2 -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}'
+kta get node tenant-a-worker-2 \
+  -o jsonpath='{.status.conditions[?(@.type=="Ready")].message}'
 ```
 
 ```{ .text .no-copy title="Output" }
@@ -170,7 +171,8 @@ A `ClusterProfile` says which clusters (a label selector) get what (Helm charts,
 
 The only value that changes from one cluster to another is the API server IP. Replace the placeholder with yours and apply:
 ```sh
-sed "s/TENANT_A_APISERVER_IP/$TENANT_A_APISERVER_IP/" manifests/sveltos-cilium.yaml | kmgmt apply -f -
+sed "s/TENANT_A_APISERVER_IP/$TENANT_A_APISERVER_IP/" \
+  manifests/sveltos-cilium.yaml | kmgmt apply -f -
 ```
 
 ```{ .text .no-copy title="Output" }
@@ -179,7 +181,8 @@ clusterprofile.config.projectsveltos.io/cilium created
 
 Sveltos matched the profile to `tenant-a` through the `cni: cilium` label:
 ```sh
-kmgmt get clusterprofile cilium -o jsonpath='{.status.matchingClusters[*].name}'
+kmgmt get clusterprofile cilium \
+  -o jsonpath='{.status.matchingClusters[*].name}'
 ```
 
 ```{ .text .no-copy title="Output" }
