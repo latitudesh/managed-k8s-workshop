@@ -32,7 +32,7 @@ helm upgrade --install cert-manager jetstack/cert-manager \
 
 
 !!! troubleshooting "`Progress deadline exceeded` after 5 minutes?"
-    See [Troubleshooting: cert-manager](troubleshooting.md#progress-deadline-exceeded-when-installing-cert-manager).
+    See [Troubleshooting: cert-manager](troubleshooting.md#cert-manager).
 
 ## 5.2 Kamaji
 

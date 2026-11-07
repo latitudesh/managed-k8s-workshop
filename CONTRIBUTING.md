@@ -78,10 +78,10 @@ Trim long output with `[...]` and keep only the lines the reader needs to compar
     Something to do before the problem happens.
 
 !!! troubleshooting "`connection reset by peer` on `172.18.0.5:6443`?"
-    See [Troubleshooting: macOS firewall](troubleshooting.md#connection-reset-by-peer-on-17218056443-macos).
+    See [Troubleshooting: macOS firewall](troubleshooting.md#macos-firewall).
 ````
 
-Keep the fix itself in `docs/troubleshooting.md` and leave only the symptom and a link in the step. Each entry there starts with a `**Where:**` line that links back to the step.
+Keep the fix itself in `docs/troubleshooting.md` and leave only the symptom and a link in the step. Each entry there starts with a `**Where:**` line that links back to the step, and its heading carries a short explicit id, `## Symptom { #macos-firewall }`, so the link from the step doesn't depend on the heading text.
 
 **Links.** Link to other pages by file name, `[7.2 Install a CNI](07-worker-node.md#72-install-a-cni)`. The anchor is the heading in lowercase with spaces as hyphens and punctuation removed. Link to manifests with their GitHub URL, so the link works on the site.
 

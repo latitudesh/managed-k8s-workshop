@@ -20,6 +20,6 @@ cloud-provider-kind
     On macOS, Docker runs inside a VM, so container IPs aren't reachable from your machine. `cloud-provider-kind` works around this with port mappings on the host, which needs extra privileges.
 
 !!! warning "macOS firewall"
-    If macOS asks whether `cloud-provider-kind` can accept incoming network connections, click **Allow**. With the firewall on and the answer set to block, the load balancer addresses won't work from your machine. See [Troubleshooting: macOS firewall](troubleshooting.md#connection-reset-by-peer-on-17218056443-macos) if that happens.
+    If macOS asks whether `cloud-provider-kind` can accept incoming network connections, click **Allow**. With the firewall on and the answer set to block, the load balancer addresses won't work from your machine. See [Troubleshooting: macOS firewall](troubleshooting.md#macos-firewall) if that happens.
 
 Leave it running. Next, [install the platform](05-helm-packages.md) on `mgmt`: cert-manager, Kamaji and etcd.

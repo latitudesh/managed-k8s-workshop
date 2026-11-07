@@ -156,7 +156,7 @@ helm upgrade --install cilium cilium/cilium --version 1.20.2 \
 
 
 !!! troubleshooting "`kubernetes cluster unreachable` with `connection reset by peer`? (macOS)"
-    If you're using the `kta` alias from the [firewall workaround](troubleshooting.md#connection-reset-by-peer-on-17218056443-macos), `helm` needs it too. See [Troubleshooting: Helm and the macOS firewall](troubleshooting.md#helm-needs-the-workaround-too).
+    If you're using the `kta` alias from the [firewall workaround](troubleshooting.md#macos-firewall), `helm` needs it too. See [Troubleshooting: Install Cilium with `hta`](troubleshooting.md#helm-install-cilium).
 
 Verify the worker node gets `Ready`:
 ```sh

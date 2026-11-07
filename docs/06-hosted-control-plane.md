@@ -150,7 +150,7 @@ Server Version: v1.36.4
 ```
 
 !!! troubleshooting "`connection reset by peer` on `172.18.0.5:6443`? (macOS)"
-    See [Troubleshooting: macOS firewall](troubleshooting.md#connection-reset-by-peer-on-17218056443-macos).
+    See [Troubleshooting: macOS firewall](troubleshooting.md#macos-firewall).
 
 It looks like any other cluster, but something is missing:
 ```sh
