@@ -9,14 +9,37 @@ search:
 ---
 
 <!-- Not in the nav on purpose. Put this page on the projector so people can
-     open the workshop on their own laptops: /managed-k8s-workshop/qr/ -->
+     open the workshop on their own laptops and join the Vevox poll, where
+     they tell us after each step whether they are done or stuck:
+     /managed-k8s-workshop/qr/ -->
 
 <div class="qr-page" markdown>
+
+<div class="qr-grid" markdown>
+
+<div class="qr-item" markdown>
 
 # Open the workshop on your laptop
 
 [![QR code for the workshop site](assets/qr-workshop.svg){ .qr-code }](https://latitudesh.github.io/managed-k8s-workshop/)
 
 [latitudesh.github.io/<br>managed-k8s-workshop/](https://latitudesh.github.io/managed-k8s-workshop/){ .qr-url }
+
+</div>
+
+<div class="qr-item" markdown>
+
+# Join the poll on Vevox
+
+After each step, vote: done, got an error, or not ready yet.
+{ .qr-note }
+
+[![QR code for the Vevox poll](assets/qr-vevox.svg){ .qr-code }](https://vevox.app/150758792)
+
+[vevox.app/<br>150758792](https://vevox.app/150758792){ .qr-url }
+
+</div>
+
+</div>
 
 </div>
