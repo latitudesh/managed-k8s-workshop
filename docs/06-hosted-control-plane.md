@@ -23,7 +23,7 @@ Create the `tenant-a` control plane:
 kmgmt apply -f manifests/tenant-a.yaml
 ```
 
-Watch it until it becomes `Ready`. This takes less than a minute:
+Watch it until it becomes `Ready`:
 ```sh
 kmgmt -n tenant-a get tenantcontrolplane tenant-a -w
 ```
