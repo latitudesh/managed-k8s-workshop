@@ -392,6 +392,570 @@
   --md-default-fg-color--lighter: var(--lat-border);
 }
 
+/* ---- Latitude.sh page (docs/latitude.md) ---------------------------------
+   Built like latitude.sh: a hero on the chrome background, "./section"
+   labels in monospace lime, chrome icons on dark cards, numbers in lime.
+   The icons are latitude.sh's own (docs/assets/latitude/). */
+.md-typeset .lat-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 1rem 0 2.5rem;
+  padding: 2.4rem 2rem 2.2rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: #060600 url("../assets/latitude/hero.jpg") center / cover no-repeat;
+  color: #ffffff;
+}
+.md-typeset .lat-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(6, 6, 0, 0.88) 0%, rgba(6, 6, 0, 0.6) 60%, rgba(6, 6, 0, 0.35) 100%);
+}
+.md-typeset .lat-hero > * {
+  position: relative;
+  margin: 0;
+}
+.md-typeset .lat-hero__label,
+.md-typeset .lat-label {
+  font-family: var(--md-code-font-family);
+  font-size: 0.7rem;
+  color: var(--lat-lime);
+  letter-spacing: 0.02em;
+}
+.md-typeset .lat-hero__label {
+  margin-bottom: 0.8rem;
+}
+.md-typeset .lat-hero__title {
+  max-width: 24ch;
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+.md-typeset .lat-hero__text {
+  max-width: 58ch;
+  font-size: 0.85rem;
+  color: #d4d7dc;
+}
+.md-typeset .lat-label {
+  margin: 2.6rem 0 -1.2rem;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-label {
+  color: var(--lat-olive);
+}
+
+/* VM vs bare metal: two stacks of layers */
+.md-typeset .lat-compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.2rem;
+  margin: 1.5rem 0;
+}
+.md-typeset .lat-stack {
+  padding: 1.1rem 1.1rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-stack--metal {
+  border-color: var(--lat-lime-dim);
+}
+.md-typeset .lat-stack p {
+  margin: 0;
+}
+.md-typeset .lat-stack__title {
+  font-weight: 700;
+  margin-bottom: 0.8rem !important;
+}
+.md-typeset .lat-layer {
+  padding: 0.55rem 0.8rem;
+  margin-bottom: 0.3rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+.md-typeset .lat-layer small {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: var(--md-default-fg-color--lighter);
+}
+.md-typeset .lat-layer--dim {
+  border-style: dashed;
+  color: var(--md-default-fg-color--lighter);
+}
+.md-typeset .lat-layer--lime {
+  background: var(--lat-lime);
+  border-color: var(--lat-lime);
+  color: var(--lat-black);
+  padding: 0.9rem 0.8rem;
+}
+.md-typeset .lat-layer--lime small {
+  color: rgba(6, 6, 0, 0.7);
+}
+.md-typeset .lat-stack__note {
+  margin-top: 0.8rem !important;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Stat tiles: chrome icon, big lime number, one line */
+.md-typeset .lat-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.md-typeset .lat-stat {
+  padding: 1rem 1rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-stat img {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+  margin-bottom: 0.6rem;
+}
+.md-typeset .lat-stat p {
+  margin: 0;
+}
+.md-typeset .lat-stat__big {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--lat-lime);
+  margin-bottom: 0.35rem !important;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-stat__big {
+  color: var(--lat-olive);
+}
+.md-typeset .lat-stat__text {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Product and feature cards: chrome icon, name, one-liner. Links on the
+   Latitude.sh page, plain divs on the LKS page. */
+.md-typeset .lat-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.md-typeset .lat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.md-typeset a.lat-card:hover,
+.md-typeset a.lat-card:focus-visible {
+  border-color: var(--lat-lime-dim);
+  color: var(--md-default-fg-color);
+  transform: translateY(-2px);
+}
+.md-typeset .lat-card img {
+  width: 3.2rem;
+  height: 3.2rem;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+.md-typeset .lat-card__title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+}
+.md-typeset .lat-card__text {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Product verticals (docs/latitude.md), in the colors latitude.sh gives
+   each one (.vertical-computing, .vertical-storage, .vertical-network on
+   the site): lime, blue, pink. The color is a CSS variable per group and
+   everything inside reads it: the name, the top border, the dot on each
+   card and the glow on hover. */
+.md-typeset .lat-vertical {
+  --v: 224 254 86;
+  --v-text: rgb(var(--v));
+  margin: 1.5rem 0;
+  padding: 1.2rem 1.2rem 1.2rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  border-top: 3px solid rgb(var(--v));
+  background:
+    radial-gradient(ellipse 70% 60% at 0% 0%, rgb(var(--v) / 0.10), transparent 70%),
+    var(--md-default-bg-color--light);
+}
+.md-typeset .lat-vertical--storage { --v: 26 160 255; }
+.md-typeset .lat-vertical--network { --v: 234 51 136; }
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vertical--compute { --v-text: var(--lat-olive); }
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vertical--storage { --v-text: #0b6fb8; }
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vertical--network { --v-text: #c21f6b; }
+.md-typeset .lat-vertical__head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "img name" "img tag";
+  column-gap: 0.9rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.md-typeset .lat-vertical__head img {
+  grid-area: img;
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+}
+.md-typeset .lat-vertical__name {
+  grid-area: name;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--v-text);
+}
+.md-typeset .lat-vertical__name::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: rgb(var(--v));
+  box-shadow: 0 0 0 0.2rem rgb(var(--v) / 0.25);
+}
+.md-typeset .lat-vertical__tag {
+  grid-area: tag;
+  font-size: 0.72rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .lat-vertical__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.7rem;
+}
+.md-typeset .lat-vcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 0.9rem 0.85rem 1.1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.md-typeset .lat-vcard::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: rgb(var(--v));
+}
+.md-typeset .lat-vcard:hover,
+.md-typeset .lat-vcard:focus-visible {
+  border-color: rgb(var(--v));
+  background: radial-gradient(ellipse 90% 80% at 30% 100%, rgb(var(--v) / 0.22), transparent), var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+.md-typeset .lat-vcard__title {
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.md-typeset .lat-vcard__text {
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vertical {
+  border-color: var(--lat-light-border);
+  border-top-color: rgb(var(--v));
+  background: radial-gradient(ellipse 70% 60% at 0% 0%, rgb(var(--v) / 0.12), transparent 70%), #ffffff;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vcard {
+  border-color: var(--lat-light-border);
+  background: var(--lat-light-bg);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vcard:hover {
+  background: radial-gradient(ellipse 90% 80% at 30% 100%, rgb(var(--v) / 0.18), transparent), var(--lat-light-bg);
+}
+
+/* Four numbered steps (docs/lks.md): a vertical timeline, number in a lime
+   circle on the left, a line joining them, title and one line on the right. */
+.md-typeset .lat-steps {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem 0 1rem;
+  padding: 0.4rem 0 0.4rem 0.2rem;
+}
+.md-typeset .lat-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  grid-template-areas: "n title" "n text";
+  column-gap: 0.9rem;
+  padding: 0 0 1.4rem;
+}
+.md-typeset .lat-step:last-child {
+  padding-bottom: 0;
+}
+.md-typeset .lat-step::before {
+  content: "";
+  position: absolute;
+  left: 1.2rem;
+  top: 2.4rem;
+  bottom: 0;
+  width: 2px;
+  background: var(--lat-border);
+}
+.md-typeset .lat-step:last-child::before {
+  display: none;
+}
+.md-typeset .lat-step__n {
+  grid-area: n;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--lat-lime);
+  color: var(--lat-black);
+  font-family: var(--md-code-font-family);
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 0 0 0.25rem rgba(224, 254, 86, 0.15);
+}
+.md-typeset .lat-step__title {
+  grid-area: title;
+  align-self: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  min-height: 2.4rem;
+  display: flex;
+  align-items: center;
+}
+.md-typeset .lat-step__text {
+  grid-area: text;
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+  margin-top: 0.1rem;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-step::before {
+  background: var(--lat-light-border);
+}
+
+/* Locations (docs/lks.md): a panel with the big count in lime and the
+   locations as tiles with their code, grouped by region, like the map
+   section on latitude.sh. */
+.md-typeset .lat-locations {
+  display: grid;
+  grid-template-columns: minmax(9rem, 1fr) 2.2fr;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  padding: 1.3rem 1.4rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 50%, rgba(224, 254, 86, 0.10), transparent 70%),
+    var(--md-default-bg-color--light);
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-locations {
+    grid-template-columns: 1fr;
+  }
+}
+.md-typeset .lat-locations__lead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.md-typeset .lat-locations__big {
+  font-size: 4.2rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--lat-lime);
+}
+.md-typeset .lat-locations__label {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 14ch;
+}
+.md-typeset .lat-locations__regions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.md-typeset .lat-region__name {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--md-default-fg-color--lighter);
+}
+.md-typeset .lat-region__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.md-typeset .lat-loc {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.4rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.md-typeset .lat-loc__code {
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  background: rgba(224, 254, 86, 0.14);
+  color: var(--lat-lime);
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-locations {
+  border-color: var(--lat-light-border);
+  background: radial-gradient(ellipse 60% 80% at 0% 50%, rgba(224, 254, 86, 0.25), transparent 70%), #ffffff;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-locations__big {
+  color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-loc {
+  border-color: var(--lat-light-border);
+  background: var(--lat-light-bg);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-loc__code {
+  background: rgba(224, 254, 86, 0.45);
+  color: var(--lat-olive);
+}
+
+/* "Your servers. Your tools.": six ways to deploy the same server, one card
+   each with a lime key, a title, one line and a one-line snippet. */
+.md-typeset .lat-ways {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0 1.8rem;
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-ways {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.md-typeset .lat-way {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 1rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.md-typeset .lat-way:hover,
+.md-typeset .lat-way:focus-visible {
+  border-color: var(--lat-lime);
+  color: var(--md-default-fg-color);
+  transform: translateY(-2px);
+}
+.md-typeset .lat-way__k {
+  align-self: flex-start;
+  padding: 0.25rem 0.6rem;
+  border-radius: 2rem;
+  background: var(--lat-lime);
+  color: var(--lat-black);
+  font-family: var(--md-code-font-family);
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+.md-typeset .lat-way__title {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.md-typeset .lat-way__text {
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+  flex: 1;
+}
+.md-typeset .lat-way .lat-way__code {
+  display: block;
+  margin-top: 0.6rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  color: var(--lat-lime);
+  font-size: 0.62rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-way {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-way:hover {
+  border-color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-way .lat-way__code {
+  background: var(--lat-light-bg);
+  border-color: var(--lat-light-border);
+  color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-stack,
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-stat,
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-card {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-layer {
+  border-color: var(--lat-light-border);
+  background: var(--lat-light-bg);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-layer--lime {
+  border-color: var(--lat-lime);
+  background: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-stack--metal,
+[data-md-color-scheme="latitude-light"] .md-typeset a.lat-card:hover {
+  border-color: var(--lat-olive);
+}
+
 /* ---- Arcade demo embed (docs/latitude.md) -----------------------------
    Same wrapper as latitude.sh/docs: the iframe fills a box whose height
    comes from the demo's aspect ratio plus Arcade's 41px toolbar. The

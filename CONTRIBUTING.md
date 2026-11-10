@@ -39,14 +39,15 @@ The `site/` folder it creates is ignored by git.
 | --- | --- |
 | `docs/welcome.md` | The cover: just the workshop title, for the projector |
 | `docs/index.md` | The introduction: what you'll build and the list of steps |
-| `docs/latitude.md` | What Latitude.sh and LKS are, and how LKS maps to the steps |
+| `docs/latitude.md` | What Latitude.sh is, with the dashboard demo |
+| `docs/lks.md` | What LKS is and how it maps to the steps |
 | `docs/hosts.md` | Who's giving the workshop, with photos in `docs/assets/` |
 | `docs/credits-and-happy-hour.md` | "On the house": the LKS credits offer and the happy hour invite, with the QR slides, shown before the workshop starts |
 | `docs/wrap-up.md` | The closing page: recap, the LKS credits offer and the happy hour again, and where to go next |
 | `docs/NN-slug.md` | One file per step, numbered in the order of the workshop |
 | `docs/troubleshooting.md` | Every known problem, with the symptom, where it shows up and the fix |
 | `docs/stylesheets/extra.css` | The Latitude.sh colors and the custom blocks described below |
-| `docs/assets/` | Logo and favicon |
+| `docs/assets/` | Logo, favicon, host photos and the QR codes for `docs/qr.md`. `latitude/` holds the icons and hero background taken from latitude.sh for `docs/latitude.md` |
 | `includes/` | Blocks shared by several pages, pulled in with `--8<-- "file.md"` |
 | `manifests/` | The Kubernetes manifests the workshop applies |
 | `mkdocs.yml` | Site configuration and navigation |
