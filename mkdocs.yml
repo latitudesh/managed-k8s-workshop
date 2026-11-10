@@ -35,7 +35,7 @@ theme:
     - navigation.top
     - navigation.tracking
     - navigation.sections
-    - navigation.indexes
+    - navigation.expand
     - toc.follow
     - search.suggest
     - search.highlight
@@ -68,6 +68,11 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
+  # Shared blocks under includes/, pulled into pages with --8<-- "file.md"
+  - pymdownx.snippets:
+      base_path:
+        - includes
+      check_paths: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -77,28 +82,38 @@ markdown_extensions:
 plugins:
   - search
 
+# The shared checkpoint lives outside docs/, so mkdocs serve has to be told
+# to watch it, or edits there don't refresh the preview.
+watch:
+  - includes
+
 nav:
-  - Introduction: index.md
-  - What is Latitude.sh?: latitude.md
-  - Your hosts: hosts.md
-  - Setup:
-      - 1. Prerequisites: 01-prerequisites.md
-      - 2. Get the workshop files: 02-workshop-files.md
-      - 3. Create the kind cluster (mgmt): 03-management-cluster.md
-      - 4. Start cloud-provider-kind: 04-cloud-provider-kind.md
-      - 5. Install Helm packages: 05-helm-packages.md
-  - Hosted control plane:
-      - 6. Create a hosted control plane: 06-hosted-control-plane.md
-      - 7. Join a worker node: 07-worker-node.md
-  - Provider network:
-      - 8. Simulate a managed Kubernetes network: 08-provider-network.md
-      - 9. Run a workload: 09-workload.md
-      - 10. Fix with Konnectivity: 10-konnectivity.md
-  - Operations:
-      - 11. Upgrade Kubernetes: 11-upgrade.md
-      - 12. Manage add-ons with Sveltos: 12-sveltos.md
-      - 13. Clean up: 13-clean-up.md
-  - Bonus:
-      - 14. Run it on LKS (optional): 14-lks.md
+  - Before we start:
+      - Welcome: welcome.md
+      - Your hosts: hosts.md
+      - Latitude.sh: latitude.md
+      - LKS: lks.md
+      - On the house: credits-and-happy-hour.md
+  - Workshop:
+      - Introduction: index.md
+      - Setup:
+          - 1. Prerequisites: 01-prerequisites.md
+          - 2. Get the workshop files: 02-workshop-files.md
+          - 3. Create the kind cluster (mgmt): 03-management-cluster.md
+          - 4. Start cloud-provider-kind: 04-cloud-provider-kind.md
+          - 5. Install Helm packages: 05-helm-packages.md
+      - Hosted control plane:
+          - 6. Create a hosted control plane: 06-hosted-control-plane.md
+          - 7. Join a worker node: 07-worker-node.md
+      - Provider network:
+          - 8. Simulate a managed Kubernetes network: 08-provider-network.md
+          - 9. Run a workload: 09-workload.md
+          - 10. Fix with Konnectivity: 10-konnectivity.md
+      - Operations:
+          - 11. Upgrade Kubernetes: 11-upgrade.md
+          - 12. Manage add-ons with Sveltos: 12-sveltos.md
+          - 13. Clean up: 13-clean-up.md
+      - Bonus:
+          - 14. Run it on LKS (optional): 14-lks.md
+      - Troubleshooting: troubleshooting.md
   - Wrap-up: wrap-up.md
-  - Troubleshooting: troubleshooting.md

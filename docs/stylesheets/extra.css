@@ -233,6 +233,117 @@
   background-color: #e8752e;
 }
 
+/* ---- "checkpoint" admonition: a ticked box, in lime ----------------------
+   The block at the end of every step (includes/vevox-checkpoint.md) that asks
+   people to mark their progress in the Vevox poll and send questions to the
+   Q&A. Brighter than a tip so it isn't skipped: lime border all around and a
+   stronger lime title.
+   Usage: !!! checkpoint "Before you move on"  */
+:root {
+  --md-admonition-icon--checkpoint: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V5h10V3H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8h-2m-11.09-.92L6.5 11.5 11 16 21 6l-1.41-1.42L11 13.17z"/></svg>');
+}
+.md-typeset .admonition.checkpoint,
+.md-typeset details.checkpoint {
+  margin-top: 1.5rem;
+  border-color: var(--lat-lime-dim);
+}
+.md-typeset .checkpoint > .admonition-title,
+.md-typeset .checkpoint > summary {
+  background-color: rgba(224, 254, 86, 0.12);
+}
+.md-typeset .checkpoint > .admonition-title::before,
+.md-typeset .checkpoint > summary::before {
+  background-color: var(--lat-lime-dim);
+  -webkit-mask-image: var(--md-admonition-icon--checkpoint);
+          mask-image: var(--md-admonition-icon--checkpoint);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .admonition.checkpoint,
+[data-md-color-scheme="latitude-dark"] .md-typeset details.checkpoint {
+  border-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .checkpoint > .admonition-title::before,
+[data-md-color-scheme="latitude-dark"] .md-typeset .checkpoint > summary::before {
+  background-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .checkpoint > .admonition-title,
+[data-md-color-scheme="latitude-light"] .md-typeset .checkpoint > summary {
+  background-color: rgba(224, 254, 86, 0.3);
+}
+/* Inside the box: two buttons, one for the poll and one for the Q&A. The
+   poll answers live in the title as plain text with emoji: each poll is
+   opened live during the workshop, so there's nothing to link to. The
+   button emoji comes from the data-emoji attribute. */
+.md-typeset .checkpoint-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.6rem 0;
+}
+.md-typeset .checkpoint-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.65rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--lat-lime-dim);
+  color: var(--md-default-fg-color);
+  font-weight: 600;
+  font-size: 0.72rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s;
+}
+.md-typeset .checkpoint-button::before {
+  content: attr(data-emoji);
+  font-size: 1rem;
+  line-height: 1;
+}
+.md-typeset .checkpoint-button--primary {
+  background-color: rgba(224, 254, 86, 0.12);
+}
+.md-typeset .checkpoint-button:hover,
+.md-typeset .checkpoint-button:focus-visible {
+  background-color: var(--lat-lime-dim);
+  border-color: var(--lat-lime-dim);
+  color: var(--lat-black);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .checkpoint-button {
+  border-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .checkpoint-button--primary {
+  border-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .checkpoint-button {
+  border-color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .checkpoint-button--primary {
+  border-color: var(--lat-lime);
+}
+
+/* The theme's own "a:hover" rules, scoped per color scheme, outrank the
+   hover rules of the link-styled components above and below (checkpoint
+   buttons, product and tool cards, roadmap pills, host links), and would
+   turn their text pale lime or olive on hover. Pin the text color here
+   with the same scheme scoping, so these rules win. */
+[data-md-color-scheme="latitude-dark"] .md-typeset a.checkpoint-button:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset a.checkpoint-button:focus-visible,
+[data-md-color-scheme="latitude-light"] .md-typeset a.checkpoint-button:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset a.checkpoint-button:focus-visible {
+  color: var(--lat-black);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset a.lat-card:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset a.lat-way:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset a.lat-vcard:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset .lat-phase__steps a:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset .host__links a:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset a.lat-card:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset a.lat-way:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset a.lat-vcard:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase__steps a:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset .host__links a:hover {
+  color: var(--md-default-fg-color);
+}
+
 /* ---- Output blocks ---------------------------------------------------------
    Written as ```{ .text .no-copy title="Output" }: a small "Output" label,
    no copy button, dimmer text and a dashed border, so they read as a result
@@ -305,6 +416,776 @@
   --md-default-fg-color--lighter: var(--lat-border);
 }
 
+/* ---- Latitude.sh page (docs/latitude.md) ---------------------------------
+   Built like latitude.sh: a hero on the chrome background, "./section"
+   labels in monospace lime, chrome icons on dark cards, numbers in lime.
+   The icons are latitude.sh's own (docs/assets/latitude/). */
+.md-typeset .lat-hero {
+  position: relative;
+  overflow: hidden;
+  margin: 1rem 0 2.5rem;
+  padding: 2.4rem 2rem 2.2rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: #060600 url("../assets/latitude/hero.jpg") center / cover no-repeat;
+  color: #ffffff;
+}
+.md-typeset .lat-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(6, 6, 0, 0.88) 0%, rgba(6, 6, 0, 0.6) 60%, rgba(6, 6, 0, 0.35) 100%);
+}
+.md-typeset .lat-hero > * {
+  position: relative;
+  margin: 0;
+}
+.md-typeset .lat-hero__label,
+.md-typeset .lat-label {
+  font-family: var(--md-code-font-family);
+  font-size: 0.7rem;
+  color: var(--lat-lime);
+  letter-spacing: 0.02em;
+}
+.md-typeset .lat-hero__label {
+  margin-bottom: 0.8rem;
+}
+.md-typeset .lat-hero__title {
+  max-width: 24ch;
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+.md-typeset .lat-hero__text {
+  max-width: 58ch;
+  font-size: 0.85rem;
+  color: #d4d7dc;
+}
+.md-typeset .lat-label {
+  margin: 2.6rem 0 -1.2rem;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-label {
+  color: var(--lat-olive);
+}
+
+/* VM vs bare metal: two stacks of layers */
+.md-typeset .lat-compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.2rem;
+  margin: 1.5rem 0;
+}
+.md-typeset .lat-stack {
+  padding: 1.1rem 1.1rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-stack--metal {
+  border-color: var(--lat-lime-dim);
+}
+.md-typeset .lat-stack p {
+  margin: 0;
+}
+.md-typeset .lat-stack__title {
+  font-weight: 700;
+  margin-bottom: 0.8rem !important;
+}
+.md-typeset .lat-layer {
+  padding: 0.55rem 0.8rem;
+  margin-bottom: 0.3rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+.md-typeset .lat-layer small {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: var(--md-default-fg-color--lighter);
+}
+.md-typeset .lat-layer--dim {
+  border-style: dashed;
+  color: var(--md-default-fg-color--lighter);
+}
+.md-typeset .lat-layer--lime {
+  background: var(--lat-lime);
+  border-color: var(--lat-lime);
+  color: var(--lat-black);
+  padding: 0.9rem 0.8rem;
+}
+.md-typeset .lat-layer--lime small {
+  color: rgba(6, 6, 0, 0.7);
+}
+.md-typeset .lat-stack__note {
+  margin-top: 0.8rem !important;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Stat tiles: chrome icon, big lime number, one line */
+.md-typeset .lat-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.md-typeset .lat-stat {
+  padding: 1rem 1rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-stat img {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+  margin-bottom: 0.6rem;
+}
+.md-typeset .lat-stat p {
+  margin: 0;
+}
+.md-typeset .lat-stat__big {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--lat-lime);
+  margin-bottom: 0.35rem !important;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-stat__big {
+  color: var(--lat-olive);
+}
+.md-typeset .lat-stat__text {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .lat-stats--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-stats--three {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Product and feature cards: chrome icon, name, one-liner. Links on the
+   Latitude.sh page, plain divs on the LKS page. */
+.md-typeset .lat-products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.md-typeset .lat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.md-typeset a.lat-card:hover,
+.md-typeset a.lat-card:focus-visible {
+  border-color: var(--lat-lime-dim);
+  color: var(--md-default-fg-color);
+  transform: translateY(-2px);
+}
+.md-typeset .lat-card img {
+  width: 3.2rem;
+  height: 3.2rem;
+  object-fit: contain;
+  margin-bottom: 0.5rem;
+}
+.md-typeset .lat-card__title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+}
+.md-typeset .lat-card__text {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Product verticals (docs/latitude.md), in the colors latitude.sh gives
+   each one (.vertical-computing, .vertical-storage, .vertical-network on
+   the site): lime, blue, pink. The color is a CSS variable per group and
+   everything inside reads it: the name, the top border, the dot on each
+   card and the glow on hover. */
+.md-typeset .lat-vertical {
+  --v: 224 254 86;
+  --v-text: rgb(var(--v));
+  margin: 1.5rem 0;
+  padding: 1.2rem 1.2rem 1.2rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  border-top: 3px solid rgb(var(--v));
+  background:
+    radial-gradient(ellipse 70% 60% at 0% 0%, rgb(var(--v) / 0.10), transparent 70%),
+    var(--md-default-bg-color--light);
+}
+.md-typeset .lat-vertical--storage { --v: 26 160 255; }
+.md-typeset .lat-vertical--network { --v: 234 51 136; }
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vertical--compute { --v-text: var(--lat-olive); }
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vertical--storage { --v-text: #0b6fb8; }
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vertical--network { --v-text: #c21f6b; }
+.md-typeset .lat-vertical__head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "img name" "img tag";
+  column-gap: 0.9rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.md-typeset .lat-vertical__head img {
+  grid-area: img;
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+}
+.md-typeset .lat-vertical__name {
+  grid-area: name;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--v-text);
+}
+.md-typeset .lat-vertical__name::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: rgb(var(--v));
+  box-shadow: 0 0 0 0.2rem rgb(var(--v) / 0.25);
+}
+.md-typeset .lat-vertical__tag {
+  grid-area: tag;
+  font-size: 0.72rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .lat-vertical__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.7rem;
+}
+.md-typeset .lat-vcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 0.9rem 0.85rem 1.1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.md-typeset .lat-vcard::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: rgb(var(--v));
+}
+.md-typeset .lat-vcard:hover,
+.md-typeset .lat-vcard:focus-visible {
+  border-color: rgb(var(--v));
+  background: radial-gradient(ellipse 90% 80% at 30% 100%, rgb(var(--v) / 0.22), transparent), var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+.md-typeset .lat-vcard__title {
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+.md-typeset .lat-vcard__text {
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vertical {
+  border-color: var(--lat-light-border);
+  border-top-color: rgb(var(--v));
+  background: radial-gradient(ellipse 70% 60% at 0% 0%, rgb(var(--v) / 0.12), transparent 70%), #ffffff;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vcard {
+  border-color: var(--lat-light-border);
+  background: var(--lat-light-bg);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-vcard:hover {
+  background: radial-gradient(ellipse 90% 80% at 30% 100%, rgb(var(--v) / 0.18), transparent), var(--lat-light-bg);
+}
+
+/* Introduction: the three takeaways, and the badges on the tool cards.
+   Teaching aids in the orange latitude.sh uses for its Build vertical,
+   production-grade tools in lime. */
+.md-typeset .lat-goals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0 1.5rem;
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-goals {
+    grid-template-columns: 1fr;
+  }
+}
+.md-typeset .lat-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  border-top: 3px solid var(--lat-lime);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-goal__n {
+  font-family: var(--md-code-font-family);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--lat-lime);
+}
+.md-typeset .lat-goal__title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+}
+.md-typeset .lat-goal__text {
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .lat-badge {
+  align-self: flex-start;
+  padding: 0.2rem 0.55rem;
+  border-radius: 2rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.md-typeset .lat-badge--teach {
+  background: rgba(255, 169, 120, 0.18);
+  color: #ffa978;
+  border: 1px solid rgba(255, 169, 120, 0.5);
+}
+.md-typeset .lat-badge--prod {
+  background: rgba(224, 254, 86, 0.14);
+  color: var(--lat-lime);
+  border: 1px solid rgba(224, 254, 86, 0.5);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-goal {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+  border-top-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-goal__n {
+  color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-badge--teach {
+  background: rgba(255, 169, 120, 0.25);
+  color: #b3480a;
+  border-color: #e8752e;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-badge--prod {
+  background: rgba(224, 254, 86, 0.45);
+  color: var(--lat-olive);
+  border-color: var(--lat-lime-dim);
+}
+
+/* Diagram panel (docs/index.md): the architecture diagram on a card with
+   room around it. Material renders the SVG inside .mermaid, so the padding
+   goes on that host element. */
+.md-typeset .lat-diagram {
+  margin: 1.2rem 0 1.5rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-diagram .mermaid {
+  margin: 0;
+  padding: 1.6rem 1.2rem;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-diagram {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-diagram .mermaid {
+  --md-mermaid-label-bg-color: #ffffff;
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .lat-diagram .mermaid {
+  --md-mermaid-label-bg-color: var(--lat-surface);
+}
+
+/* Roadmap (docs/index.md): one card per part of the workshop, with the
+   steps as numbered pills. The bonus part is dashed, it's optional. */
+.md-typeset .lat-roadmap {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0 1.5rem;
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-roadmap {
+    grid-template-columns: 1fr;
+  }
+}
+.md-typeset .lat-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  padding: 1rem 1rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  border-top: 3px solid var(--lat-lime);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-phase--bonus {
+  border-style: dashed;
+  border-top-style: solid;
+  border-top-color: var(--lat-fg-muted);
+}
+.md-typeset .lat-phase__name {
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+}
+.md-typeset .lat-phase__text {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .lat-phase__steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+.md-typeset .lat-phase__steps a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.6rem 0.25rem 0.25rem;
+  border-radius: 2rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font-size: 0.66rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.md-typeset .lat-phase__steps a:hover,
+.md-typeset .lat-phase__steps a:focus-visible {
+  border-color: var(--lat-lime);
+  color: var(--md-default-fg-color);
+}
+.md-typeset .lat-phase__steps b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  padding: 0 0.3rem;
+  border-radius: 2rem;
+  background: var(--lat-lime);
+  color: var(--lat-black);
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+  border-top-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase--bonus {
+  border-top-color: #9a9a94;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase__steps a {
+  background: var(--lat-light-bg);
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase__steps a:hover {
+  border-color: var(--lat-olive);
+}
+
+/* Four numbered steps (docs/lks.md): a vertical timeline, number in a lime
+   circle on the left, a line joining them, title and one line on the right. */
+.md-typeset .lat-steps {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem 0 1rem;
+  padding: 0.4rem 0 0.4rem 0.2rem;
+}
+.md-typeset .lat-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  grid-template-areas: "n title" "n text";
+  column-gap: 0.9rem;
+  padding: 0 0 1.4rem;
+}
+.md-typeset .lat-step:last-child {
+  padding-bottom: 0;
+}
+.md-typeset .lat-step::before {
+  content: "";
+  position: absolute;
+  left: 1.2rem;
+  top: 2.4rem;
+  bottom: 0;
+  width: 2px;
+  background: var(--lat-border);
+}
+.md-typeset .lat-step:last-child::before {
+  display: none;
+}
+.md-typeset .lat-step__n {
+  grid-area: n;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background: var(--lat-lime);
+  color: var(--lat-black);
+  font-family: var(--md-code-font-family);
+  font-size: 0.8rem;
+  font-weight: 700;
+  box-shadow: 0 0 0 0.25rem rgba(224, 254, 86, 0.15);
+}
+.md-typeset .lat-step__title {
+  grid-area: title;
+  align-self: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  min-height: 2.4rem;
+  display: flex;
+  align-items: center;
+}
+.md-typeset .lat-step__text {
+  grid-area: text;
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+  margin-top: 0.1rem;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-step::before {
+  background: var(--lat-light-border);
+}
+
+/* Locations (docs/lks.md): a panel with the big count in lime and the
+   locations as tiles with their code, grouped by region, like the map
+   section on latitude.sh. */
+.md-typeset .lat-locations {
+  display: grid;
+  grid-template-columns: minmax(9rem, 1fr) 2.2fr;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  padding: 1.3rem 1.4rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 50%, rgba(224, 254, 86, 0.10), transparent 70%),
+    var(--md-default-bg-color--light);
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-locations {
+    grid-template-columns: 1fr;
+  }
+}
+.md-typeset .lat-locations__lead {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.md-typeset .lat-locations__big {
+  font-size: 4.2rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--lat-lime);
+}
+.md-typeset .lat-locations__label {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.3;
+  max-width: 14ch;
+}
+.md-typeset .lat-locations__regions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.md-typeset .lat-region__name {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--md-default-fg-color--lighter);
+}
+.md-typeset .lat-region__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.md-typeset .lat-loc {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem 0.35rem 0.4rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.md-typeset .lat-loc__code {
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  background: rgba(224, 254, 86, 0.14);
+  color: var(--lat-lime);
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-locations {
+  border-color: var(--lat-light-border);
+  background: radial-gradient(ellipse 60% 80% at 0% 50%, rgba(224, 254, 86, 0.25), transparent 70%), #ffffff;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-locations__big {
+  color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-loc {
+  border-color: var(--lat-light-border);
+  background: var(--lat-light-bg);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-loc__code {
+  background: rgba(224, 254, 86, 0.45);
+  color: var(--lat-olive);
+}
+
+/* "Your servers. Your tools.": six ways to deploy the same server, one card
+   each with a lime key, a title, one line and a one-line snippet. */
+.md-typeset .lat-ways {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0 1.8rem;
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-ways {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.md-typeset .lat-way {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 1rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+  color: var(--md-default-fg-color);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.md-typeset .lat-way:hover,
+.md-typeset .lat-way:focus-visible {
+  border-color: var(--lat-lime);
+  color: var(--md-default-fg-color);
+  transform: translateY(-2px);
+}
+.md-typeset .lat-way__k {
+  align-self: flex-start;
+  padding: 0.25rem 0.6rem;
+  border-radius: 2rem;
+  background: var(--lat-lime);
+  color: var(--lat-black);
+  font-family: var(--md-code-font-family);
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+.md-typeset .lat-way__title {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.md-typeset .lat-way__text {
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+  flex: 1;
+}
+.md-typeset .lat-way .lat-way__code {
+  display: block;
+  margin-top: 0.6rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  color: var(--lat-lime);
+  font-size: 0.62rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-way {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-way:hover {
+  border-color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-way .lat-way__code {
+  background: var(--lat-light-bg);
+  border-color: var(--lat-light-border);
+  color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-stack,
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-stat,
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-card {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-layer {
+  border-color: var(--lat-light-border);
+  background: var(--lat-light-bg);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-layer--lime {
+  border-color: var(--lat-lime);
+  background: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-stack--metal,
+[data-md-color-scheme="latitude-light"] .md-typeset a.lat-card:hover {
+  border-color: var(--lat-olive);
+}
+
 /* ---- Arcade demo embed (docs/latitude.md) -----------------------------
    Same wrapper as latitude.sh/docs: the iframe fills a box whose height
    comes from the demo's aspect ratio plus Arcade's 41px toolbar. The
@@ -331,25 +1212,176 @@
   color-scheme: light;
 }
 
-/* ---- "Your hosts" page: two cards side by side, stacked on narrow screens --- */
+/* ---- Cover page (docs/welcome.md): the hero, taller, with "Welcome to"
+   in lime and the workshop title as the H1. Projected while people arrive. */
+.md-typeset .lat-hero--cover {
+  min-height: 68vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 2.5rem;
+}
+.md-typeset .lat-hero--cover h1 {
+  color: #ffffff;
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  max-width: 18ch;
+  margin: 0;
+}
+.md-typeset .lat-hero--cover .cover__kicker {
+  margin: 0 0 0.8rem;
+  font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+  font-weight: 600;
+  color: var(--lat-lime);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* ---- "Your hosts" page: two cards side by side, stacked on narrow screens,
+   in the same card style as the rest. */
 .md-typeset .hosts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 1.5rem;
+  gap: 1.2rem;
   margin: 1.5rem 0;
+}
+.md-typeset .host {
+  padding: 1.1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
 }
 .md-typeset .host img {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
+  object-position: center 30%;
   border-radius: 0.4rem;
   border: 1px solid var(--lat-border);
-}
-[data-md-color-scheme="latitude-light"] .md-typeset .host img {
-  border-color: #e0e0dc;
+  margin-bottom: 0.9rem;
 }
 .md-typeset .host p {
-  margin: 0.6rem 0;
+  margin: 0.5rem 0;
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .host .host__name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--md-default-fg-color);
+}
+.md-typeset .host .host__role {
+  margin: 0.1rem 0 0.7rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.65rem;
+  color: var(--lat-lime);
+}
+.md-typeset .host .host__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+.md-typeset .host .host__links a {
+  padding: 0.25rem 0.65rem;
+  border-radius: 2rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.md-typeset .host .host__links a:hover {
+  border-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host img {
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host .host__role {
+  color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host .host__links a {
+  background: var(--lat-light-bg);
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host .host__links a:hover {
+  border-color: var(--lat-olive);
+}
+
+/* ---- Slides with a footer (docs/credits-and-happy-hour.md, docs/wrap-up.md):
+   the 16:9 slide as is, no frame, with one line and a lime button under it. */
+.md-typeset .lat-slide {
+  margin: 1.2rem 0 1.8rem;
+}
+.md-typeset .lat-slide > p {
+  margin: 0;
+}
+.md-typeset .lat-slide img {
+  display: block;
+  width: 100%;
+  border-radius: 0.4rem;
+}
+.md-typeset .lat-slide .lat-slide__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  padding: 0.8rem 0 0;
+  font-size: 0.72rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .lat-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  background: var(--lat-lime);
+  color: var(--lat-black) !important;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.md-typeset .lat-button:hover,
+.md-typeset .lat-button:focus-visible {
+  background: var(--lat-lime-dim);
+}
+
+/* Two QR slides side by side (Q&A section of the Wrap-up), so both can be
+   scanned from the projector while we take questions. Stacked on narrow
+   screens. */
+.md-typeset .qr-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+@media (max-width: 44rem) {
+  .md-typeset .qr-pair {
+    grid-template-columns: 1fr;
+  }
+}
+.md-typeset .qr-pair p {
+  margin: 0;
+}
+.md-typeset .qr-pair img {
+  display: block;
+  width: 100%;
+  border-radius: 0.4rem;
+}
+
+/* Goal cards that wrap to as many columns as fit (docs/wrap-up.md) */
+.md-typeset .lat-goals--wrap {
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
 }
 
 /* ---- QR page (docs/qr.md, not in the nav): projected at the start of the

@@ -2,19 +2,28 @@
 
 This is the "Create Cluster" button. One `TenantControlPlane` resource becomes a full Kubernetes control plane, running as ordinary Pods in `mgmt`. No VMs to boot and no control plane nodes to manage.
 
+<div class="lat-diagram" markdown>
+
 ```mermaid
-flowchart LR
-  you(["kubectl"]) --> lb["LoadBalancer<br/>172.18.0.5:6443"]
+%%{init: {"flowchart": {"padding": 20, "nodeSpacing": 60, "rankSpacing": 60, "subGraphTitleMargin": {"top": 16, "bottom": 22}}}}%%
+flowchart TB
+  you(["kubectl"])
   subgraph mgmt["mgmt cluster"]
+    lb["LoadBalancer<br/>172.18.0.5:6443"]
     subgraph ns["namespace: tenant-a"]
-      lb --> p1["Pod<br/>kube-apiserver<br/>kube-scheduler<br/>kube-controller-manager"]
-      lb --> p2["Pod<br/>kube-apiserver<br/>kube-scheduler<br/>kube-controller-manager"]
+      p1["Pod<br/>kube-apiserver<br/>kube-scheduler<br/>kube-controller-manager"]
+      p2["Pod<br/>kube-apiserver<br/>kube-scheduler<br/>kube-controller-manager"]
     end
     etcd[("kamaji-etcd<br/>prefix: /&lt;tenant-a uuid&gt;")]
   end
+  you --> lb
+  lb --> p1
+  lb --> p2
   p1 --> etcd
   p2 --> etcd
 ```
+
+</div>
 
 Take a look at [`manifests/tenant-a.yaml`](https://github.com/latitudesh/managed-k8s-workshop/blob/main/manifests/tenant-a.yaml), each field is commented.
 
@@ -194,5 +203,7 @@ Save the API server IP. You'll need it to join nodes and to configure Cilium:
 export TENANT_A_APISERVER_IP=$(kmgmt -n tenant-a get svc tenant-a \
   -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
+
+--8<-- "vevox-checkpoint.md"
 
 You have a control plane with no nodes. Next, [join a worker node](07-worker-node.md).

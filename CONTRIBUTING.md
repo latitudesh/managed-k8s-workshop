@@ -37,20 +37,24 @@ The `site/` folder it creates is ignored by git.
 
 | Path | What it is |
 | --- | --- |
+| `docs/welcome.md` | The cover: just the workshop title, for the projector |
 | `docs/index.md` | The introduction: what you'll build and the list of steps |
-| `docs/latitude.md` | What Latitude.sh and LKS are, and how LKS maps to the steps |
+| `docs/latitude.md` | What Latitude.sh is, with the dashboard demo |
+| `docs/lks.md` | What LKS is and how it maps to the steps |
 | `docs/hosts.md` | Who's giving the workshop, with photos in `docs/assets/` |
-| `docs/wrap-up.md` | The closing page: recap, the LKS credits offer and where to go next |
+| `docs/credits-and-happy-hour.md` | "On the house": the LKS credits offer and the happy hour invite, with the QR slides, shown before the workshop starts |
+| `docs/wrap-up.md` | The closing page: recap, the LKS credits offer and the happy hour again, and where to go next |
 | `docs/NN-slug.md` | One file per step, numbered in the order of the workshop |
 | `docs/troubleshooting.md` | Every known problem, with the symptom, where it shows up and the fix |
 | `docs/stylesheets/extra.css` | The Latitude.sh colors and the custom blocks described below |
-| `docs/assets/` | Logo and favicon |
+| `docs/assets/` | Logo, favicon, host photos and the QR codes for `docs/qr.md`. `latitude/` holds the icons and hero background taken from latitude.sh for `docs/latitude.md` |
+| `includes/` | Blocks shared by several pages, pulled in with `--8<-- "file.md"` |
 | `manifests/` | The Kubernetes manifests the workshop applies |
 | `mkdocs.yml` | Site configuration and navigation |
 
 ## Writing conventions
 
-**Steps.** Each page starts with an `# N. Title` heading and uses `## N.M Subtitle` for subsections. The numbers are part of the heading because the text refers to them ("as in 7.2"), and the heading matches the entry in `nav`. When you add a step, add it to `nav` in `mkdocs.yml` too. Each page ends with one sentence that says what the reader has now and links to the next step.
+**Steps.** Each page starts with an `# N. Title` heading and uses `## N.M Subtitle` for subsections. The numbers are part of the heading because the text refers to them ("as in 7.2"), and the heading matches the entry in `nav`. When you add a step, add it to `nav` in `mkdocs.yml` too. Each page ends with the `checkpoint` snippet described below and then one sentence that says what the reader has now and links to the next step.
 
 **Commands and output.** A command goes in a `sh` block. Its output goes right after it in an output block, which has a label, dimmer styling and no copy button:
 
@@ -68,7 +72,7 @@ kamaji-667f5c4b7c-g6h5p   1/1     Running   0          116s
 
 Trim long output with `[...]` and keep only the lines the reader needs to compare.
 
-**Callouts.** Three kinds, all with the [admonition](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) syntax:
+**Callouts.** Three kinds in the text, all with the [admonition](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) syntax:
 
 ````
 !!! tip "Why a separate kubeconfig file?"
@@ -82,6 +86,12 @@ Trim long output with `[...]` and keep only the lines the reader needs to compar
 ````
 
 Keep the fix itself in `docs/troubleshooting.md` and leave only the symptom and a link in the step. Each entry there starts with a `**Where:**` line that links back to the step, and its heading carries a short explicit id, `## Symptom { #macos-firewall }`, so the link from the step doesn't depend on the heading text.
+
+A fourth kind, `checkpoint`, sits right before the closing sentence of every step. It lives in `includes/vevox-checkpoint.md` and each step pulls it in with a snippet line, so the Vevox session id is changed in one place:
+
+````
+--8<-- "vevox-checkpoint.md"
+````
 
 **Links.** Link to other pages by file name, `[7.2 Install a CNI](07-worker-node.md#72-install-a-cni)`. The anchor is the heading in lowercase with spaces as hyphens and punctuation removed. Link to manifests with their GitHub URL, so the link works on the site.
 

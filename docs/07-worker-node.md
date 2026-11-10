@@ -2,7 +2,10 @@
 
 On a managed provider, adding a node pool means booting machines in your network that join the hosted control plane. Here, a worker node is a Docker container running the `kindest/node` image, the same image kind uses for its own nodes. It comes with containerd, kubelet and kubeadm preinstalled.
 
+<div class="lat-diagram" markdown>
+
 ```mermaid
+%%{init: {"flowchart": {"padding": 20, "nodeSpacing": 60, "rankSpacing": 60, "subGraphTitleMargin": {"top": 10, "bottom": 14}}}}%%
 flowchart LR
   subgraph net["Docker network: kind"]
     subgraph mgmt["mgmt cluster"]
@@ -16,6 +19,8 @@ flowchart LR
   worker -- "✅ kubeadm join, then kubelet → :6443" --> lb
   lb --> cp
 ```
+
+</div>
 
 Create the worker node as a Docker container:
 ```sh
@@ -154,7 +159,6 @@ helm upgrade --install cilium cilium/cilium --version 1.20.2 \
 - `ipam.mode=kubernetes`: use the Pod CIDR the controller-manager assigns to each node (`10.244.0.0/24` here).
 - `operator.replicas=1`: we only have one node.
 
-
 !!! troubleshooting "`kubernetes cluster unreachable` with `connection reset by peer`? (macOS)"
     If you're using the `kta` alias from the [firewall workaround](troubleshooting.md#macos-firewall), `helm` needs it too. See [Troubleshooting: Install Cilium with `hta`](troubleshooting.md#helm-install-cilium).
 
@@ -186,5 +190,7 @@ kube-system   coredns-695c5d47b8-twmks           1/1     Running   0          20
 - `cilium-envoy-*`: the Envoy proxy Cilium uses for L7 features, one per node.
 - `cilium-operator-*`: cluster-wide housekeeping for Cilium.
 - `coredns-*`: finally `Running`, now that the node has a network.
+
+--8<-- "vevox-checkpoint.md"
 
 `tenant-a` is a working cluster: control plane in `mgmt`, one node, a CNI. It was too easy, because everything shares one Docker network. Next, [put a boundary between them](08-provider-network.md), like a real provider has.

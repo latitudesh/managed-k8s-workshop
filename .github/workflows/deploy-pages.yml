@@ -5,12 +5,14 @@ on:
     branches: [main]
     paths:
       - "docs/**"
+      - "includes/**"
       - "mkdocs.yml"
       - "requirements.txt"
       - ".github/workflows/deploy-pages.yml"
   pull_request:
     paths:
       - "docs/**"
+      - "includes/**"
       - "mkdocs.yml"
       - "requirements.txt"
       - ".github/workflows/deploy-pages.yml"
