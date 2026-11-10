@@ -320,6 +320,30 @@
   border-color: var(--lat-lime);
 }
 
+/* The theme's own "a:hover" rules, scoped per color scheme, outrank the
+   hover rules of the link-styled components above and below (checkpoint
+   buttons, product and tool cards, roadmap pills, host links), and would
+   turn their text pale lime or olive on hover. Pin the text color here
+   with the same scheme scoping, so these rules win. */
+[data-md-color-scheme="latitude-dark"] .md-typeset a.checkpoint-button:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset a.checkpoint-button:focus-visible,
+[data-md-color-scheme="latitude-light"] .md-typeset a.checkpoint-button:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset a.checkpoint-button:focus-visible {
+  color: var(--lat-black);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset a.lat-card:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset a.lat-way:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset a.lat-vcard:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset .lat-phase__steps a:hover,
+[data-md-color-scheme="latitude-dark"] .md-typeset .host__links a:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset a.lat-card:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset a.lat-way:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset a.lat-vcard:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase__steps a:hover,
+[data-md-color-scheme="latitude-light"] .md-typeset .host__links a:hover {
+  color: var(--md-default-fg-color);
+}
+
 /* ---- Output blocks ---------------------------------------------------------
    Written as ```{ .text .no-copy title="Output" }: a small "Output" label,
    no copy button, dimmer text and a dashed border, so they read as a result

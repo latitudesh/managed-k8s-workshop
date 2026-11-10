@@ -82,6 +82,11 @@ markdown_extensions:
 plugins:
   - search
 
+# The shared checkpoint lives outside docs/, so mkdocs serve has to be told
+# to watch it, or edits there don't refresh the preview.
+watch:
+  - includes
+
 nav:
   - Before we start:
       - Welcome: welcome.md
