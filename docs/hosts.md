@@ -30,4 +30,4 @@ Jonatas Baldin, also known as jojo, is a software and infrastructure engineer wi
 
 </div>
 
-Ready? Start with [1. Prerequisites](01-prerequisites.md).
+Next, [Latitude.sh](latitude.md), the company behind the workshop and the product it takes apart.

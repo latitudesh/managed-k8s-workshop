@@ -37,10 +37,12 @@ The `site/` folder it creates is ignored by git.
 
 | Path | What it is |
 | --- | --- |
+| `docs/welcome.md` | The cover: just the workshop title, for the projector |
 | `docs/index.md` | The introduction: what you'll build and the list of steps |
 | `docs/latitude.md` | What Latitude.sh and LKS are, and how LKS maps to the steps |
 | `docs/hosts.md` | Who's giving the workshop, with photos in `docs/assets/` |
-| `docs/wrap-up.md` | The closing page: recap, the LKS credits offer and where to go next |
+| `docs/credits-and-happy-hour.md` | "On the house": the LKS credits offer and the happy hour invite, with the QR slides, shown before the workshop starts |
+| `docs/wrap-up.md` | The closing page: recap, the LKS credits offer and the happy hour again, and where to go next |
 | `docs/NN-slug.md` | One file per step, numbered in the order of the workshop |
 | `docs/troubleshooting.md` | Every known problem, with the symptom, where it shows up and the fix |
 | `docs/stylesheets/extra.css` | The Latitude.sh colors and the custom blocks described below |
