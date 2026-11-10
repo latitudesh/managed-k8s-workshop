@@ -33,7 +33,7 @@ In a public cloud, a VM is a slice of a server. A hypervisor carves the machine 
   <div class="lat-stack lat-stack--metal">
     <p class="lat-stack__title">A Latitude.sh server</p>
     <div class="lat-layer">Your app</div>
-    <div class="lat-layer">Your OS</div>
+    <div class="lat-layer">OS</div>
     <div class="lat-layer lat-layer--lime">The whole server<small>every core, every GPU, every disk: yours</small></div>
     <p class="lat-stack__note">No hypervisor and no neighbors. Still provisioned, rebooted and deleted through an API, like a VM.</p>
   </div>
@@ -51,7 +51,7 @@ In a public cloud, a VM is a slice of a server. A hypervisor carves the machine 
   </div>
   <div class="lat-stat">
     <img src="../assets/latitude/metal.png" alt="">
-    <p class="lat-stat__big">0 hypervisor</p>
+    <p class="lat-stat__big">No hypervisor</p>
     <p class="lat-stat__text">Dedicated hardware with zero virtualization overhead. Every core is yours.</p>
   </div>
   <div class="lat-stat">
