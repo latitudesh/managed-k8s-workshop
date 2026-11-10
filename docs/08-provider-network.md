@@ -2,8 +2,11 @@
 
 So far everything lives on the same Docker network, so the control plane can reach the worker node directly. That's not how a managed provider works. The control plane runs in the provider's network, and your nodes run in yours. Nodes can reach the API server through its public endpoint, but the API server can't open connections into your network.
 
+<div class="lat-diagram" markdown>
+
 ```mermaid
-flowchart LR
+%%{init: {"flowchart": {"padding": 20, "nodeSpacing": 60, "rankSpacing": 60, "subGraphTitleMargin": {"top": 10, "bottom": 14}}}}%%
+flowchart TB
   subgraph provider["Provider network (mgmt)"]
     api["tenant-a kube-apiserver"]
   end
@@ -13,6 +16,8 @@ flowchart LR
   kubelet -- "✅ node → API server :6443" --> api
   api -. "❌ API server → kubelet :10250" .-> kubelet
 ```
+
+</div>
 
 Most of Kubernetes only needs the node → API server direction. A few features need the other one, because the API server has to call the kubelet:
 

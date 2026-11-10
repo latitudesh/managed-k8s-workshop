@@ -2,16 +2,23 @@
 
 The API server can't reach into the customer network, but the nodes can reach out. So turn the connection around: something on the node dials **out** to the control plane and keeps a tunnel open, and the API server sends its kubelet traffic back through it. That's [Konnectivity](https://kubernetes.io/docs/tasks/extend-kubernetes/setup-konnectivity/), the Kubernetes project for exactly this problem.
 
+<div class="lat-diagram" markdown>
+
 ```mermaid
-flowchart LR
-  subgraph provider["Provider network (mgmt)"]
-    api["tenant-a kube-apiserver"] --> server["konnectivity-server :8132"]
-  end
+%%{init: {"flowchart": {"padding": 20, "nodeSpacing": 60, "rankSpacing": 90, "subGraphTitleMargin": {"top": 10, "bottom": 14}}}}%%
+flowchart TB
   subgraph customer["Customer network"]
+    direction LR
     agent["konnectivity-agent"] --> kubelet["kubelet :10250"]
+  end
+  subgraph provider["Provider network (mgmt)"]
+    direction LR
+    api["tenant-a kube-apiserver"] --> server["konnectivity-server :8132"]
   end
   agent -- "✅ dials out, keeps the tunnel open" --> server
 ```
+
+</div>
 
 - `konnectivity-server`: a new container in the control plane Pods.
 - `konnectivity-agent`: runs on the worker nodes and dials out to the server.

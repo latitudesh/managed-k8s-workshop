@@ -132,8 +132,11 @@ Some of these are here because they run on a laptop. A provider would never ship
 
 ## What you'll build
 
+<div class="lat-diagram" markdown>
+
 ```mermaid
-flowchart LR
+%%{init: {"flowchart": {"padding": 20, "nodeSpacing": 60, "rankSpacing": 60, "subGraphTitleMargin": {"top": 10, "bottom": 14}}}}%%
+flowchart TB
   you(["You<br/>(kubectl)"])
 
   subgraph provider["Provider side: mgmt cluster (kind)"]
@@ -155,6 +158,8 @@ flowchart LR
   you --> lb
   w1 -- "joins & reports" --> lb
 ```
+
+</div>
 
 There are two kinds of cluster here:
 

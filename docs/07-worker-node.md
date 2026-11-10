@@ -2,7 +2,10 @@
 
 On a managed provider, adding a node pool means booting machines in your network that join the hosted control plane. Here, a worker node is a Docker container running the `kindest/node` image, the same image kind uses for its own nodes. It comes with containerd, kubelet and kubeadm preinstalled.
 
+<div class="lat-diagram" markdown>
+
 ```mermaid
+%%{init: {"flowchart": {"padding": 20, "nodeSpacing": 60, "rankSpacing": 60, "subGraphTitleMargin": {"top": 10, "bottom": 14}}}}%%
 flowchart LR
   subgraph net["Docker network: kind"]
     subgraph mgmt["mgmt cluster"]
@@ -16,6 +19,8 @@ flowchart LR
   worker -- "✅ kubeadm join, then kubelet → :6443" --> lb
   lb --> cp
 ```
+
+</div>
 
 Create the worker node as a Docker container:
 ```sh

@@ -773,6 +773,30 @@
   border-color: var(--lat-lime-dim);
 }
 
+/* Diagram panel (docs/index.md): the architecture diagram on a card with
+   room around it. Material renders the SVG inside .mermaid, so the padding
+   goes on that host element. */
+.md-typeset .lat-diagram {
+  margin: 1.2rem 0 1.5rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-diagram .mermaid {
+  margin: 0;
+  padding: 1.6rem 1.2rem;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-diagram {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-diagram .mermaid {
+  --md-mermaid-label-bg-color: #ffffff;
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .lat-diagram .mermaid {
+  --md-mermaid-label-bg-color: var(--lat-surface);
+}
+
 /* Roadmap (docs/index.md): one card per part of the workshop, with the
    steps as numbered pills. The bonus part is dashed, it's optional. */
 .md-typeset .lat-roadmap {
