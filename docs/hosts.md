@@ -1,6 +1,14 @@
 # Your hosts
 
-Two people from Latitude.sh are running this workshop. Grab us at any point, during the steps or after, and if you get stuck, that's what we're here for.
+<div class="lat-hero" markdown>
+
+<p class="lat-hero__label">./your-hosts</p>
+
+<p class="lat-hero__title">Two people from Latitude.sh.</p>
+
+<p class="lat-hero__text">Grab us at any point, during the steps or after. If you get stuck, that's what we're here for.</p>
+
+</div>
 
 <div class="hosts" markdown>
 
@@ -8,11 +16,12 @@ Two people from Latitude.sh are running this workshop. Grab us at any point, dur
 
 ![Camila Maia](assets/camila.jpg)
 
-**Camila Maia**
+<p class="host__name" markdown>Camila Maia</p>
+<p class="host__role" markdown>Developer Relations Specialist</p>
 
-Camila Maia is a Developer Relations Specialist at Latitude.sh, where she helps developers build and scale AI applications on bare metal. She is the creator of [ScanAPI](https://scanapi.dev), an open source API testing framework, and the founder of [Cumbuca Dev](https://cumbuca.dev), an initiative that promotes education via open source. An open source maintainer featured by the Open Source Initiative and GitHub, she is passionate about developer experience and making complex technologies accessible through education and community.
+Camila helps developers build and scale AI applications on bare metal. She is the creator of [ScanAPI](https://scanapi.dev), an open source API testing framework, and the founder of [Cumbuca Dev](https://cumbuca.dev), an initiative that promotes education via open source. An open source maintainer featured by the Open Source Initiative and GitHub, she is passionate about developer experience and making complex technologies accessible through education and community.
 
-[GitHub](https://github.com/camilamaia) · [LinkedIn](https://www.linkedin.com/in/cmaiacd) · [X](https://x.com/cmaiacd) · [camilamaia.com](https://camilamaia.com)
+<p class="host__links" markdown>[GitHub](https://github.com/camilamaia) [LinkedIn](https://www.linkedin.com/in/cmaiacd) [X](https://x.com/cmaiacd) [camilamaia.com](https://camilamaia.com)</p>
 
 </div>
 
@@ -20,11 +29,12 @@ Camila Maia is a Developer Relations Specialist at Latitude.sh, where she helps 
 
 ![Jonatas Baldin, also known as jojo](assets/jojo.jpg)
 
-**Jonatas Baldin (jojo)**
+<p class="host__name" markdown>Jonatas Baldin (jojo)</p>
+<p class="host__role" markdown>Senior Platform Engineer, LKS</p>
 
-Jonatas Baldin, also known as jojo, is a software and infrastructure engineer with 10+ years of experience across backend (Python, Go), cloud-native platforms and developer-facing products. He is a Senior Platform Engineer at Latitude.sh, developing the Latitude Kubernetes Service (LKS). He is midway through an undergraduate degree in Psychology.
+Jojo is a software and infrastructure engineer with 10+ years of experience across backend (Python, Go), cloud-native platforms and developer-facing products. At Latitude.sh he develops the Latitude Kubernetes Service (LKS). He is midway through an undergraduate degree in Psychology.
 
-[GitHub](https://github.com/jonatasbaldin) · [LinkedIn](https://www.linkedin.com/in/jonatas-baldin-de-oliveira-5138a02a4/) · [jojo.garden](https://jojo.garden)
+<p class="host__links" markdown>[GitHub](https://github.com/jonatasbaldin) [LinkedIn](https://www.linkedin.com/in/jonatas-baldin-de-oliveira-5138a02a4/) [jojo.garden](https://jojo.garden)</p>
 
 </div>
 

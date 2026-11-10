@@ -1173,25 +1173,176 @@
   color-scheme: light;
 }
 
-/* ---- "Your hosts" page: two cards side by side, stacked on narrow screens --- */
+/* ---- Cover page (docs/welcome.md): the hero, taller, with "Welcome to"
+   in lime and the workshop title as the H1. Projected while people arrive. */
+.md-typeset .lat-hero--cover {
+  min-height: 68vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 2.5rem;
+}
+.md-typeset .lat-hero--cover h1 {
+  color: #ffffff;
+  font-size: clamp(2rem, 4.6vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  max-width: 18ch;
+  margin: 0;
+}
+.md-typeset .lat-hero--cover .cover__kicker {
+  margin: 0 0 0.8rem;
+  font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+  font-weight: 600;
+  color: var(--lat-lime);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* ---- "Your hosts" page: two cards side by side, stacked on narrow screens,
+   in the same card style as the rest. */
 .md-typeset .hosts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 1.5rem;
+  gap: 1.2rem;
   margin: 1.5rem 0;
+}
+.md-typeset .host {
+  padding: 1.1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color--light);
 }
 .md-typeset .host img {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
+  object-position: center 30%;
   border-radius: 0.4rem;
   border: 1px solid var(--lat-border);
-}
-[data-md-color-scheme="latitude-light"] .md-typeset .host img {
-  border-color: #e0e0dc;
+  margin-bottom: 0.9rem;
 }
 .md-typeset .host p {
-  margin: 0.6rem 0;
+  margin: 0.5rem 0;
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .host .host__name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--md-default-fg-color);
+}
+.md-typeset .host .host__role {
+  margin: 0.1rem 0 0.7rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.65rem;
+  color: var(--lat-lime);
+}
+.md-typeset .host .host__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+.md-typeset .host .host__links a {
+  padding: 0.25rem 0.65rem;
+  border-radius: 2rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+.md-typeset .host .host__links a:hover {
+  border-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host img {
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host .host__role {
+  color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host .host__links a {
+  background: var(--lat-light-bg);
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .host .host__links a:hover {
+  border-color: var(--lat-olive);
+}
+
+/* ---- Slides with a footer (docs/credits-and-happy-hour.md, docs/wrap-up.md):
+   the 16:9 slide as is, no frame, with one line and a lime button under it. */
+.md-typeset .lat-slide {
+  margin: 1.2rem 0 1.8rem;
+}
+.md-typeset .lat-slide > p {
+  margin: 0;
+}
+.md-typeset .lat-slide img {
+  display: block;
+  width: 100%;
+  border-radius: 0.4rem;
+}
+.md-typeset .lat-slide .lat-slide__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  padding: 0.8rem 0 0;
+  font-size: 0.72rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .lat-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  background: var(--lat-lime);
+  color: var(--lat-black) !important;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.md-typeset .lat-button:hover,
+.md-typeset .lat-button:focus-visible {
+  background: var(--lat-lime-dim);
+}
+
+/* Two QR slides side by side (Q&A section of the Wrap-up), so both can be
+   scanned from the projector while we take questions. Stacked on narrow
+   screens. */
+.md-typeset .qr-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+@media (max-width: 44rem) {
+  .md-typeset .qr-pair {
+    grid-template-columns: 1fr;
+  }
+}
+.md-typeset .qr-pair p {
+  margin: 0;
+}
+.md-typeset .qr-pair img {
+  display: block;
+  width: 100%;
+  border-radius: 0.4rem;
+}
+
+/* Goal cards that wrap to as many columns as fit (docs/wrap-up.md) */
+.md-typeset .lat-goals--wrap {
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
 }
 
 /* ---- QR page (docs/qr.md, not in the nav): projected at the start of the
