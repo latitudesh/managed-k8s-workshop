@@ -698,6 +698,173 @@
   background: radial-gradient(ellipse 90% 80% at 30% 100%, rgb(var(--v) / 0.18), transparent), var(--lat-light-bg);
 }
 
+/* Introduction: the three takeaways, and the badges on the tool cards.
+   Teaching aids in the orange latitude.sh uses for its Build vertical,
+   production-grade tools in lime. */
+.md-typeset .lat-goals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0 1.5rem;
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-goals {
+    grid-template-columns: 1fr;
+  }
+}
+.md-typeset .lat-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  border-top: 3px solid var(--lat-lime);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-goal__n {
+  font-family: var(--md-code-font-family);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--lat-lime);
+}
+.md-typeset .lat-goal__text {
+  font-size: 0.75rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .lat-badge {
+  align-self: flex-start;
+  padding: 0.2rem 0.55rem;
+  border-radius: 2rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.md-typeset .lat-badge--teach {
+  background: rgba(255, 169, 120, 0.18);
+  color: #ffa978;
+  border: 1px solid rgba(255, 169, 120, 0.5);
+}
+.md-typeset .lat-badge--prod {
+  background: rgba(224, 254, 86, 0.14);
+  color: var(--lat-lime);
+  border: 1px solid rgba(224, 254, 86, 0.5);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-goal {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+  border-top-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-goal__n {
+  color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-badge--teach {
+  background: rgba(255, 169, 120, 0.25);
+  color: #b3480a;
+  border-color: #e8752e;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-badge--prod {
+  background: rgba(224, 254, 86, 0.45);
+  color: var(--lat-olive);
+  border-color: var(--lat-lime-dim);
+}
+
+/* Roadmap (docs/index.md): one card per part of the workshop, with the
+   steps as numbered pills. The bonus part is dashed, it's optional. */
+.md-typeset .lat-roadmap {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 1.2rem 0 1.5rem;
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-roadmap {
+    grid-template-columns: 1fr;
+  }
+}
+.md-typeset .lat-phase {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1rem 0.9rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--lat-border);
+  border-top: 3px solid var(--lat-lime);
+  background: var(--md-default-bg-color--light);
+}
+.md-typeset .lat-phase--bonus {
+  border-style: dashed;
+  border-top-style: solid;
+  border-top-color: var(--lat-fg-muted);
+}
+.md-typeset .lat-phase__name {
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+}
+.md-typeset .lat-phase__text {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .lat-phase__steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+.md-typeset .lat-phase__steps a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.6rem 0.25rem 0.25rem;
+  border-radius: 2rem;
+  border: 1px solid var(--lat-border);
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  font-size: 0.66rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.md-typeset .lat-phase__steps a:hover,
+.md-typeset .lat-phase__steps a:focus-visible {
+  border-color: var(--lat-lime);
+  color: var(--md-default-fg-color);
+}
+.md-typeset .lat-phase__steps b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  padding: 0 0.3rem;
+  border-radius: 2rem;
+  background: var(--lat-lime);
+  color: var(--lat-black);
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase {
+  background: #ffffff;
+  border-color: var(--lat-light-border);
+  border-top-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase--bonus {
+  border-top-color: #9a9a94;
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase__steps a {
+  background: var(--lat-light-bg);
+  border-color: var(--lat-light-border);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .lat-phase__steps a:hover {
+  border-color: var(--lat-olive);
+}
+
 /* Four numbered steps (docs/lks.md): a vertical timeline, number in a lime
    circle on the left, a line joining them, title and one line on the right. */
 .md-typeset .lat-steps {
