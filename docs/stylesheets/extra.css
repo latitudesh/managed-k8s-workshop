@@ -566,6 +566,15 @@
   color: var(--md-default-fg-color--light);
 }
 
+.md-typeset .lat-stats--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 44rem) {
+  .md-typeset .lat-stats--three {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Product and feature cards: chrome icon, name, one-liner. Links on the
    Latitude.sh page, plain divs on the LKS page. */
 .md-typeset .lat-products {
