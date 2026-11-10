@@ -1,4 +1,4 @@
-# LKS
+# Latitude Kubernetes Service (LKS)
 
 <!-- Based on latitude.sh/lks, shortened. Same components as docs/latitude.md
      (hero, ./labels, stacks, cards), icons from docs/assets/latitude/. -->
