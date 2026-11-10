@@ -68,6 +68,11 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
+  # Shared blocks under includes/, pulled into pages with --8<-- "file.md"
+  - pymdownx.snippets:
+      base_path:
+        - includes
+      check_paths: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid

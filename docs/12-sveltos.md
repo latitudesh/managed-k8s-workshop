@@ -246,4 +246,6 @@ cilium	kube-system	1       	2026-11-04 13:08:34.48236522 +0000 UTC	deployed	cili
 !!! tip "This is how the CNI is already there when you create a cluster"
     A provider labels every new cluster and registers it with its add-on manager. A profile like this one matches it right away, before the first node joins. By the time you download the kubeconfig, the CNI, the CSI driver and the rest are already installed, and you never ran `helm install`.
 
+--8<-- "vevox-checkpoint.md"
+
 That's the whole provider: hosted control planes, a network boundary with a tunnel through it, upgrades, and add-ons pushed from `mgmt`. Next, [clean up](13-clean-up.md).

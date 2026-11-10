@@ -118,4 +118,6 @@ kta exec deploy/web -- hostname
 web-795767664d-sl6tx
 ```
 
+--8<-- "vevox-checkpoint.md"
+
 Logs and exec work again, and the boundary is still there. That's day one done. Next, [upgrade Kubernetes](11-upgrade.md), the way a provider does.

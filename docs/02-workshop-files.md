@@ -6,4 +6,6 @@ git clone https://github.com/latitudesh/managed-k8s-workshop.git
 cd managed-k8s-workshop
 ```
 
+--8<-- "vevox-checkpoint.md"
+
 Every command from here on assumes you're in this folder. Next, [create the management cluster](03-management-cluster.md).

@@ -57,4 +57,6 @@ error: unable to upgrade connection: error dialing backend: dial tcp 172.18.0.6:
 - `dial tcp 172.18.0.6:10250`: the API server tried to open a connection to the kubelet on the worker node.
 - `i/o timeout`: our iptables rule dropped it.
 
+--8<-- "vevox-checkpoint.md"
+
 Workloads run, but anything where the API server has to call the kubelet is dead. Next, [fix it with Konnectivity](10-konnectivity.md).

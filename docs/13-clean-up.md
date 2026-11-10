@@ -17,4 +17,6 @@ Delete the kubeconfig files:
 rm -f mgmt.kubeconfig tenant-a.kubeconfig
 ```
 
+--8<-- "vevox-checkpoint.md"
+
 That's the end of the main path. If you have access to Latitude.sh, the optional step [runs the same thing on LKS](14-lks.md). It doesn't need anything you just deleted, and it reuses the aliases and file names, so cleaning up first avoids mixing the two `tenant-a` clusters. Otherwise, head to the [Wrap-up](wrap-up.md) for a recap, the LKS credits offer and where to go next.

@@ -233,6 +233,93 @@
   background-color: #e8752e;
 }
 
+/* ---- "checkpoint" admonition: a ticked box, in lime ----------------------
+   The block at the end of every step (includes/vevox-checkpoint.md) that asks
+   people to mark their progress in the Vevox poll and send questions to the
+   Q&A. Brighter than a tip so it isn't skipped: lime border all around and a
+   stronger lime title.
+   Usage: !!! checkpoint "Before you move on"  */
+:root {
+  --md-admonition-icon--checkpoint: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V5h10V3H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-8h-2m-11.09-.92L6.5 11.5 11 16 21 6l-1.41-1.42L11 13.17z"/></svg>');
+}
+.md-typeset .admonition.checkpoint,
+.md-typeset details.checkpoint {
+  margin-top: 1.5rem;
+  border-color: var(--lat-lime-dim);
+}
+.md-typeset .checkpoint > .admonition-title,
+.md-typeset .checkpoint > summary {
+  background-color: rgba(224, 254, 86, 0.12);
+}
+.md-typeset .checkpoint > .admonition-title::before,
+.md-typeset .checkpoint > summary::before {
+  background-color: var(--lat-lime-dim);
+  -webkit-mask-image: var(--md-admonition-icon--checkpoint);
+          mask-image: var(--md-admonition-icon--checkpoint);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .admonition.checkpoint,
+[data-md-color-scheme="latitude-dark"] .md-typeset details.checkpoint {
+  border-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .checkpoint > .admonition-title::before,
+[data-md-color-scheme="latitude-dark"] .md-typeset .checkpoint > summary::before {
+  background-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .checkpoint > .admonition-title,
+[data-md-color-scheme="latitude-light"] .md-typeset .checkpoint > summary {
+  background-color: rgba(224, 254, 86, 0.3);
+}
+/* Inside the box: two buttons, one for the poll and one for the Q&A. The
+   poll answers live in the title as plain text with emoji: each poll is
+   opened live during the workshop, so there's nothing to link to. The
+   button emoji comes from the data-emoji attribute. */
+.md-typeset .checkpoint-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.6rem 0;
+}
+.md-typeset .checkpoint-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.65rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--lat-lime-dim);
+  color: var(--md-default-fg-color);
+  font-weight: 600;
+  font-size: 0.72rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 0.15s, color 0.15s;
+}
+.md-typeset .checkpoint-button::before {
+  content: attr(data-emoji);
+  font-size: 1rem;
+  line-height: 1;
+}
+.md-typeset .checkpoint-button--primary {
+  background-color: rgba(224, 254, 86, 0.12);
+}
+.md-typeset .checkpoint-button:hover,
+.md-typeset .checkpoint-button:focus-visible {
+  background-color: var(--lat-lime-dim);
+  border-color: var(--lat-lime-dim);
+  color: var(--lat-black);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .checkpoint-button {
+  border-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-dark"] .md-typeset .checkpoint-button--primary {
+  border-color: var(--lat-lime);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .checkpoint-button {
+  border-color: var(--lat-olive);
+}
+[data-md-color-scheme="latitude-light"] .md-typeset .checkpoint-button--primary {
+  border-color: var(--lat-lime);
+}
+
 /* ---- Output blocks ---------------------------------------------------------
    Written as ```{ .text .no-copy title="Output" }: a small "Output" label,
    no copy button, dimmer text and a dashed border, so they read as a result

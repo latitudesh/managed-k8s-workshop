@@ -45,4 +45,6 @@ DROP       tcp  --  172.18.0.3           0.0.0.0/0            tcp dpt:10250
 !!! tip "Why block the `mgmt` node IPs, not the API server Pods?"
     Traffic leaving a Pod for an address outside the cluster is translated to its node's IP. From the worker's point of view, the API server calls come from the `mgmt` nodes.
 
+--8<-- "vevox-checkpoint.md"
+
 The boundary is in place. Next, [run a workload](09-workload.md) and see what still works and what doesn't.

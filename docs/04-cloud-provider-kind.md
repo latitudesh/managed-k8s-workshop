@@ -22,4 +22,6 @@ cloud-provider-kind
 !!! warning "macOS firewall"
     If macOS asks whether `cloud-provider-kind` can accept incoming network connections, click **Allow**. With the firewall on and the answer set to block, the load balancer addresses won't work from your machine. See [Troubleshooting: macOS firewall](troubleshooting.md#macos-firewall) if that happens.
 
+--8<-- "vevox-checkpoint.md"
+
 Leave it running. Next, [install the platform](05-helm-packages.md) on `mgmt`: cert-manager, Kamaji and etcd.

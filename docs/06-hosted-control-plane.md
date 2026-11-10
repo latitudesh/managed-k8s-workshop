@@ -195,4 +195,6 @@ export TENANT_A_APISERVER_IP=$(kmgmt -n tenant-a get svc tenant-a \
   -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
 
+--8<-- "vevox-checkpoint.md"
+
 You have a control plane with no nodes. Next, [join a worker node](07-worker-node.md).

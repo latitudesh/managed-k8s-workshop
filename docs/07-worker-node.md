@@ -154,7 +154,6 @@ helm upgrade --install cilium cilium/cilium --version 1.20.2 \
 - `ipam.mode=kubernetes`: use the Pod CIDR the controller-manager assigns to each node (`10.244.0.0/24` here).
 - `operator.replicas=1`: we only have one node.
 
-
 !!! troubleshooting "`kubernetes cluster unreachable` with `connection reset by peer`? (macOS)"
     If you're using the `kta` alias from the [firewall workaround](troubleshooting.md#macos-firewall), `helm` needs it too. See [Troubleshooting: Install Cilium with `hta`](troubleshooting.md#helm-install-cilium).
 
@@ -186,5 +185,7 @@ kube-system   coredns-695c5d47b8-twmks           1/1     Running   0          20
 - `cilium-envoy-*`: the Envoy proxy Cilium uses for L7 features, one per node.
 - `cilium-operator-*`: cluster-wide housekeeping for Cilium.
 - `coredns-*`: finally `Running`, now that the node has a network.
+
+--8<-- "vevox-checkpoint.md"
 
 `tenant-a` is a working cluster: control plane in `mgmt`, one node, a CNI. It was too easy, because everything shares one Docker network. Next, [put a boundary between them](08-provider-network.md), like a real provider has.

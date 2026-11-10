@@ -30,7 +30,6 @@ helm upgrade --install cert-manager jetstack/cert-manager \
   --wait
 ```
 
-
 !!! troubleshooting "`Progress deadline exceeded` after 5 minutes?"
     See [Troubleshooting: cert-manager](troubleshooting.md#cert-manager).
 
@@ -97,5 +96,7 @@ Spec:
 Status:
   Ready:  true
 ```
+
+--8<-- "vevox-checkpoint.md"
 
 The platform is in place and Kamaji is waiting for its first `TenantControlPlane`. Next, [create one](06-hosted-control-plane.md).
