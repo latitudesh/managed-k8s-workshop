@@ -21,63 +21,10 @@
 In two hours you'll build the pieces a managed Kubernetes provider runs, step by step, and hit the problems they had to solve. You leave knowing:
 
 <div class="lat-goals">
-  <div class="lat-goal"><span class="lat-goal__n">1</span><span class="lat-goal__text">Where a customer's control plane actually lives, and what "managed" means for it.</span></div>
-  <div class="lat-goal"><span class="lat-goal__n">2</span><span class="lat-goal__text">Why the provider's network and the customer's network are separate, what that breaks, and how a tunnel fixes it.</span></div>
-  <div class="lat-goal"><span class="lat-goal__n">3</span><span class="lat-goal__text">How upgrades and add-ons are rolled out from the provider's side, without touching your workloads.</span></div>
+  <div class="lat-goal"><span class="lat-goal__n">1</span><span class="lat-goal__title">Build the Control Plane</span><span class="lat-goal__text">Where a customer's control plane actually lives, and what "managed" means for it.</span></div>
+  <div class="lat-goal"><span class="lat-goal__n">2</span><span class="lat-goal__title">Join Worker Nodes</span><span class="lat-goal__text">Why the provider's network and the customer's network are separate, what that breaks, and how a tunnel fixes it.</span></div>
+  <div class="lat-goal"><span class="lat-goal__n">3</span><span class="lat-goal__title">Upgrade and Addons</span><span class="lat-goal__text">How upgrades and add-ons are rolled out from the provider's side, without touching your workloads.</span></div>
 </div>
-
-<p class="lat-label">./who-is-this-for</p>
-
-## Who this is for
-
-<div class="lat-products">
-  <div class="lat-card">
-    <span class="lat-badge lat-badge--prod">Platform engineers</span>
-    <span class="lat-card__title">Deciding between building and buying</span>
-    <span class="lat-card__text">Before you run control planes for other teams, see what that actually takes: the boundary, the tunnel, the upgrades, the add-ons. Two hours of it is enough to size the job.</span>
-  </div>
-  <div class="lat-card">
-    <span class="lat-badge lat-badge--prod">SREs and operators</span>
-    <span class="lat-card__title">Running or evaluating a managed Kubernetes</span>
-    <span class="lat-card__text">Know what your provider does for you, what the network boundary breaks, and what an upgrade really changes.</span>
-  </div>
-  <div class="lat-card">
-    <span class="lat-badge lat-badge--prod">Developers</span>
-    <span class="lat-card__title">Curious about the "Create Cluster" button</span>
-    <span class="lat-card__text">You use managed Kubernetes every day and never saw a control plane. Two hours later, you'll have run one.</span>
-  </div>
-  <div class="lat-card">
-    <span class="lat-badge lat-badge--prod">Learning Kubernetes internals</span>
-    <span class="lat-card__title">Past the basics, before the source code</span>
-    <span class="lat-card__text">API server, etcd, kubelet, CNI, the tunnel: see how the pieces fit by wiring them up yourself.</span>
-  </div>
-</div>
-
-You need to be comfortable with `kubectl` and a terminal. You don't need to have run a control plane before. That's the point.
-
-<p class="lat-label">./two-tracks</p>
-
-## Two tracks: the laptop and the real thing
-
-<div class="lat-compare">
-  <div class="lat-stack lat-stack--metal">
-    <p class="lat-stack__title">Steps 1 to 13: the didactic path</p>
-    <div class="lat-layer lat-layer--lime">Everything on your laptop<small>Docker, kind, open source tools, no account</small></div>
-    <div class="lat-layer">A simulated provider<small>a fake fleet, a fake load balancer, a fake network boundary</small></div>
-    <div class="lat-layer">The real problems<small>hosted control planes, the tunnel, upgrades, add-ons</small></div>
-    <p class="lat-stack__note">This is the workshop. The tools are stand-ins, the problems are the real ones.</p>
-  </div>
-  <div class="lat-stack">
-    <p class="lat-stack__title">Step 14: the real thing on LKS</p>
-    <div class="lat-layer lat-layer--dim">Optional bonus<small>needs a Latitude.sh account</small></div>
-    <div class="lat-layer lat-layer--dim">An LKS cluster as the management cluster<small>real managed Kubernetes</small></div>
-    <div class="lat-layer lat-layer--dim">A bare metal server as the worker<small>real infrastructure</small></div>
-    <p class="lat-stack__note">The same build, on real infrastructure, if you have access and time.</p>
-  </div>
-</div>
-
-!!! warning "The tutorial is not LKS"
-    Steps 1 to 13 don't use LKS and don't show how LKS is built. They use open source tools to simulate what any managed Kubernetes provider does, so the shape of the problem is clear. LKS itself only shows up in [step 14](14-lks.md).
 
 <p class="lat-label">./toolbox</p>
 
@@ -100,11 +47,6 @@ Some of these are here because they run on a laptop. A provider would never ship
     <span class="lat-badge lat-badge--teach">Teaching aid</span>
     <span class="lat-card__title">cloud-provider-kind</span>
     <span class="lat-card__text">Gives <code>LoadBalancer</code> Services an IP on your laptop. The real thing is the provider's load balancer.</span>
-  </div>
-  <div class="lat-card">
-    <span class="lat-badge lat-badge--teach">Teaching aid</span>
-    <span class="lat-card__title">An iptables rule</span>
-    <span class="lat-card__text">Drops traffic from the control plane to the nodes, to simulate two networks. A provider has two actual networks.</span>
   </div>
   <div class="lat-card">
     <span class="lat-badge lat-badge--prod">Production-grade</span>
@@ -213,13 +155,43 @@ Fourteen steps in five parts. Every step ends with a checkpoint, so you can tell
     </span>
   </div>
   <div class="lat-phase lat-phase--bonus">
+    <span class="lat-badge lat-badge--teach">The tutorial is not LKS</span>
     <span class="lat-phase__name">Bonus</span>
-    <span class="lat-phase__text">The same build on real infrastructure: an LKS cluster and a bare metal server. Optional.</span>
+    <span class="lat-phase__text">Steps 1 to 13 don't use LKS and don't show how LKS is built: they simulate what any managed Kubernetes provider does, with open source tools. LKS itself only shows up here, with the same build on real infrastructure: an LKS cluster and a bare metal server. Optional.</span>
     <span class="lat-phase__steps">
       <a href="14-lks/"><b>14</b>Run it on LKS</a>
     </span>
   </div>
 </div>
+
+<p class="lat-label">./who-is-this-for</p>
+
+## Who this is for
+
+<div class="lat-products">
+  <div class="lat-card">
+    <span class="lat-badge lat-badge--prod">Platform engineers</span>
+    <span class="lat-card__title">Deciding between building and buying</span>
+    <span class="lat-card__text">Before you run control planes for other teams, see what that actually takes: the boundary, the tunnel, the upgrades, the add-ons. Two hours of it is enough to size the job.</span>
+  </div>
+  <div class="lat-card">
+    <span class="lat-badge lat-badge--prod">SREs and operators</span>
+    <span class="lat-card__title">Running or evaluating a managed Kubernetes</span>
+    <span class="lat-card__text">Know what your provider does for you, what the network boundary breaks, and what an upgrade really changes.</span>
+  </div>
+  <div class="lat-card">
+    <span class="lat-badge lat-badge--prod">Developers</span>
+    <span class="lat-card__title">Curious about the "Create Cluster" button</span>
+    <span class="lat-card__text">You use managed Kubernetes every day and never saw a control plane. Two hours later, you'll have run one.</span>
+  </div>
+  <div class="lat-card">
+    <span class="lat-badge lat-badge--prod">Learning Kubernetes internals</span>
+    <span class="lat-card__title">Past the basics, before the source code</span>
+    <span class="lat-card__text">API server, etcd, kubelet, CNI, the tunnel: see how the pieces fit by wiring them up yourself.</span>
+  </div>
+</div>
+
+You need to be comfortable with `kubectl` and a terminal. You don't need to have run a control plane before. That's the point.
 
 <p class="lat-label">./account</p>
 

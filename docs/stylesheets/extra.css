@@ -762,6 +762,11 @@
   line-height: 1;
   color: var(--lat-lime);
 }
+.md-typeset .lat-goal__title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: -0.01em;
+}
 .md-typeset .lat-goal__text {
   font-size: 0.75rem;
   color: var(--md-default-fg-color--light);
@@ -846,6 +851,7 @@
 .md-typeset .lat-phase {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 0.4rem;
   padding: 1rem 1rem 0.9rem;
   border-radius: 0.6rem;
